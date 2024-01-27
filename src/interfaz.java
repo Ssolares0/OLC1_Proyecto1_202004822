@@ -1,6 +1,11 @@
 
 import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
+import javax.swing.*;
+import java.awt.*;
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
 
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
@@ -74,7 +79,12 @@ public class interfaz extends javax.swing.JFrame {
         });
         jMenu1.add(jMenuItem1);
 
-        jMenuItem2.setText("jMenuItem2");
+        jMenuItem2.setText("Abrir Archivo");
+        jMenuItem2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem2ActionPerformed(evt);
+            }
+        });
         jMenu1.add(jMenuItem2);
 
         jMenuItem3.setText("jMenuItem3");
@@ -146,6 +156,11 @@ public class interfaz extends javax.swing.JFrame {
             
     }//GEN-LAST:event_jMenuItem1ActionPerformed
 
+    private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
+        // TODO add your handling code here:
+        openArchivo();  
+    }//GEN-LAST:event_jMenuItem2ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -204,7 +219,45 @@ public class interfaz extends javax.swing.JFrame {
         JPanel newPanel = new JPanel();
         
         jTabbedPane1.addTab("newtaab", newPanel);
-        
+        jTabbedPane1.setVisible(true);
     
+    }
+    
+    private void openArchivo(){
+        JPanel newPanel = new JPanel();
+        
+        JFileChooser fileChooser = new JFileChooser();
+        int result = fileChooser.showOpenDialog(this);
+
+        if (result == JFileChooser.APPROVE_OPTION) {
+            // Seleccionar un archivo
+            java.io.File selectedFile = fileChooser.getSelectedFile();
+            
+            // verificamos la extensión del archivo
+            if (selectedFile.getName().toLowerCase().endsWith(".df")) {
+                String contenido = readContenidoArchivo(selectedFile);
+                // Crear JTextArea para mostrar el contenido
+                JTextArea textArea = new JTextArea(contenido);
+                JScrollPane scrollPane = new JScrollPane(textArea);
+
+                // Agregar pestaña al JTabbedPane
+                jTabbedPane1.addTab(selectedFile.getName(), scrollPane);
+            }else {
+                JOptionPane.showMessageDialog(this, "Por favor, seleccione un archivo con extensión .df", "Error", JOptionPane.ERROR_MESSAGE);
+            }
+            
+        }
+    }
+    private String readContenidoArchivo(java.io.File file) {
+        StringBuilder contenido = new StringBuilder();
+        try (BufferedReader br = new BufferedReader(new FileReader(file))) {
+            String linea;
+            while ((linea = br.readLine()) != null) {
+                contenido.append(linea).append("\n");
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return contenido.toString();
     }
 }
