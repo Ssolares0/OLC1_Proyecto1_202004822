@@ -222,7 +222,7 @@ public class interfaz extends javax.swing.JFrame {
     
     private void newArchivo(){
         
-    
+        
         JPanel newPanel = new JPanel(new BorderLayout());
         JTextArea textArea = new JTextArea();
         JScrollPane scrollPane = new JScrollPane(textArea);
