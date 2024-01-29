@@ -229,7 +229,8 @@ public class interfaz extends javax.swing.JFrame {
         newPanel.add(scrollPane, BorderLayout.CENTER);
 
         jTabbedPane1.addTab("undefined", newPanel);
-        jTabbedPane1.setSelectedIndex(tabbedPane.getTabCount() - 1);
+        int lastIndex = jTabbedPane1.getTabCount() - 1;
+        jTabbedPane1.setSelectedIndex(lastIndex);
     
     }
     private void guardarArchivo() {
