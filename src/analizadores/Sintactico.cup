@@ -30,7 +30,9 @@ action code
 
 
 //------> Declaración de terminales
-terminal String ENTERO,PUNTOYCOMA;
+terminal String NUMERO,ASSIGN,DOSPUNTOS,PUNTOYCOMA;
+terminal String VAR,DOUBLE,CHAR,END,PROGRAM,ENDPROGRAM;
+
 
 
 //------> Declaración de no terminales
@@ -43,5 +45,4 @@ start with inicio;
 
 // ------------>  Producciones  <------------
 
-inicio ::= ENTERO
-;
+inicio ::= NUMERO;

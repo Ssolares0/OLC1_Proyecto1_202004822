@@ -4,6 +4,8 @@
  */
 package dataforge;
 
+
+
 /**
  *
  * @author Sebastian S
@@ -15,7 +17,8 @@ public class Dataforge {
      */
     public static void main(String[] args) {
         // TODO code application logic here
-        System.out.println("probando!!");
+        interfaz app = new interfaz();
+        app.setVisible(true);
     }
     
 }

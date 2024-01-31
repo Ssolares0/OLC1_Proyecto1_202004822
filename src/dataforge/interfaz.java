@@ -1,3 +1,6 @@
+package dataforge;
+
+
 
 import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
@@ -8,6 +11,8 @@ import java.io.BufferedReader;
 import java.io.FileWriter;
 import java.io.FileReader;
 import java.io.IOException;
+import analizadores.Lexico;
+import analizadores.Sintactico;
 
 
 
@@ -225,6 +230,9 @@ public class interfaz extends javax.swing.JFrame {
                 String dato = textArea.getText();
                 System.out.println(dato);
                 
+                Lexico Analisis_L = new Lexico(new java.io.StringReader(dato));
+                Sintactico Analisis_S = new Sintactico(Analisis_L);
+                Analisis_S.parse();
                 
                 
             }
