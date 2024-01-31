@@ -29,6 +29,7 @@ import java.util.ArrayList;
 
 //entero = [0-9]+
 numero = [0-9]+("."[0-9]+)?
+cadena = [\'][^\']*[\']|[\"][^\"]*[\"]
 blancos = [ \t\f\r\n]+
 comentario_oneL = "!".*\n
 comentario_multL= <!"([^!]|!+[^>])*"!>
@@ -45,11 +46,24 @@ comentario_multL= <!"([^!]|!+[^>])*"!>
     ":"    { System.out.println("Reconocio Dos puntos ,lexema: "+yytext());
             return new Symbol(sym.DOSPUNTOS, yycolumn, yyline, yytext()); }
 
+    ","   { System.out.println("Reconocio coma ,lexema: "+yytext());
+            return new Symbol(sym.COMA, yycolumn, yyline, yytext()); }
+
     "<-"   { System.out.println("Reconocio Assignacion llave ,lexema: "+yytext());
             return new Symbol(sym.ASSIGN, yycolumn, yyline, yytext()); }
 
+    "@"    { System.out.println("Reconocio  ,lexema: "+yytext());
+            return new Symbol(sym.ARROBA, yycolumn, yyline, yytext()); }
+
+    "["   { System.out.println("Reconocio Corchete izquierdo ,lexema: "+yytext());
+            return new Symbol(sym.COR_IZQ, yycolumn, yyline, yytext()); }
+     
+    "]"   { System.out.println("Reconocio Corchete derecho ,lexema: "+yytext());
+            return new Symbol(sym.COR_DER, yycolumn, yyline, yytext()); }
 
 
+
+            
     // ------------  Palabras -------------------------
 
 
@@ -64,6 +78,9 @@ comentario_multL= <!"([^!]|!+[^>])*"!>
                     return new Symbol(sym.CHAR, yycolumn, yyline, yytext()); }
     "END PROGRAM"   { System.out.println("Reconocio palabra ,lexema: "+yytext());
                         return new Symbol(sym.ENDPROGRAM, yycolumn, yyline, yytext()); }
+    
+    "arr"           { System.out.println("Reconocio palabra ,lexema: "+yytext());
+                        return new Symbol(sym.ARR, yycolumn, yyline, yytext()); }
                 
     "end"           { System.out.println("Reconocio palabra ,lexema: "+yytext());
                         return new Symbol(sym.END, yycolumn, yyline, yytext()); }
@@ -83,6 +100,9 @@ comentario_multL= <!"([^!]|!+[^>])*"!>
 
     {numero}  { System.out.println("Reconocio un numero,lexema: "+yytext());
                return new Symbol(sym.NUMERO, yycolumn, yyline, yytext());}
+
+    {cadena}  { System.out.println("Reconocio una cadena,lexema: "+yytext())     
+                 return new Symbol(sym.CADENA, yycolumn, yyline, yytext());}
 
     {blancos}  {} //THIS IGNORE THE SPACES
 
