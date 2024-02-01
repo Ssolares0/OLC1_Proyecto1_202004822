@@ -36,7 +36,31 @@ terminal String VAR,DOUBLE,CHAR,ARR,END,PROGRAM,ENDPROGRAM;
 
 
 //------> Declaración de no terminales
-non terminal inicio;
+non terminal INICIO;
+non terminal VARIABLES;
+
+/*
+non terminal ENCAPSULAMIENTO;
+non terminal COMENTARIOS;
+non terminal COMENTARIOS_MULT;
+non terminal TIPO;
+non terminal ARREGLOS;
+non terminal OPERACIONES;
+non terminal FUNCIONESEST;
+non terminal IMPRIMIR;
+non terminal IMPRIMIRARREGLO;
+non terminal GRAFICABARRAS;
+non terminal GRAFICAPIE;
+non terminal GRAFICALINEA;
+non terminal HISTOGRAMA;
+*/
+
+
+
+
+
+
+
 
 
 //------> Definir Simbolo Inicial
@@ -45,4 +69,4 @@ start with inicio;
 
 // ------------>  Producciones  <------------
 
-inicio ::= NUMERO;
+INICIO ::= PROGRAM;
