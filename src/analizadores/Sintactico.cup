@@ -9,7 +9,48 @@ import java_cup.runtime.*;
 
 parser code 
 {:
-    public static String resultado = ""; 
+
+    //declaramos nuestras variables
+
+    public Double resultado = 0.0;
+    public Double printConsole = "";
+
+    //funciones a usar
+
+    public void clean(){
+        //esta funcion permite limpiar la consola
+
+          public static String printConsole = ""; 
+
+    }
+
+    public Double operaciones(String name,double a,double b){
+            Double resultado = 0.0;
+            
+            switch (name){
+                case "+":
+                    resultado =a+b;
+                    break;
+                case "-":
+                    resultado =a-b;
+                
+                case "*":
+                    resultado = a*b;
+                
+                case "/":
+                    resultado = a/b;
+                    
+                case "%":
+                    resultado = a;
+
+            }
+            
+            
+            
+            printConsole += "Operacion: " + name+ "Resultado:" + String.valueOf(resultado);
+            return resultado;
+        }
+    
 
     public void syntax_error(Symbol s)
     {
@@ -61,12 +102,22 @@ non terminal HISTOGRAMA;
 
 
 
+//PROCEDENCIAS
+precedence left sum,res;
+precedence left mult,div;
+precedence left mod;
 
 
 //------> Definir Simbolo Inicial
-start with inicio; 
+start with INICIO; 
 
 
 // ------------>  Producciones  <------------
 
-INICIO ::= PROGRAM;
+INICIO ::= {:clean();:} E:Pa {:resultado =Pa:};
+
+Expresion_numerica::= Expresion_numerica:a sum Expresion_numerica:b {:RESULT = operaciones("+",a,b); :}
+    | Expresion_numerica:a res Expresion_numerica:b {:RESULT = operaciones("-",a,b); :}
+    | Expresion_numerica:a mul Expresion_numerica:b {:RESULT = operaciones("*",a,b); :}
+    | Expresion_numerica:a div Expresion_numerica:b {:RESULT = operaciones("/",a,b); :}
+    | Expresion_numerica:a mod Expresion_numerica:b {:RESULT = operaciones("%",a,b); :}

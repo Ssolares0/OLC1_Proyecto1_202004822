@@ -37,7 +37,7 @@ comentario_multL= <!"([^!]|!+[^>])*"!>
 
 
 
-
+<YYINITIAL>{
     // ------------  Simbolos -------------------------
 
     ";"    { System.out.println("Reconocio punto y coma,lexema: "+yytext());
@@ -45,7 +45,7 @@ comentario_multL= <!"([^!]|!+[^>])*"!>
 
     ":"    { System.out.println("Reconocio Dos puntos ,lexema: "+yytext());
             return new Symbol(sym.DOSPUNTOS, yycolumn, yyline, yytext()); }
-
+            
     ","   { System.out.println("Reconocio coma ,lexema: "+yytext());
             return new Symbol(sym.COMA, yycolumn, yyline, yytext()); }
 
@@ -115,9 +115,7 @@ comentario_multL= <!"([^!]|!+[^>])*"!>
                          } 
     
     
-    
-    
-    
+}
 
 
 
