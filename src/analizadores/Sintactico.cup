@@ -10,47 +10,6 @@ import java_cup.runtime.*;
 parser code 
 {:
 
-    //declaramos nuestras variables
-
-    public Double resultado = 0.0;
-    public Double printConsole = "";
-
-    //funciones a usar
-
-    public void clean(){
-        //esta funcion permite limpiar la consola
-
-          public static String printConsole = ""; 
-
-    }
-
-    public Double operaciones(String name,double a,double b){
-            Double resultado = 0.0;
-            
-            switch (name){
-                case "+":
-                    resultado =a+b;
-                    break;
-                case "-":
-                    resultado =a-b;
-                
-                case "*":
-                    resultado = a*b;
-                
-                case "/":
-                    resultado = a/b;
-                    
-                case "%":
-                    resultado = a;
-
-            }
-            
-            
-            
-            printConsole += "Operacion: " + name+ "Resultado:" + String.valueOf(resultado);
-            return resultado;
-        }
-    
 
     public void syntax_error(Symbol s)
     {
@@ -72,19 +31,23 @@ action code
 
 //------> Declaración de terminales
 terminal String NUMERO,CADENA,COMA,ARROBA,COR_IZQ,COR_DER,ASSIGN,DOSPUNTOS,PUNTOYCOMA;
+terminal String ID_VARIABLE;
+terminal String sum,res,mul,mod,div;
 terminal String VAR,DOUBLE,CHAR,ARR,END,PROGRAM,ENDPROGRAM;
 
 
 
 //------> Declaración de no terminales
 non terminal INICIO;
+non terminal SENTENCIA;
 non terminal VARIABLES;
+non terminal TIPO;
+non terminal EXPRESION;
 
 /*
 non terminal ENCAPSULAMIENTO;
 non terminal COMENTARIOS;
 non terminal COMENTARIOS_MULT;
-non terminal TIPO;
 non terminal ARREGLOS;
 non terminal OPERACIONES;
 non terminal FUNCIONESEST;
@@ -103,9 +66,9 @@ non terminal HISTOGRAMA;
 
 
 //PROCEDENCIAS
-precedence left sum,res;
-precedence left mult,div;
-precedence left mod;
+//precedence left sum,res;
+//precedence left mult,div;
+//precedence left mod;
 
 
 //------> Definir Simbolo Inicial
@@ -114,10 +77,20 @@ start with INICIO;
 
 // ------------>  Producciones  <------------
 
-INICIO ::= {:clean();:} E:Pa {:resultado =Pa:};
+INICIO ::= PROGRAM SENTENCIA ENDPROGRAM;
 
+SENTENCIA ::= VAR DOSPUNTOS TIPO DOSPUNTOS DOSPUNTOS ASSIGN EXPRESION END PUNTOYCOMA;
+
+    TIPO ::= CHAR | DOUBLE;
+    EXPRESION::= NUMERO | CADENA;
+
+
+//INICIO ::= {:clean();:} E:Pa {:resultado =Pa:};
+
+
+/*
 Expresion_numerica::= Expresion_numerica:a sum Expresion_numerica:b {:RESULT = operaciones("+",a,b); :}
     | Expresion_numerica:a res Expresion_numerica:b {:RESULT = operaciones("-",a,b); :}
     | Expresion_numerica:a mul Expresion_numerica:b {:RESULT = operaciones("*",a,b); :}
     | Expresion_numerica:a div Expresion_numerica:b {:RESULT = operaciones("/",a,b); :}
-    | Expresion_numerica:a mod Expresion_numerica:b {:RESULT = operaciones("%",a,b); :}
+*/

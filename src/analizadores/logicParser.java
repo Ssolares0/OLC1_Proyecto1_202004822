@@ -10,29 +10,39 @@ package analizadores;
  */
 public class logicParser {
     public static void main(String[] args) {
-    
-    
+        //declaramos nuestras variables
+
+    public Double resultado = 0.0;
+    public Double printConsole = "";
+
+    //funciones a usar
+
+    public void clean(){
+        //esta funcion permite limpiar la consola
+
+          public static String printConsole = ""; 
+
+
     }
-        
-        
-     
-        public Double operaciones(String name,double a,double b){
+
+    public Double operaciones(String name,double a,double b){
+            
             Double resultado = 0.0;
             
             switch (name){
-                case "sum":
+                case "+":
                     resultado =a+b;
                     break;
-                case "res":
+                case "-":
                     resultado =a-b;
                 
-                case "mul":
+                case "*":
                     resultado = a*b;
                 
-                case "div":
+                case "/":
                     resultado = a/b;
                     
-                case "mod":
+                case "%":
                     resultado = a;
 
             }
@@ -42,6 +52,16 @@ public class logicParser {
             printConsole += "Operacion: " + name+ "Resultado:" + String.valueOf(resultado);
             return resultado;
         }
+    
+
+    
+    
+    
+}
+        
+        
+     
+        
     }
 
 

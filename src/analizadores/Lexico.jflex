@@ -29,10 +29,11 @@ import java.util.ArrayList;
 
 //entero = [0-9]+
 numero = [0-9]+("."[0-9]+)?
+//id_variable = ::[^<-]*<-
 cadena = [\'][^\']*[\']|[\"][^\"]*[\"]
 blancos = [ \t\f\r\n]+
 comentario_oneL = "!".*\n
-comentario_multL= <!"([^!]|!+[^>])*"!>
+//comentario_multL= <!"([^!]|!+[^>])*"!>
 %%
 
 
@@ -76,6 +77,7 @@ comentario_multL= <!"([^!]|!+[^>])*"!>
 
     "char[]"        { System.out.println("Reconocio tipo de dato ,lexema: "+yytext());
                     return new Symbol(sym.CHAR, yycolumn, yyline, yytext()); }
+
     "END PROGRAM"   { System.out.println("Reconocio palabra ,lexema: "+yytext());
                         return new Symbol(sym.ENDPROGRAM, yycolumn, yyline, yytext()); }
     
@@ -89,6 +91,22 @@ comentario_multL= <!"([^!]|!+[^>])*"!>
 
                        return new Symbol(sym.PROGRAM, yycolumn, yyline, yytext()); }
 
+    "sum"       { System.out.println("Reconocio palabra ,lexema: "+yytext());
+                       return new Symbol(sym.sum, yycolumn, yyline, yytext()); }
+
+    "res"       { System.out.println("Reconocio palabra ,lexema: "+yytext());
+                       return new Symbol(sym.res, yycolumn, yyline, yytext()); }
+
+    "mul"       { System.out.println("Reconocio palabra ,lexema: "+yytext());
+
+                       return new Symbol(sym.mul, yycolumn, yyline, yytext()); }
+    "mod"       { System.out.println("Reconocio palabra ,lexema: "+yytext());
+
+                       return new Symbol(sym.mod, yycolumn, yyline, yytext()); }
+
+    "div"       { System.out.println("Reconocio palabra ,lexema: "+yytext());
+                       return new Symbol(sym.div, yycolumn, yyline, yytext()); }
+
     
 
     
@@ -101,7 +119,11 @@ comentario_multL= <!"([^!]|!+[^>])*"!>
     {numero}  { System.out.println("Reconocio un numero,lexema: "+yytext());
                return new Symbol(sym.NUMERO, yycolumn, yyline, yytext());}
 
-    {cadena}  { System.out.println("Reconocio una cadena,lexema: "+yytext())     
+    //{id_variable}  { System.out.println("Reconocio el id de una declaracion de variable,lexema: "+yytext());
+    //           return new Symbol(sym.ID_VARIABLE, yycolumn, yyline, yytext());}
+
+
+    {cadena}  { System.out.println("Reconocio una cadena,lexema: "+yytext());    
                  return new Symbol(sym.CADENA, yycolumn, yyline, yytext());}
 
     {blancos}  {} //THIS IGNORE THE SPACES
@@ -111,8 +133,7 @@ comentario_multL= <!"([^!]|!+[^>])*"!>
                         
 
  
-    {comentario_multL} { System.out.println("Reconocio comentario multi linea: "+yytext());
-                         } 
+    //{comentario_multL} { System.out.println("Reconocio comentario multi linea: "+yytext());} 
     
     
 }

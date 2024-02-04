@@ -8,28 +8,52 @@ package analizadores;
 /** CUP generated class containing symbol constants. */
 public class sym {
   /* terminals */
-  public static final int PROGRAM = 10;
-  public static final int DOSPUNTOS = 4;
+  public static final int PUNTOYCOMA = 10;
+  public static final int ARR = 20;
+  public static final int sum = 12;
+  public static final int DOSPUNTOS = 9;
+  public static final int CADENA = 3;
+  public static final int CHAR = 19;
+  public static final int END = 21;
+  public static final int PROGRAM = 22;
+  public static final int COMA = 4;
+  public static final int div = 16;
   public static final int EOF = 0;
-  public static final int VAR = 6;
-  public static final int DOUBLE = 7;
-  public static final int NUMERO = 2;
-  public static final int ASSIGN = 3;
+  public static final int ENDPROGRAM = 23;
+  public static final int ID_VARIABLE = 11;
   public static final int error = 1;
-  public static final int PUNTOYCOMA = 5;
-  public static final int ENDPROGRAM = 11;
-  public static final int END = 9;
-  public static final int CHAR = 8;
+  public static final int NUMERO = 2;
+  public static final int ASSIGN = 8;
+  public static final int COR_IZQ = 6;
+  public static final int mul = 14;
+  public static final int COR_DER = 7;
+  public static final int ARROBA = 5;
+  public static final int VAR = 17;
+  public static final int mod = 15;
+  public static final int DOUBLE = 18;
+  public static final int res = 13;
   public static final String[] terminalNames = new String[] {
   "EOF",
   "error",
   "NUMERO",
+  "CADENA",
+  "COMA",
+  "ARROBA",
+  "COR_IZQ",
+  "COR_DER",
   "ASSIGN",
   "DOSPUNTOS",
   "PUNTOYCOMA",
+  "ID_VARIABLE",
+  "sum",
+  "res",
+  "mul",
+  "mod",
+  "div",
   "VAR",
   "DOUBLE",
   "CHAR",
+  "ARR",
   "END",
   "PROGRAM",
   "ENDPROGRAM"
