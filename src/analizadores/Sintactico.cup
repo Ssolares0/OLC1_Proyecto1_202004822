@@ -9,7 +9,65 @@ import java_cup.runtime.*;
 
 parser code 
 {:
+    public double resultado;
+    public String printConsole; 
+    public String numeroString;
+    
+    public static double operaciones(String name, double a, double b) {
+    String printConsole = ""; 
+    double resultado = 0.0; 
+    String numeroString = "";
 
+    switch (name) {
+        case "+":
+            resultado = a + b;
+            numeroString = Double.toString(resultado);
+            System.out.println(numeroString);
+            break;
+        case "-":
+            resultado = a - b;
+            numeroString = Double.toString(resultado);
+            System.out.println(numeroString);
+            break;
+        case "*":
+            resultado = a * b;
+            numeroString = Double.toString(resultado);
+            System.out.println(numeroString);
+            break;
+        case "/":
+            
+            if (b != 0) {
+                resultado = a / b;
+                numeroString = Double.toString(resultado);
+                System.out.println(numeroString);
+            } else {
+                System.out.println("Error: División por cero no permitida.");
+            }
+            break;
+        case "%":
+            resultado = a; 
+            numeroString = Double.toString(resultado);
+            System.out.println(numeroString);
+            break;
+        default:
+            System.out.println("Error: Operación no reconocida.");
+    }
+
+    printConsole += "Operacion: " + name + " Resultado: " + Double.toString(resultado);
+
+    return resultado;
+    }
+
+    
+    public void clean(){
+
+        //esta funcion permite limpiar la consola
+
+         printConsole = ""; 
+    
+    }
+    
+ 
 
     public void syntax_error(Symbol s)
     {
@@ -31,7 +89,7 @@ action code
 
 //------> Declaración de terminales
 terminal String NUMERO,CADENA,COMA,ARROBA,COR_IZQ,COR_DER,ASSIGN,DOSPUNTOS,PUNTOYCOMA;
-terminal String ID_VARIABLE;
+terminal String ID_VARIABLE,CONSOLE,PRINT,IGUAL;
 terminal String sum,res,mul,mod,div;
 terminal String VAR,DOUBLE,CHAR,ARR,END,PROGRAM,ENDPROGRAM;
 
@@ -43,32 +101,16 @@ non terminal SENTENCIA;
 non terminal VARIABLES;
 non terminal TIPO;
 non terminal EXPRESION;
-
-/*
-non terminal ENCAPSULAMIENTO;
-non terminal COMENTARIOS;
-non terminal COMENTARIOS_MULT;
-non terminal ARREGLOS;
-non terminal OPERACIONES;
-non terminal FUNCIONESEST;
-non terminal IMPRIMIR;
-non terminal IMPRIMIRARREGLO;
-non terminal GRAFICABARRAS;
-non terminal GRAFICAPIE;
-non terminal GRAFICALINEA;
-non terminal HISTOGRAMA;
-*/
-
-
-
+non terminal Operacion_numerica;
+non terminal IMPRIMIR_EXP;
 
 
 
 
 //PROCEDENCIAS
-//precedence left sum,res;
-//precedence left mult,div;
-//precedence left mod;
+precedence left sum,res;
+precedence left mul,div;
+precedence left mod;
 
 
 //------> Definir Simbolo Inicial
@@ -77,20 +119,29 @@ start with INICIO;
 
 // ------------>  Producciones  <------------
 
-INICIO ::= PROGRAM SENTENCIA ENDPROGRAM;
-
-SENTENCIA ::= VAR DOSPUNTOS TIPO DOSPUNTOS DOSPUNTOS ASSIGN EXPRESION END PUNTOYCOMA;
-
-    TIPO ::= CHAR | DOUBLE;
-    EXPRESION::= NUMERO | CADENA;
+//inicio
+INICIO ::= PROGRAM IMPRIMIR_EXP ENDPROGRAM;
 
 
-//INICIO ::= {:clean();:} E:Pa {:resultado =Pa:};
+// imprimir una expresion
+IMPRIMIR_EXP ::=  CONSOLE DOSPUNTOS DOSPUNTOS PRINT IGUAL EXPRESION COMA END PUNTOYCOMA;
+
+//La sentencia
+SENTENCIA ::= VAR DOSPUNTOS TIPO DOSPUNTOS DOSPUNTOS ID_VARIABLE ASSIGN EXPRESION END PUNTOYCOMA;
+
+        TIPO ::= CHAR | DOUBLE;
+        EXPRESION::= NUMERO | CADENA;
 
 
+//INICIO ::= {:clean();:} Operacion_numerica:Pa {:RESULT =Pa; :};
+
+
+
+// Operaciones numericas
 /*
-Expresion_numerica::= Expresion_numerica:a sum Expresion_numerica:b {:RESULT = operaciones("+",a,b); :}
-    | Expresion_numerica:a res Expresion_numerica:b {:RESULT = operaciones("-",a,b); :}
-    | Expresion_numerica:a mul Expresion_numerica:b {:RESULT = operaciones("*",a,b); :}
-    | Expresion_numerica:a div Expresion_numerica:b {:RESULT = operaciones("/",a,b); :}
+Operacion_numerica::= Operacion_numerica:a sum Operacion_numerica:b {:RESULT = operaciones("+",a,b); :}
+    | Operacion_numerica:a res Operacion_numerica:b {:RESULT = operaciones("-",a,b); :}
+    | Operacion_numerica:a mul Operacion_numerica:b {:RESULT = operaciones("*",a,b); :}
+    | Operacion_numerica:a div Operacion_numerica:b {:RESULT = operaciones("/",a,b); :}
+    | NUMERO:a {: RESULT = Double.parseDouble(a); :};
 */

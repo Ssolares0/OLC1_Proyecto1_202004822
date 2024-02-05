@@ -29,7 +29,7 @@ import java.util.ArrayList;
 
 //entero = [0-9]+
 numero = [0-9]+("."[0-9]+)?
-//id_variable = ::[^<-]*<-
+id_variable = [a-zA-Z_][a-zA-Z0-9_]*
 cadena = [\'][^\']*[\']|[\"][^\"]*[\"]
 blancos = [ \t\f\r\n]+
 comentario_oneL = "!".*\n
@@ -61,7 +61,9 @@ comentario_oneL = "!".*\n
      
     "]"   { System.out.println("Reconocio Corchete derecho ,lexema: "+yytext());
             return new Symbol(sym.COR_DER, yycolumn, yyline, yytext()); }
-
+    
+    "="   { System.out.println("Reconocio Signo igual ,lexema: "+yytext());
+            return new Symbol(sym.IGUAL, yycolumn, yyline, yytext()); }
 
 
             
@@ -91,6 +93,15 @@ comentario_oneL = "!".*\n
 
                        return new Symbol(sym.PROGRAM, yycolumn, yyline, yytext()); }
 
+    "CONSOLE"       { System.out.println("Reconocio palabra ,lexema: "+yytext());
+
+                       return new Symbol(sym.CONSOLE, yycolumn, yyline, yytext()); }
+                   
+    "PRINT"       { System.out.println("Reconocio palabra ,lexema: "+yytext());
+
+                       return new Symbol(sym.PRINT, yycolumn, yyline, yytext()); }
+
+
     "sum"       { System.out.println("Reconocio palabra ,lexema: "+yytext());
                        return new Symbol(sym.sum, yycolumn, yyline, yytext()); }
 
@@ -119,8 +130,8 @@ comentario_oneL = "!".*\n
     {numero}  { System.out.println("Reconocio un numero,lexema: "+yytext());
                return new Symbol(sym.NUMERO, yycolumn, yyline, yytext());}
 
-    //{id_variable}  { System.out.println("Reconocio el id de una declaracion de variable,lexema: "+yytext());
-    //           return new Symbol(sym.ID_VARIABLE, yycolumn, yyline, yytext());}
+    {id_variable}  { System.out.println("Reconocio el id de una declaracion de variable,lexema: "+yytext());
+              return new Symbol(sym.ID_VARIABLE, yycolumn, yyline, yytext());}
 
 
     {cadena}  { System.out.println("Reconocio una cadena,lexema: "+yytext());    

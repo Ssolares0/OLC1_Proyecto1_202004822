@@ -31,9 +31,9 @@ public class Sintactico extends java_cup.runtime.lr_parser {
   /** Production table. */
   protected static final short _production_table[][] = 
     unpackFromStrings(new String[] {
-    "\000\007\000\002\002\004\000\002\002\005\000\002\003" +
-    "\013\000\002\005\003\000\002\005\003\000\002\006\003" +
-    "\000\002\006\003" });
+    "\000\010\000\002\002\004\000\002\002\005\000\002\010" +
+    "\013\000\002\003\014\000\002\005\003\000\002\005\003" +
+    "\000\002\006\003\000\002\006\003" });
 
   /** Access to production table. */
   public short[][] production_table() {return _production_table;}
@@ -41,16 +41,15 @@ public class Sintactico extends java_cup.runtime.lr_parser {
   /** Parse-action table. */
   protected static final short[][] _action_table = 
     unpackFromStrings(new String[] {
-    "\000\023\000\004\030\005\001\002\000\004\002\025\001" +
-    "\002\000\004\023\006\001\002\000\004\013\011\001\002" +
-    "\000\004\031\010\001\002\000\004\002\000\001\002\000" +
-    "\006\024\012\025\013\001\002\000\004\013\ufffd\001\002" +
-    "\000\004\013\ufffe\001\002\000\004\013\015\001\002\000" +
-    "\004\013\016\001\002\000\004\012\017\001\002\000\006" +
-    "\004\020\005\022\001\002\000\004\027\ufffc\001\002\000" +
-    "\004\027\023\001\002\000\004\027\ufffb\001\002\000\004" +
-    "\014\024\001\002\000\004\031\uffff\001\002\000\004\002" +
-    "\001\001\002" });
+    "\000\021\000\004\033\005\001\002\000\004\002\023\001" +
+    "\002\000\004\016\007\001\002\000\004\034\022\001\002" +
+    "\000\004\013\010\001\002\000\004\013\011\001\002\000" +
+    "\004\017\012\001\002\000\004\020\013\001\002\000\006" +
+    "\004\014\005\016\001\002\000\004\006\ufffb\001\002\000" +
+    "\004\006\017\001\002\000\004\006\ufffa\001\002\000\004" +
+    "\032\020\001\002\000\004\014\021\001\002\000\004\034" +
+    "\uffff\001\002\000\004\002\000\001\002\000\004\002\001" +
+    "\001\002" });
 
   /** Access to parse-action table. */
   public short[][] action_table() {return _action_table;}
@@ -58,13 +57,12 @@ public class Sintactico extends java_cup.runtime.lr_parser {
   /** <code>reduce_goto</code> table. */
   protected static final short[][] _reduce_table = 
     unpackFromStrings(new String[] {
-    "\000\023\000\004\002\003\001\001\000\002\001\001\000" +
-    "\004\003\006\001\001\000\002\001\001\000\002\001\001" +
-    "\000\002\001\001\000\004\005\013\001\001\000\002\001" +
-    "\001\000\002\001\001\000\002\001\001\000\002\001\001" +
-    "\000\002\001\001\000\004\006\020\001\001\000\002\001" +
-    "\001\000\002\001\001\000\002\001\001\000\002\001\001" +
-    "\000\002\001\001\000\002\001\001" });
+    "\000\021\000\004\002\003\001\001\000\002\001\001\000" +
+    "\004\010\005\001\001\000\002\001\001\000\002\001\001" +
+    "\000\002\001\001\000\002\001\001\000\002\001\001\000" +
+    "\004\006\014\001\001\000\002\001\001\000\002\001\001" +
+    "\000\002\001\001\000\002\001\001\000\002\001\001\000" +
+    "\002\001\001\000\002\001\001\000\002\001\001" });
 
   /** Access to <code>reduce_goto</code> table. */
   public short[][] reduce_table() {return _reduce_table;}
@@ -103,7 +101,65 @@ public class Sintactico extends java_cup.runtime.lr_parser {
 
 
 
+    public double resultado;
+    public String printConsole; 
+    public String numeroString;
+    
+    public static double operaciones(String name, double a, double b) {
+    String printConsole = ""; 
+    double resultado = 0.0; 
+    String numeroString = "";
 
+    switch (name) {
+        case "+":
+            resultado = a + b;
+            numeroString = Double.toString(resultado);
+            System.out.println(numeroString);
+            break;
+        case "-":
+            resultado = a - b;
+            numeroString = Double.toString(resultado);
+            System.out.println(numeroString);
+            break;
+        case "*":
+            resultado = a * b;
+            numeroString = Double.toString(resultado);
+            System.out.println(numeroString);
+            break;
+        case "/":
+            
+            if (b != 0) {
+                resultado = a / b;
+                numeroString = Double.toString(resultado);
+                System.out.println(numeroString);
+            } else {
+                System.out.println("Error: División por cero no permitida.");
+            }
+            break;
+        case "%":
+            resultado = a; 
+            numeroString = Double.toString(resultado);
+            System.out.println(numeroString);
+            break;
+        default:
+            System.out.println("Error: Operación no reconocida.");
+    }
+
+    printConsole += "Operacion: " + name + " Resultado: " + Double.toString(resultado);
+
+    return resultado;
+    }
+
+    
+    public void clean(){
+
+        //esta funcion permite limpiar la consola
+
+         printConsole = ""; 
+    
+    }
+    
+ 
 
     public void syntax_error(Symbol s)
     {
@@ -158,7 +214,7 @@ class CUP$Sintactico$actions {
           return CUP$Sintactico$result;
 
           /*. . . . . . . . . . . . . . . . . . . .*/
-          case 1: // INICIO ::= PROGRAM SENTENCIA ENDPROGRAM 
+          case 1: // INICIO ::= PROGRAM IMPRIMIR_EXP ENDPROGRAM 
             {
               Object RESULT =null;
 
@@ -167,16 +223,25 @@ class CUP$Sintactico$actions {
           return CUP$Sintactico$result;
 
           /*. . . . . . . . . . . . . . . . . . . .*/
-          case 2: // SENTENCIA ::= VAR DOSPUNTOS TIPO DOSPUNTOS DOSPUNTOS ASSIGN EXPRESION END PUNTOYCOMA 
+          case 2: // IMPRIMIR_EXP ::= CONSOLE DOSPUNTOS DOSPUNTOS PRINT IGUAL EXPRESION COMA END PUNTOYCOMA 
             {
               Object RESULT =null;
 
-              CUP$Sintactico$result = parser.getSymbolFactory().newSymbol("SENTENCIA",1, ((java_cup.runtime.Symbol)CUP$Sintactico$stack.elementAt(CUP$Sintactico$top-8)), ((java_cup.runtime.Symbol)CUP$Sintactico$stack.peek()), RESULT);
+              CUP$Sintactico$result = parser.getSymbolFactory().newSymbol("IMPRIMIR_EXP",6, ((java_cup.runtime.Symbol)CUP$Sintactico$stack.elementAt(CUP$Sintactico$top-8)), ((java_cup.runtime.Symbol)CUP$Sintactico$stack.peek()), RESULT);
             }
           return CUP$Sintactico$result;
 
           /*. . . . . . . . . . . . . . . . . . . .*/
-          case 3: // TIPO ::= CHAR 
+          case 3: // SENTENCIA ::= VAR DOSPUNTOS TIPO DOSPUNTOS DOSPUNTOS ID_VARIABLE ASSIGN EXPRESION END PUNTOYCOMA 
+            {
+              Object RESULT =null;
+
+              CUP$Sintactico$result = parser.getSymbolFactory().newSymbol("SENTENCIA",1, ((java_cup.runtime.Symbol)CUP$Sintactico$stack.elementAt(CUP$Sintactico$top-9)), ((java_cup.runtime.Symbol)CUP$Sintactico$stack.peek()), RESULT);
+            }
+          return CUP$Sintactico$result;
+
+          /*. . . . . . . . . . . . . . . . . . . .*/
+          case 4: // TIPO ::= CHAR 
             {
               Object RESULT =null;
 
@@ -185,7 +250,7 @@ class CUP$Sintactico$actions {
           return CUP$Sintactico$result;
 
           /*. . . . . . . . . . . . . . . . . . . .*/
-          case 4: // TIPO ::= DOUBLE 
+          case 5: // TIPO ::= DOUBLE 
             {
               Object RESULT =null;
 
@@ -194,7 +259,7 @@ class CUP$Sintactico$actions {
           return CUP$Sintactico$result;
 
           /*. . . . . . . . . . . . . . . . . . . .*/
-          case 5: // EXPRESION ::= NUMERO 
+          case 6: // EXPRESION ::= NUMERO 
             {
               Object RESULT =null;
 
@@ -203,7 +268,7 @@ class CUP$Sintactico$actions {
           return CUP$Sintactico$result;
 
           /*. . . . . . . . . . . . . . . . . . . .*/
-          case 6: // EXPRESION ::= CADENA 
+          case 7: // EXPRESION ::= CADENA 
             {
               Object RESULT =null;
 
