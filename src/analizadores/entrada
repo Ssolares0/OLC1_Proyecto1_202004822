@@ -1,0 +1,5 @@
+PROGRAM
+console::print = "hola",1 ,"jaja" end;
+var: char[] :: contador <- 25 end;
+console::column = "TITULO" -> [1, 2, 3, 4, 5] end;
+END PROGRAM

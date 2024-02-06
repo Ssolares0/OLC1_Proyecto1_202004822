@@ -88,8 +88,8 @@ action code
 
 
 //------> Declaración de terminales
-terminal String NUMERO,CADENA,COMA,ARROBA,COR_IZQ,COR_DER,ASSIGN,DOSPUNTOS,PUNTOYCOMA;
-terminal String ID_VARIABLE,CONSOLE,PRINT,IGUAL,PAR_IZQ,PAR_DER;
+terminal String NUMERO,CADENA,COMA,COR_IZQ,COR_DER,ASSIGN,ASSIGN2,DOSPUNTOS,PUNTOYCOMA;
+terminal String ID_VARIABLE,ID_ARRAY,CONSOLE,COLUMN,PRINT,IGUAL,PAR_IZQ,PAR_DER;
 terminal String sum,res,mul,mod,div;
 terminal String VAR,DOUBLE,CHAR,ARR,END,PROGRAM,ENDPROGRAM;
 
@@ -98,14 +98,19 @@ terminal String VAR,DOUBLE,CHAR,ARR,END,PROGRAM,ENDPROGRAM;
 //------> Declaración de no terminales
 non terminal INICIO;
 non terminal INSTRUCCIONES;
+non terminal INSTRUCCION;
 non terminal DECLARACION;
 non terminal VARIABLES;
 non terminal TIPO;
 non terminal EXP;
+non terminal EXP_TITULO;
+non terminal EXP_ARITMETICAS;
+non terminal EXPRESION;
 non terminal valores;
 non terminal EXPRESION_PRINT;
 non terminal Operacion_numerica;
 non terminal IMPRIMIR_EXP;
+non terminal IMPRIMIR_ARRAY;
 non terminal Dec_Arreglo;
 non terminal Exp_Arreglo;
 non terminal EXP_SUCESIVAS;
@@ -128,7 +133,7 @@ start with INICIO;
 
 // ------------>  Producciones  <------------
 
-//inicio
+//---------->Gramatica para el inicio<-------------
 INICIO ::= PROGRAM INSTRUCCIONES ENDPROGRAM;
 
 INSTRUCCIONES ::= INSTRUCCIONES INSTRUCCION
@@ -136,17 +141,28 @@ INSTRUCCIONES ::= INSTRUCCIONES INSTRUCCION
 
 INSTRUCCION::= Dec_Arreglo END PUNTOYCOMA 
                |IMPRIMIR_EXP END PUNTOYCOMA
-               | DECLARACION END PUNTOYCOMA ;
+               |IMPRIMIR_ARRAY END PUNTOYCOMA
+               |DECLARACION END PUNTOYCOMA ;
 
 
-// imprimir una expresion
+// ---------------------------->imprimir una expresion<---------------------------------------------
 IMPRIMIR_EXP ::=  CONSOLE DOSPUNTOS DOSPUNTOS PRINT IGUAL EXP_SUCESIVAS ;
 
+// ---------------------------->imprimir un ARREGLO<---------------------------------------------
 
-//DECLARACION DE UN ARREGLO
+IMPRIMIR_ARRAY ::= CONSOLE DOSPUNTOS DOSPUNTOS COLUMN IGUAL EXP_TITULO ASSIGN2 COR_IZQ EXP_SUCESIVAS COR_DER ; 
 
-Dec_Arreglo::= ARR DOSPUNTOS TIPO DOSPUNTOS DOSPUNTOS ARROBA ID_VARIABLE ASSIGN COR_IZQ 
+
+    EXP_TITULO ::= CADENA | ID_VARIABLE;
+
+// ----------------------------> DECLARACION DE UN ARREGLO <----------------------------------------
+
+
+
+Dec_Arreglo::= ARR DOSPUNTOS TIPO DOSPUNTOS DOSPUNTOS ID_ARRAY ASSIGN COR_IZQ 
                 EXP_SUCESIVAS COR_DER;
+
+
                 
                 EXP_SUCESIVAS::= EXP_SUCESIVAS COMA valores
                                 | valores;
@@ -155,23 +171,23 @@ Dec_Arreglo::= ARR DOSPUNTOS TIPO DOSPUNTOS DOSPUNTOS ARROBA ID_VARIABLE ASSIGN 
 
                  
 
-                EXP ::= sum PAR_IZQ EXP_SUCESIVA PAR_DER;
+                EXP ::= sum PAR_IZQ EXP_SUCESIVAS PAR_DER;
 
 
 
-                valores::=   NUMERO:num {:RESULT = new Operacion(num,); :} 
+                valores::=   NUMERO:num {://RESULT = new Operacion(num,); :} 
                         |CADENA:cad {: :} 
                         |ID_VARIABLE 
+                        |ID_ARRAY
                         |LLAMADA_EXP {: :};
 
                 LLAMADA_EXP::= ID_VARIABLE PAR_IZQ EXP_SUCESIVAS PAR_DER
                                 |ID_VARIABLE PAR_IZQ PAR_DER;
                 
                 
-                
+               
 
-
-//La sentencia
+//--------------------------> La Declaracion de una variable<----------------
 
 DECLARACION ::= VAR DOSPUNTOS TIPO DOSPUNTOS DOSPUNTOS ID_VARIABLE ASSIGN EXPRESION;
 

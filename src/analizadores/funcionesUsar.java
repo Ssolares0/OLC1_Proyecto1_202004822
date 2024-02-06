@@ -17,6 +17,8 @@ public class funcionesUsar {
         operaciones("zz", 2.0, 2.0);
     }
     
+   
+    
     public void clean(){
         //esta funcion permite limpiar la consola
 

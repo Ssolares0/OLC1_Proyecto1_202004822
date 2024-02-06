@@ -9,48 +9,56 @@ package analizadores;
 public class sym {
   /* terminals */
   public static final int PUNTOYCOMA = 10;
-  public static final int ARR = 23;
-  public static final int sum = 15;
+  public static final int ARR = 27;
+  public static final int sum = 19;
   public static final int DOSPUNTOS = 9;
   public static final int CADENA = 3;
-  public static final int IGUAL = 14;
-  public static final int CHAR = 22;
-  public static final int END = 24;
-  public static final int CONSOLE = 12;
-  public static final int PROGRAM = 25;
+  public static final int IGUAL = 16;
+  public static final int CHAR = 26;
+  public static final int COLUMN = 14;
+  public static final int ASSIGN2 = 8;
+  public static final int END = 28;
+  public static final int CONSOLE = 13;
+  public static final int PROGRAM = 29;
   public static final int COMA = 4;
-  public static final int div = 19;
+  public static final int div = 23;
   public static final int EOF = 0;
-  public static final int ENDPROGRAM = 26;
+  public static final int ID_ARRAY = 12;
+  public static final int ENDPROGRAM = 30;
+  public static final int PAR_IZQ = 17;
   public static final int ID_VARIABLE = 11;
-  public static final int PRINT = 13;
+  public static final int PRINT = 15;
   public static final int error = 1;
   public static final int NUMERO = 2;
-  public static final int ASSIGN = 8;
-  public static final int COR_IZQ = 6;
-  public static final int mul = 17;
-  public static final int COR_DER = 7;
-  public static final int ARROBA = 5;
-  public static final int VAR = 20;
-  public static final int mod = 18;
-  public static final int DOUBLE = 21;
-  public static final int res = 16;
+  public static final int PAR_DER = 18;
+  public static final int ASSIGN = 7;
+  public static final int COR_IZQ = 5;
+  public static final int mul = 21;
+  public static final int COR_DER = 6;
+  public static final int VAR = 24;
+  public static final int mod = 22;
+  public static final int DOUBLE = 25;
+  public static final int res = 20;
   public static final String[] terminalNames = new String[] {
   "EOF",
   "error",
   "NUMERO",
   "CADENA",
   "COMA",
-  "ARROBA",
   "COR_IZQ",
   "COR_DER",
   "ASSIGN",
+  "ASSIGN2",
   "DOSPUNTOS",
   "PUNTOYCOMA",
   "ID_VARIABLE",
+  "ID_ARRAY",
   "CONSOLE",
+  "COLUMN",
   "PRINT",
   "IGUAL",
+  "PAR_IZQ",
+  "PAR_DER",
   "sum",
   "res",
   "mul",
