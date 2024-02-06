@@ -65,6 +65,13 @@ comentario_oneL = "!".*\n
     "="   { System.out.println("Reconocio Signo igual ,lexema: "+yytext());
             return new Symbol(sym.IGUAL, yycolumn, yyline, yytext()); }
 
+    "("   { System.out.println("Reconocio PARENTESIS IZQ ,lexema: "+yytext());
+            return new Symbol(sym.PAR_IZQ, yycolumn, yyline, yytext()); }
+
+    ")"   { System.out.println("Reconocio PARENTESIS DER ,lexema: "+yytext());
+            return new Symbol(sym.PAR_DER, yycolumn, yyline, yytext()); }
+
+
 
             
     // ------------  Palabras -------------------------

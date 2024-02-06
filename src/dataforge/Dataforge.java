@@ -19,6 +19,7 @@ public class Dataforge {
         // TODO code application logic here
         interfaz app = new interfaz();
         app.setVisible(true);
+        
     }
     
 }

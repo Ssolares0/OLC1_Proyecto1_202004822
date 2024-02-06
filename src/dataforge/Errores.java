@@ -24,6 +24,8 @@ public class Errores {
         this.column = column;
         this.description = description;
     }
+    
+    
 
     //Getters y Setters
     public String getError() {

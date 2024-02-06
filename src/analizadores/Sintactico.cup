@@ -89,7 +89,7 @@ action code
 
 //------> Declaración de terminales
 terminal String NUMERO,CADENA,COMA,ARROBA,COR_IZQ,COR_DER,ASSIGN,DOSPUNTOS,PUNTOYCOMA;
-terminal String ID_VARIABLE,CONSOLE,PRINT,IGUAL;
+terminal String ID_VARIABLE,CONSOLE,PRINT,IGUAL,PAR_IZQ,PAR_DER;
 terminal String sum,res,mul,mod,div;
 terminal String VAR,DOUBLE,CHAR,ARR,END,PROGRAM,ENDPROGRAM;
 
@@ -97,12 +97,21 @@ terminal String VAR,DOUBLE,CHAR,ARR,END,PROGRAM,ENDPROGRAM;
 
 //------> Declaración de no terminales
 non terminal INICIO;
-non terminal SENTENCIA;
+non terminal INSTRUCCIONES;
+non terminal DECLARACION;
 non terminal VARIABLES;
 non terminal TIPO;
-non terminal EXPRESION;
+non terminal EXP;
+non terminal valores;
+non terminal EXPRESION_PRINT;
 non terminal Operacion_numerica;
 non terminal IMPRIMIR_EXP;
+non terminal Dec_Arreglo;
+non terminal Exp_Arreglo;
+non terminal EXP_SUCESIVAS;
+non terminal LLAMADA_EXP;
+
+
 
 
 
@@ -120,28 +129,61 @@ start with INICIO;
 // ------------>  Producciones  <------------
 
 //inicio
-INICIO ::= PROGRAM IMPRIMIR_EXP ENDPROGRAM;
+INICIO ::= PROGRAM INSTRUCCIONES ENDPROGRAM;
+
+INSTRUCCIONES ::= INSTRUCCIONES INSTRUCCION
+                | INSTRUCCION;
+
+INSTRUCCION::= Dec_Arreglo END PUNTOYCOMA 
+               |IMPRIMIR_EXP END PUNTOYCOMA
+               | DECLARACION END PUNTOYCOMA ;
 
 
 // imprimir una expresion
-IMPRIMIR_EXP ::=  CONSOLE DOSPUNTOS DOSPUNTOS PRINT IGUAL EXPRESION COMA END PUNTOYCOMA;
+IMPRIMIR_EXP ::=  CONSOLE DOSPUNTOS DOSPUNTOS PRINT IGUAL EXP_SUCESIVAS ;
+
+
+//DECLARACION DE UN ARREGLO
+
+Dec_Arreglo::= ARR DOSPUNTOS TIPO DOSPUNTOS DOSPUNTOS ARROBA ID_VARIABLE ASSIGN COR_IZQ 
+                EXP_SUCESIVAS COR_DER;
+                
+                EXP_SUCESIVAS::= EXP_SUCESIVAS COMA valores
+                                | valores;
+
+                EXP_ARITMETICAS ::= valores COMA valores;
+
+                 
+
+                EXP ::= sum PAR_IZQ EXP_SUCESIVA PAR_DER;
+
+
+
+                valores::=   NUMERO:num {:RESULT = new Operacion(num,); :} 
+                        |CADENA:cad {: :} 
+                        |ID_VARIABLE 
+                        |LLAMADA_EXP {: :};
+
+                LLAMADA_EXP::= ID_VARIABLE PAR_IZQ EXP_SUCESIVAS PAR_DER
+                                |ID_VARIABLE PAR_IZQ PAR_DER;
+                
+                
+                
+
 
 //La sentencia
-SENTENCIA ::= VAR DOSPUNTOS TIPO DOSPUNTOS DOSPUNTOS ID_VARIABLE ASSIGN EXPRESION END PUNTOYCOMA;
+
+DECLARACION ::= VAR DOSPUNTOS TIPO DOSPUNTOS DOSPUNTOS ID_VARIABLE ASSIGN EXPRESION;
 
         TIPO ::= CHAR | DOUBLE;
         EXPRESION::= NUMERO | CADENA;
+        EXPRESION_PRINT::= Dec_Arreglo;
 
 
-//INICIO ::= {:clean();:} Operacion_numerica:Pa {:RESULT =Pa; :};
 
 
 
-// Operaciones numericas
-/*
-Operacion_numerica::= Operacion_numerica:a sum Operacion_numerica:b {:RESULT = operaciones("+",a,b); :}
-    | Operacion_numerica:a res Operacion_numerica:b {:RESULT = operaciones("-",a,b); :}
-    | Operacion_numerica:a mul Operacion_numerica:b {:RESULT = operaciones("*",a,b); :}
-    | Operacion_numerica:a div Operacion_numerica:b {:RESULT = operaciones("/",a,b); :}
-    | NUMERO:a {: RESULT = Double.parseDouble(a); :};
-*/
+
+                        
+
+                            
