@@ -11,9 +11,6 @@ package abstracto;
 public interface sentencia {
     
     public Object ejecutar();
-    
-    
-    
-    
+      
     
 }

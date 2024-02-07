@@ -1,7 +1,7 @@
 package dataforge;
 
 
-
+import abstracto.sentencia;
 import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
 import javax.swing.*;
@@ -13,6 +13,11 @@ import java.io.FileReader;
 import java.io.IOException;
 import analizadores.Lexico;
 import analizadores.Sintactico;
+import java.io.StringReader;
+import java.util.LinkedList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import singleton.MiSingleton;
 
 
 
@@ -230,10 +235,19 @@ public class interfaz extends javax.swing.JFrame {
                 String dato = textArea.getText();
                 System.out.println(dato);
                 
-                Lexico Analisis_L = new Lexico(new java.io.StringReader(dato));
-                Sintactico Analisis_S = new Sintactico(Analisis_L);
-                Analisis_S.parse();
+                Lexico scanner = new Lexico(new java.io.StringReader(dato));
+                Sintactico parser = new Sintactico(scanner);
+                parser.parse();
+                System.out.println("Analizando entrada... ");
+                LinkedList<sentencia> AST= parser.getAST();
                 
+                for(int i=0; i<AST.size(); i++){
+                AST.get(i).ejecutar();
+                }
+                MiSingleton singleton = MiSingleton.obtenerInstancia();
+                jTextArea1.setText(singleton.get_consola());
+                
+
                 
             }
    
@@ -241,6 +255,7 @@ public class interfaz extends javax.swing.JFrame {
         }catch(Exception e){
             
             System.out.println("Ocurrio un error al mandar la entrada");
+            Logger.getLogger(interfaz.class.getName()).log(Level.SEVERE,null,e);
             
         }
     }//GEN-LAST:event_jMenuItem5ActionPerformed

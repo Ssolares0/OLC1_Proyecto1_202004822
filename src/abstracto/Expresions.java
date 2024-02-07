@@ -3,6 +3,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package abstracto;
+import abstracto.Types;
 
 /**
  *
@@ -10,7 +11,7 @@ package abstracto;
  */
 public interface Expresions {
     
-    public Object ejecutar();
+    public Types ejecutarexp();
     
     
     

@@ -2,6 +2,14 @@
 package analizadores;
 
 import java_cup.runtime.*;
+import java.util.LinkedList;
+import expressions.Valores;
+import sentence.print;
+import sentence.declaracion;
+import abstracto.Expresions;
+import abstracto.sentencia;
+import abstracto.Types;
+import abstracto.Types.Type;
 
 
 //------> Codigo para el parser
@@ -9,66 +17,15 @@ import java_cup.runtime.*;
 
 parser code 
 {:
-    public double resultado;
-    public String printConsole; 
-    public String numeroString;
+    public LinkedList<sentencia>AST;
+
+    public LinkedList<sentencia>getAST(){
     
-    public static double operaciones(String name, double a, double b) {
-    String printConsole = ""; 
-    double resultado = 0.0; 
-    String numeroString = "";
+        return AST;
 
-    switch (name) {
-        case "+":
-            resultado = a + b;
-            numeroString = Double.toString(resultado);
-            System.out.println(numeroString);
-            break;
-        case "-":
-            resultado = a - b;
-            numeroString = Double.toString(resultado);
-            System.out.println(numeroString);
-            break;
-        case "*":
-            resultado = a * b;
-            numeroString = Double.toString(resultado);
-            System.out.println(numeroString);
-            break;
-        case "/":
-            
-            if (b != 0) {
-                resultado = a / b;
-                numeroString = Double.toString(resultado);
-                System.out.println(numeroString);
-            } else {
-                System.out.println("Error: División por cero no permitida.");
-            }
-            break;
-        case "%":
-            resultado = a; 
-            numeroString = Double.toString(resultado);
-            System.out.println(numeroString);
-            break;
-        default:
-            System.out.println("Error: Operación no reconocida.");
-    }
-
-    printConsole += "Operacion: " + name + " Resultado: " + Double.toString(resultado);
-
-    return resultado;
-    }
-
-    
-    public void clean(){
-
-        //esta funcion permite limpiar la consola
-
-         printConsole = ""; 
-    
     }
     
- 
-
+   
     public void syntax_error(Symbol s)
     {
             System.err.println("Error Sintactico: "+ s.value + " - Fila: " + s.right + " - Columna: " + s.left + ". Recuperado" );
@@ -97,36 +54,24 @@ terminal String VAR,DOUBLE,CHAR,ARR,END,PROGRAM,ENDPROGRAM;
 
 //------> Declaración de no terminales
 non terminal INICIO;
-non terminal INSTRUCCIONES;
-non terminal INSTRUCCION;
-non terminal DECLARACION;
-non terminal VARIABLES;
+non terminal sentencia INSTRUCCION;
+non terminal LinkedList<Expresions>DECLARACION;
 non terminal TIPO;
 non terminal EXP;
 non terminal EXP_TITULO;
 non terminal EXP_ARITMETICAS;
-non terminal EXPRESION;
-non terminal valores;
-non terminal EXPRESION_PRINT;
+non terminal Expresions valores;
+non terminal valores_PRINT;
 non terminal Operacion_numerica;
-non terminal IMPRIMIR_EXP;
+non terminal print IMPRIMIR_EXP;
 non terminal IMPRIMIR_ARRAY;
 non terminal Dec_Arreglo;
 non terminal Exp_Arreglo;
-non terminal EXP_SUCESIVAS;
 non terminal LLAMADA_EXP;
-//pruebita
-//pruebita2
+non terminal LinkedList<sentencia>INSTRUCCIONES;
+non terminal LinkedList<Expresions>EXP_SUCESIVAS;
 
 
-
-
-
-
-//PROCEDENCIAS
-precedence left sum,res;
-precedence left mul,div;
-precedence left mod;
 
 
 //------> Definir Simbolo Inicial
@@ -136,19 +81,26 @@ start with INICIO;
 // ------------>  Producciones  <------------
 
 //---------->Gramatica para el inicio<-------------
-INICIO ::= PROGRAM INSTRUCCIONES ENDPROGRAM;
+INICIO ::= PROGRAM INSTRUCCIONES:b ENDPROGRAM {: parser.AST=b; :};
 
-INSTRUCCIONES ::= INSTRUCCIONES INSTRUCCION
-                | INSTRUCCION;
+INSTRUCCIONES ::= INSTRUCCIONES:a INSTRUCCION:b {: RESULT= a; RESULT.add(b); :}
+                | INSTRUCCION: a                 {: RESULT = new LinkedList<>(); RESULT.add(a); :};
 
-INSTRUCCION::= Dec_Arreglo END PUNTOYCOMA 
-               |IMPRIMIR_EXP END PUNTOYCOMA
+INSTRUCCION::= Dec_Arreglo END PUNTOYCOMA {::}
+               |IMPRIMIR_EXP:a END PUNTOYCOMA {:RESULT =a; :}
                |IMPRIMIR_ARRAY END PUNTOYCOMA
-               |DECLARACION END PUNTOYCOMA ;
+               |DECLARACION:a END PUNTOYCOMA {::};
+
+
+
+//--------------------------> La Declaracion de una variable<----------------
+
+DECLARACION ::= VAR DOSPUNTOS TIPO DOSPUNTOS DOSPUNTOS ID_VARIABLE ASSIGN valores: vale {:RESULT = new LinkedList<>(); RESULT.add(vale); :};
+
 
 
 // ---------------------------->imprimir una expresion<---------------------------------------------
-IMPRIMIR_EXP ::=  CONSOLE DOSPUNTOS DOSPUNTOS PRINT IGUAL EXP_SUCESIVAS ;
+IMPRIMIR_EXP ::=  CONSOLE DOSPUNTOS DOSPUNTOS PRINT IGUAL EXP_SUCESIVAS: exp_s {: RESULT = new print(exp_s,exp_sright, exp_sleft); :};
 
 // ---------------------------->imprimir un ARREGLO<---------------------------------------------
 
@@ -161,47 +113,38 @@ IMPRIMIR_ARRAY ::= CONSOLE DOSPUNTOS DOSPUNTOS COLUMN IGUAL EXP_TITULO ASSIGN2 C
 
 
 
-Dec_Arreglo::= ARR DOSPUNTOS TIPO DOSPUNTOS DOSPUNTOS ID_ARRAY ASSIGN COR_IZQ 
-                EXP_SUCESIVAS COR_DER;
-
-
-                
-                EXP_SUCESIVAS::= EXP_SUCESIVAS COMA valores
-                                | valores;
-
-                EXP_ARITMETICAS ::= valores COMA valores;
-
-                 
-
-                EXP ::= sum PAR_IZQ EXP_SUCESIVAS PAR_DER;
+Dec_Arreglo::= ARR DOSPUNTOS TIPO DOSPUNTOS DOSPUNTOS ID_ARRAY ASSIGN COR_IZQ EXP_SUCESIVAS COR_DER;
 
 
 
-                valores::=   NUMERO:num {://RESULT = new Operacion(num,); :} 
-                        |CADENA:cad {: :} 
-                        |ID_VARIABLE 
-                        |ID_ARRAY
-                        |LLAMADA_EXP {: :};
+       
 
-                LLAMADA_EXP::= ID_VARIABLE PAR_IZQ EXP_SUCESIVAS PAR_DER
+TIPO ::= CHAR | DOUBLE;
+
+EXP_SUCESIVAS::= EXP_SUCESIVAS:exp_s COMA valores: val {: RESULT = exp_s; RESULT.add(val); :}
+                 | valores: val {:RESULT = new LinkedList<>(); RESULT.add(val); :};
+
+
+
+
+
+
+
+
+EXP_ARITMETICAS ::= valores COMA valores;
+
+             
+
+EXP ::= sum PAR_IZQ valores COMA valores PAR_DER {: :}
+        |res PAR_IZQ valores COMA valores PAR_DER {: :};
+
+valores::=          NUMERO: num {:RESULT = new Valores(num,Valores.Datatype.DECIMAL,numright,numleft); :}
+                    | CADENA: cad {:RESULT = new Valores(cad,Valores.Datatype.CADENA,cadright,cadleft); :}
+                    | ID_VARIABLE: var {: RESULT = new Valores(var,Valores.Datatype.VARIABLE,varright,varleft); :};
+
+
+LLAMADA_EXP::= ID_VARIABLE PAR_IZQ EXP_SUCESIVAS PAR_DER
                                 |ID_VARIABLE PAR_IZQ PAR_DER;
-                
-                
-               
-
-//--------------------------> La Declaracion de una variable<----------------
-
-DECLARACION ::= VAR DOSPUNTOS TIPO DOSPUNTOS DOSPUNTOS ID_VARIABLE ASSIGN EXPRESION;
-
-        TIPO ::= CHAR | DOUBLE;
-        EXPRESION::= NUMERO | CADENA;
-        EXPRESION_PRINT::= Dec_Arreglo;
-
-
-
-
-
-
-                        
+//valores_PRINT::= Dec_Arreglo;
 
                             
