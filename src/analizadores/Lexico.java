@@ -837,7 +837,7 @@ public class Lexico implements java_cup.runtime.Scanner {
           case 41: break;
           case 10:
             { System.out.println("Reconocio el id de una declaracion de variable,lexema: "+yytext());
-              return new Symbol(sym.ID_VARIABLE, yycolumn, yyline, yytext());
+              return new Symbol(sym.ID, yycolumn, yyline, yytext());
             }
           // fall through
           case 42: break;

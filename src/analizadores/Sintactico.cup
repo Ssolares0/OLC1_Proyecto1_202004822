@@ -12,18 +12,41 @@ import abstracto.Types;
 import abstracto.Types.Type;
 
 
+
 //------> Codigo para el parser
 //------> Declaracion de variables, funciones y funciones de error
+
+
 
 parser code 
 {:
     public LinkedList<sentencia>AST;
+    
 
     public LinkedList<sentencia>getAST(){
     
         return AST;
 
     }
+
+    public static String buscarVariable(String id){
+        declaracion miDeclaracion = new declaracion("miID", "miValor", 1, 1);
+
+        // Llamada a la función obtenerValorPorID
+        String valorEncontrado = miDeclaracion.obtenerValorPorID(id);
+
+        if (valorEncontrado != null) {
+            System.out.println("Valor encontrado: " + valorEncontrado);
+            return valorEncontrado;
+        } else {
+            System.out.println("ID no encontrado.");
+        }
+        return valorEncontrado;
+    
+ 
+    
+    } 
+    
     
    
     public void syntax_error(Symbol s)
@@ -46,7 +69,7 @@ action code
 
 //------> Declaración de terminales
 terminal String NUMERO,CADENA,COMA,COR_IZQ,COR_DER,ASSIGN,ASSIGN2,DOSPUNTOS,PUNTOYCOMA;
-terminal String ID_VARIABLE,ID_ARRAY,CONSOLE,COLUMN,PRINT,IGUAL,PAR_IZQ,PAR_DER;
+terminal String ID,ID_ARRAY,CONSOLE,COLUMN,PRINT,IGUAL,PAR_IZQ,PAR_DER;
 terminal String sum,res,mul,mod,div;
 terminal String VAR,DOUBLE,CHAR,ARR,END,PROGRAM,ENDPROGRAM;
 
@@ -55,15 +78,15 @@ terminal String VAR,DOUBLE,CHAR,ARR,END,PROGRAM,ENDPROGRAM;
 //------> Declaración de no terminales
 non terminal INICIO;
 non terminal sentencia INSTRUCCION;
-non terminal LinkedList<Expresions>DECLARACION;
+non terminal declaracion DECLARACION;
 non terminal TIPO;
 non terminal EXP;
 non terminal EXP_TITULO;
-non terminal EXP_ARITMETICAS;
-non terminal Expresions valores;
+non terminal Expresions valores_print;
 non terminal valores_PRINT;
 non terminal Operacion_numerica;
 non terminal print IMPRIMIR_EXP;
+non terminal declaracion valores_variable;
 non terminal IMPRIMIR_ARRAY;
 non terminal Dec_Arreglo;
 non terminal Exp_Arreglo;
@@ -89,15 +112,14 @@ INSTRUCCIONES ::= INSTRUCCIONES:a INSTRUCCION:b {: RESULT= a; RESULT.add(b); :}
 INSTRUCCION::= Dec_Arreglo END PUNTOYCOMA {::}
                |IMPRIMIR_EXP:a END PUNTOYCOMA {:RESULT =a; :}
                |IMPRIMIR_ARRAY END PUNTOYCOMA
-               |DECLARACION:a END PUNTOYCOMA {::};
+               |DECLARACION:a END PUNTOYCOMA {: RESULT=a; :};
 
 
 
 //--------------------------> La Declaracion de una variable<----------------
 
-DECLARACION ::= VAR DOSPUNTOS TIPO DOSPUNTOS DOSPUNTOS ID_VARIABLE ASSIGN valores: vale {:RESULT = new LinkedList<>(); RESULT.add(vale); :};
-
-
+DECLARACION ::= VAR DOSPUNTOS TIPO DOSPUNTOS DOSPUNTOS ID: id_var ASSIGN valores_variable: exp_va {:RESULT = new declaracion(id_var,exp_va.toString(),exp_varight,exp_valeft); :};
+   
 
 // ---------------------------->imprimir una expresion<---------------------------------------------
 IMPRIMIR_EXP ::=  CONSOLE DOSPUNTOS DOSPUNTOS PRINT IGUAL EXP_SUCESIVAS: exp_s {: RESULT = new print(exp_s,exp_sright, exp_sleft); :};
@@ -107,7 +129,7 @@ IMPRIMIR_EXP ::=  CONSOLE DOSPUNTOS DOSPUNTOS PRINT IGUAL EXP_SUCESIVAS: exp_s {
 IMPRIMIR_ARRAY ::= CONSOLE DOSPUNTOS DOSPUNTOS COLUMN IGUAL EXP_TITULO ASSIGN2 COR_IZQ EXP_SUCESIVAS COR_DER ; 
 
 
-    EXP_TITULO ::= CADENA | ID_VARIABLE;
+    EXP_TITULO ::= CADENA | ID;
 
 // ----------------------------> DECLARACION DE UN ARREGLO <----------------------------------------
 
@@ -121,30 +143,28 @@ Dec_Arreglo::= ARR DOSPUNTOS TIPO DOSPUNTOS DOSPUNTOS ID_ARRAY ASSIGN COR_IZQ EX
 
 TIPO ::= CHAR | DOUBLE;
 
-EXP_SUCESIVAS::= EXP_SUCESIVAS:exp_s COMA valores: val {: RESULT = exp_s; RESULT.add(val); :}
-                 | valores: val {:RESULT = new LinkedList<>(); RESULT.add(val); :};
+EXP_SUCESIVAS::= EXP_SUCESIVAS:exp_s COMA valores_print: val {: RESULT = exp_s; RESULT.add(val); :}
+                 | valores_print: val {:RESULT = new LinkedList<>(); RESULT.add(val); :};
 
 
-
-
-
-
-
-
-EXP_ARITMETICAS ::= valores COMA valores;
 
              
 
-EXP ::= sum PAR_IZQ valores COMA valores PAR_DER {: :}
-        |res PAR_IZQ valores COMA valores PAR_DER {: :};
+EXP ::= sum PAR_IZQ valores_variable COMA valores_variable PAR_DER {: :}
+        |res PAR_IZQ valores_variable COMA valores_variable PAR_DER {: :};
 
-valores::=          NUMERO: num {:RESULT = new Valores(num,Valores.Datatype.DECIMAL,numright,numleft); :}
-                    | CADENA: cad {:RESULT = new Valores(cad,Valores.Datatype.CADENA,cadright,cadleft); :}
-                    | ID_VARIABLE: var {: RESULT = new Valores(var,Valores.Datatype.VARIABLE,varright,varleft); :};
+valores_print::=            NUMERO: num {:RESULT = new Valores(num,Valores.Datatype.DECIMAL,numright,numleft); :}
+                    | CADENA: cad {:RESULT = new Valores(cad,Valores.Datatype.CADENA,cadright,cadleft); :};
+                    //| ID: id_var {: RESULT= miDeclaracion.obtenerValorPorID(id_var); :};
+
+valores_variable ::= NUMERO: numero {: RESULT = numero; :}
+                  | CADENA: cadena {: RESULT = cadena; :}
+                  //| ID: var {:RESULT= miDeclaracion.getValor(); :};
+                  | ID: var {:RESULT= obtenerValorPorID(var); :};
 
 
-LLAMADA_EXP::= ID_VARIABLE PAR_IZQ EXP_SUCESIVAS PAR_DER
-                                |ID_VARIABLE PAR_IZQ PAR_DER;
+//LLAMADA_EXP::= ID_VARIABLE PAR_IZQ EXP_SUCESIVAS PAR_DER
+ //                               |ID_VARIABLE PAR_IZQ PAR_DER;
 //valores_PRINT::= Dec_Arreglo;
 
                             

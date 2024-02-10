@@ -4,6 +4,8 @@
  */
 package analizadores;
 
+import sentence.declaracion;
+import abstracto.Expresions;
 /**
  *
  * @author sebastiansolares
@@ -26,6 +28,25 @@ public class funcionesUsar {
          System.out.println(printConsole);
          //resultado == 2.2;
     }
+    
+    
+    public static String buscarVariable(String id){
+        declaracion miDeclaracion = new declaracion("miID", "miValor", 1, 1);
+
+        // Llamada a la función obtenerValorPorID
+        String valorEncontrado = miDeclaracion.obtenerValorPorID(id);
+
+        if (valorEncontrado != null) {
+            System.out.println("Valor encontrado: " + valorEncontrado);
+            return valorEncontrado;
+        } else {
+            System.out.println("ID no encontrado.");
+        }
+        return valorEncontrado;
+    
+ 
+    
+    } 
     
     public static double operaciones(String name, double a, double b) {
         

@@ -19,6 +19,7 @@ public class sym {
   public static final int ASSIGN2 = 8;
   public static final int END = 28;
   public static final int CONSOLE = 13;
+  public static final int ID = 11;
   public static final int PROGRAM = 29;
   public static final int COMA = 4;
   public static final int div = 23;
@@ -26,7 +27,6 @@ public class sym {
   public static final int ID_ARRAY = 12;
   public static final int ENDPROGRAM = 30;
   public static final int PAR_IZQ = 17;
-  public static final int ID_VARIABLE = 11;
   public static final int PRINT = 15;
   public static final int error = 1;
   public static final int NUMERO = 2;
@@ -51,7 +51,7 @@ public class sym {
   "ASSIGN2",
   "DOSPUNTOS",
   "PUNTOYCOMA",
-  "ID_VARIABLE",
+  "ID",
   "ID_ARRAY",
   "CONSOLE",
   "COLUMN",

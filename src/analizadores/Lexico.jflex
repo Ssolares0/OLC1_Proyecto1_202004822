@@ -29,7 +29,7 @@ import java.util.ArrayList;
 
 //entero = [0-9]+
 numero = [0-9]+("."[0-9]+)?
-id_variable = [a-zA-Z_][a-zA-Z0-9_]*
+id = [a-zA-Z_][a-zA-Z0-9_]*
 id_array = @([a-zA-Z_][a-zA-Z0-9_]*)
 cadena = [\'][^\']*[\']|[\"][^\"]*[\"]
 blancos = [ \t\f\r\n]+
@@ -145,8 +145,8 @@ comentario_oneL = "!".*\n
     {numero}  { System.out.println("Reconocio un numero,lexema: "+yytext());
                return new Symbol(sym.NUMERO, yycolumn, yyline, yytext());}
 
-    {id_variable}  { System.out.println("Reconocio el id de una declaracion de variable,lexema: "+yytext());
-              return new Symbol(sym.ID_VARIABLE, yycolumn, yyline, yytext());}
+    {id}  { System.out.println("Reconocio el id de una declaracion de variable,lexema: "+yytext());
+              return new Symbol(sym.ID, yycolumn, yyline, yytext());}
 
     {id_array}  { System.out.println("Reconocio el id de un array ,lexema: "+yytext());
               return new Symbol(sym.ID_ARRAY, yycolumn, yyline, yytext());}
