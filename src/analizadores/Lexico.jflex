@@ -28,13 +28,18 @@ import java.util.ArrayList;
 // ------------  Reglas Lexicas -------------------
 
 //entero = [0-9]+
+
+comentario_oneL = "!"[^\r\n]* (\r|\n|\r\n)?
+comentario_multL = "<!"([^\r\n]* (\r|\n|\r\n?)?)*"!>"
+
+
 numero = [0-9]+("."[0-9]+)?
 id = [a-zA-Z_][a-zA-Z0-9_]*
-id_array = @([a-zA-Z_][a-zA-Z0-9_]*)
+//id_array = @([a-zA-Z_][a-zA-Z0-9_]*)
 cadena = [\'][^\']*[\']|[\"][^\"]*[\"]
 blancos = [ \t\f\r\n]+
-comentario_oneL = "!".*\n
-//comentario_multL= <!"([^!]|!+[^>])*"!>
+
+
 %%
 
 
@@ -73,6 +78,9 @@ comentario_oneL = "!".*\n
 
     ")"   { System.out.println("Reconocio PARENTESIS DER ,lexema: "+yytext());
             return new Symbol(sym.PAR_DER, yycolumn, yyline, yytext()); }
+
+    "@"   { System.out.println("Reconocio ARROBA  ,lexema: "+yytext());
+            return new Symbol(sym.ARROBA, yycolumn, yyline, yytext()); }
 
 
 
@@ -117,20 +125,20 @@ comentario_oneL = "!".*\n
                        return new Symbol(sym.PRINT, yycolumn, yyline, yytext()); }
 
 
-    "sum"       { System.out.println("Reconocio palabra ,lexema: "+yytext());
+    "SUM"       { System.out.println("Reconocio palabra ,lexema: "+yytext());
                        return new Symbol(sym.sum, yycolumn, yyline, yytext()); }
 
-    "res"       { System.out.println("Reconocio palabra ,lexema: "+yytext());
+    "RES"       { System.out.println("Reconocio palabra ,lexema: "+yytext());
                        return new Symbol(sym.res, yycolumn, yyline, yytext()); }
 
-    "mul"       { System.out.println("Reconocio palabra ,lexema: "+yytext());
+    "MUL"       { System.out.println("Reconocio palabra ,lexema: "+yytext());
 
                        return new Symbol(sym.mul, yycolumn, yyline, yytext()); }
-    "mod"       { System.out.println("Reconocio palabra ,lexema: "+yytext());
+    "MOD"       { System.out.println("Reconocio palabra ,lexema: "+yytext());
 
                        return new Symbol(sym.mod, yycolumn, yyline, yytext()); }
 
-    "div"       { System.out.println("Reconocio palabra ,lexema: "+yytext());
+    "DIV"       { System.out.println("Reconocio palabra ,lexema: "+yytext());
                        return new Symbol(sym.div, yycolumn, yyline, yytext()); }
 
     
@@ -142,14 +150,21 @@ comentario_oneL = "!".*\n
 
     // {entero}  { return new Symbol(sym.ENTERO, yycolumn, yyline, yytext()); }
 
+    {comentario_multL} { System.out.println("Reconocio comentario multi linea: "+yytext());} 
+    
+    {comentario_oneL} { System.out.println("Reconocio comentario una linea,lexema: "+yytext());}   
+    
+                   
+    
+
     {numero}  { System.out.println("Reconocio un numero,lexema: "+yytext());
                return new Symbol(sym.NUMERO, yycolumn, yyline, yytext());}
 
     {id}  { System.out.println("Reconocio el id de una declaracion de variable,lexema: "+yytext());
               return new Symbol(sym.ID, yycolumn, yyline, yytext());}
 
-    {id_array}  { System.out.println("Reconocio el id de un array ,lexema: "+yytext());
-              return new Symbol(sym.ID_ARRAY, yycolumn, yyline, yytext());}
+    //{id_array}  { System.out.println("Reconocio el id de un array ,lexema: "+yytext());
+    //          return new Symbol(sym.ID_ARRAY, yycolumn, yyline, yytext());}
 
 
     {cadena}  { System.out.println("Reconocio una cadena,lexema: "+yytext());    
@@ -157,19 +172,10 @@ comentario_oneL = "!".*\n
 
     {blancos}  {} //THIS IGNORE THE SPACES
 
-    {comentario_oneL} { System.out.println("Reconocio comentario una linea,lexema: "+yytext());
-    }   
-                        
-
- 
-    //{comentario_multL} { System.out.println("Reconocio comentario multi linea: "+yytext());} 
+    
     
     
 }
-
-
-
-    
 
     //------> Errores Léxicos 
 

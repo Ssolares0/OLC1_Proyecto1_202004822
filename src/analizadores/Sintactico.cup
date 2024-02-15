@@ -5,6 +5,7 @@ import java_cup.runtime.*;
 import java.util.LinkedList;
 import expressions.Valores;
 import sentence.print;
+import sentence.declaracionArray;
 import sentence.declaracion;
 import abstracto.Expresions;
 import abstracto.sentencia;
@@ -19,7 +20,8 @@ import abstracto.Types.Type;
 
 
 parser code 
-{:
+{:  
+
     public LinkedList<sentencia>AST;
     
 
@@ -28,6 +30,17 @@ parser code
         return AST;
 
     }
+    class Triple<T, U, V> {
+    T first;
+    U second;
+    V third;
+
+    Triple(T first, U second, V third) {
+        this.first = first;
+        this.second = second;
+        this.third = third;
+        }
+    }   
 
     public static String buscarVariable(String id){
         declaracion miDeclaracion = new declaracion("miID", "miValor", 1, 1);
@@ -69,7 +82,7 @@ action code
 
 //------> Declaración de terminales
 terminal String NUMERO,CADENA,COMA,COR_IZQ,COR_DER,ASSIGN,ASSIGN2,DOSPUNTOS,PUNTOYCOMA;
-terminal String ID,ID_ARRAY,CONSOLE,COLUMN,PRINT,IGUAL,PAR_IZQ,PAR_DER;
+terminal String ID,ID_ARRAY,CONSOLE,COLUMN,PRINT,IGUAL,PAR_IZQ,PAR_DER,ARROBA;
 terminal String sum,res,mul,mod,div;
 terminal String VAR,DOUBLE,CHAR,ARR,END,PROGRAM,ENDPROGRAM;
 
@@ -80,19 +93,25 @@ non terminal INICIO;
 non terminal sentencia INSTRUCCION;
 non terminal declaracion DECLARACION;
 non terminal TIPO;
+non terminal OP,OP2;
 non terminal EXP;
 non terminal EXP_TITULO;
 non terminal Expresions valores_print;
 non terminal valores_PRINT;
-non terminal Operacion_numerica;
 non terminal print IMPRIMIR_EXP;
-non terminal declaracion valores_variable;
-non terminal IMPRIMIR_ARRAY;
-non terminal Dec_Arreglo;
+non terminal valores_variable;
+non terminal print IMPRIMIR_ARRAY;
+non terminal declaracionArray Dec_Arreglo;
+non terminal OP_ARITMETICA;
 non terminal Exp_Arreglo;
 non terminal LLAMADA_EXP;
 non terminal LinkedList<sentencia>INSTRUCCIONES;
 non terminal LinkedList<Expresions>EXP_SUCESIVAS;
+
+// Asociatividades y Prioridades 
+precedence left sum, res;
+precedence left mul, div, mod;
+
 
 
 
@@ -109,11 +128,10 @@ INICIO ::= PROGRAM INSTRUCCIONES:b ENDPROGRAM {: parser.AST=b; :};
 INSTRUCCIONES ::= INSTRUCCIONES:a INSTRUCCION:b {: RESULT= a; RESULT.add(b); :}
                 | INSTRUCCION: a                 {: RESULT = new LinkedList<>(); RESULT.add(a); :};
 
-INSTRUCCION::= Dec_Arreglo END PUNTOYCOMA {::}
-               |IMPRIMIR_EXP:a END PUNTOYCOMA {:RESULT =a; :}
-               |IMPRIMIR_ARRAY END PUNTOYCOMA
-               |DECLARACION:a END PUNTOYCOMA {: RESULT=a; :};
-
+INSTRUCCION::=  IMPRIMIR_EXP:a END PUNTOYCOMA {:RESULT =a; :}
+               |IMPRIMIR_ARRAY:a END PUNTOYCOMA {: RESULT=a; :}
+               |DECLARACION:a END PUNTOYCOMA {: RESULT=a; :}
+               |Dec_Arreglo:a END PUNTOYCOMA {:RESULT=a; :};
 
 
 //--------------------------> La Declaracion de una variable<----------------
@@ -121,27 +139,49 @@ INSTRUCCION::= Dec_Arreglo END PUNTOYCOMA {::}
 DECLARACION ::= VAR DOSPUNTOS TIPO DOSPUNTOS DOSPUNTOS ID: id_var ASSIGN valores_variable: exp_va {:RESULT = new declaracion(id_var,exp_va.toString(),exp_varight,exp_valeft); :};
    
 
-// ---------------------------->imprimir una expresion<---------------------------------------------
-IMPRIMIR_EXP ::=  CONSOLE DOSPUNTOS DOSPUNTOS PRINT IGUAL EXP_SUCESIVAS: exp_s {: RESULT = new print(exp_s,exp_sright, exp_sleft); :};
-
-// ---------------------------->imprimir un ARREGLO<---------------------------------------------
-
-IMPRIMIR_ARRAY ::= CONSOLE DOSPUNTOS DOSPUNTOS COLUMN IGUAL EXP_TITULO ASSIGN2 COR_IZQ EXP_SUCESIVAS COR_DER ; 
-
-
-    EXP_TITULO ::= CADENA | ID;
-
 // ----------------------------> DECLARACION DE UN ARREGLO <----------------------------------------
 
 
 
-Dec_Arreglo::= ARR DOSPUNTOS TIPO DOSPUNTOS DOSPUNTOS ID_ARRAY ASSIGN COR_IZQ EXP_SUCESIVAS COR_DER;
+Dec_Arreglo::= ARR DOSPUNTOS TIPO:tipo_arr DOSPUNTOS DOSPUNTOS ARROBA ID: id_arr ASSIGN COR_IZQ EXP_SUCESIVAS:exp_s COR_DER {:RESULT = new declaracionArray(exp_s,exp_sright, exp_sleft,tipo_arr.toString(),id_arr.toString()); :};
 
 
 
-       
+// ---------------------------->imprimir una expresion<---------------------------------------------
+IMPRIMIR_EXP ::=  CONSOLE DOSPUNTOS DOSPUNTOS PRINT IGUAL EXP_SUCESIVAS: exp_s {: RESULT = new print(exp_s,exp_sright, exp_sleft); :};
 
-TIPO ::= CHAR | DOUBLE;
+
+//--------------------------->Operaciones<-----------------------------------------------------------
+
+OP_ARITMETICA ::= 
+                sum PAR_IZQ OP PAR_DER
+               | res PAR_IZQ OP PAR_DER
+               | mul PAR_IZQ OP PAR_DER
+               | mod PAR_IZQ OP PAR_DER
+               | div PAR_IZQ OP PAR_DER; 
+
+OP::= 
+      OP COMA OP2
+      | OP2;
+
+OP2::= OP_ARITMETICA
+        |NUMERO;
+
+
+               
+
+
+// ---------------------------->imprimir un ARREGLO<---------------------------------------------
+
+IMPRIMIR_ARRAY ::= CONSOLE DOSPUNTOS DOSPUNTOS COLUMN IGUAL EXP_TITULO ASSIGN2 COR_IZQ EXP_SUCESIVAS: exp_s {: RESULT = new print(exp_s,exp_sright, exp_sleft); :} COR_DER ; 
+
+    EXP_TITULO ::= CADENA | ID;
+
+
+
+TIPO ::= CHAR: char_ {: RESULT = char_; :}
+        | DOUBLE: num {: RESULT = num; :};
+
 
 EXP_SUCESIVAS::= EXP_SUCESIVAS:exp_s COMA valores_print: val {: RESULT = exp_s; RESULT.add(val); :}
                  | valores_print: val {:RESULT = new LinkedList<>(); RESULT.add(val); :};
@@ -150,17 +190,17 @@ EXP_SUCESIVAS::= EXP_SUCESIVAS:exp_s COMA valores_print: val {: RESULT = exp_s; 
 
              
 
-EXP ::= sum PAR_IZQ valores_variable COMA valores_variable PAR_DER {: :}
-        |res PAR_IZQ valores_variable COMA valores_variable PAR_DER {: :};
+//EXP ::= sum PAR_IZQ valores_variable COMA valores_variable PAR_DER {: :}
+//        |res PAR_IZQ valores_variable COMA valores_variable PAR_DER {: :};
 
 valores_print::=            NUMERO: num {:RESULT = new Valores(num,Valores.Datatype.DECIMAL,numright,numleft); :}
                     | CADENA: cad {:RESULT = new Valores(cad,Valores.Datatype.CADENA,cadright,cadleft); :};
                     //| ID: id_var {: RESULT= miDeclaracion.obtenerValorPorID(id_var); :};
 
 valores_variable ::= NUMERO: numero {: RESULT = numero; :}
-                  | CADENA: cadena {: RESULT = cadena; :}
-                  //| ID: var {:RESULT= miDeclaracion.getValor(); :};
-                  | ID: var {:RESULT= obtenerValorPorID(var); :};
+                   |CADENA: cadena {: RESULT = cadena; :}
+                  | OP_ARITMETICA {:RESULT= "prueba";:};
+                  //| ID: var {::};
 
 
 //LLAMADA_EXP::= ID_VARIABLE PAR_IZQ EXP_SUCESIVAS PAR_DER

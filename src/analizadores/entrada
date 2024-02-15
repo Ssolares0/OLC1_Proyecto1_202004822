@@ -1,5 +1,19 @@
 PROGRAM
 var: char[] :: contador <- 25 end;
+! Comentario de una linea
 console::print = "hola",1 ,"jaja" end;
-console::column = "TITULO" -> [1, 2, 3, 4, 5] end;
+
+! debo modificar la declaracion array
+arr:double::@darray <- [1,2,3,4,5] end;
+
+! operacion aritmetica anidada
+var:double:: suma <- MUL( SUM(7,3) , RES(7, 3 )) end;
+
+! Imprimir un array
+console::column = "test" -> [10, 15.5, 61.1] end;
+
+<! esto es un comentario multilinea
+de prueba !>
+
 END PROGRAM
+
