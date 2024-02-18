@@ -19,6 +19,8 @@ public class funcionesUsar {
         operaciones("zz", 2.0, 2.0);
     }
     
+    
+    
    
     
     public void clean(){
@@ -29,7 +31,8 @@ public class funcionesUsar {
          //resultado == 2.2;
     }
     
-    
+
+
     public static String buscarVariable(String id){
         declaracion miDeclaracion = new declaracion("miID", "miValor", 1, 1);
 

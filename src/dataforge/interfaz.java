@@ -8,6 +8,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.io.BufferedWriter;
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.FileWriter;
 import java.io.FileReader;
 import java.io.IOException;
@@ -18,6 +19,8 @@ import java.util.LinkedList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import singleton.MiSingleton;
+import analizadores.Sintactico;
+import analizadores.Lexico;
 
 
 
@@ -68,6 +71,7 @@ public class interfaz extends javax.swing.JFrame {
         jMenu3 = new javax.swing.JMenu();
         jMenuItem5 = new javax.swing.JMenuItem();
         jMenu4 = new javax.swing.JMenu();
+        Errores = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("DataForge");
@@ -142,6 +146,20 @@ public class interfaz extends javax.swing.JFrame {
         jMenuBar1.add(jMenu3);
 
         jMenu4.setText("Reportes");
+        jMenu4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenu4ActionPerformed(evt);
+            }
+        });
+
+        Errores.setText("Errores");
+        Errores.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ErroresActionPerformed(evt);
+            }
+        });
+        jMenu4.add(Errores);
+
         jMenuBar1.add(jMenu4);
 
         setJMenuBar(jMenuBar1);
@@ -238,6 +256,53 @@ public class interfaz extends javax.swing.JFrame {
                 Lexico scanner = new Lexico(new java.io.StringReader(dato));
                 Sintactico parser = new Sintactico(scanner);
                 parser.parse();
+                
+                
+                // Crear el estilo del HTML
+                String htmlstyle = "<!DOCTYPE html>"+
+                                   "<html>"+
+                                   "<head>" +
+                                   "<meta http-equiv=\"Content-Type\" content=\"text/html; charset=iso-8859-1\">" +
+                                   "<title>Errores</title>"+
+                                   "</head>"+
+                                   "<style>"+
+                                   "table, th {background-color: #D7C0AE;} td { border: 1px solid rgb(31, 31, 31);"+
+                                   "border-collapse: collapse;"+
+                                   "background-color: #D7C0AE;"+
+                                   "}"+
+                                   "th:nth-child(even),td:nth-child(even) {"+
+                                   "background-color: #EEE3CB;"+
+                                   "}"+
+                                   "</style>"+
+                                   "<body bgcolor=\"B7C4CF\">"+
+                                   "<center>";
+
+                // Crear el contenido de la tabla
+                String html =  htmlstyle + "<table border=1><tr><th>Linea</th><th>Columna</th><th>Descripcion</th><th>Tipo</th></tr>";
+
+                // Iterar sobre los errores sintácticos
+                for (int i = 0; i < parser.errSint.size(); i++) {
+                    html += "<tr><td><center>" + parser.errSint.get(i).getLine() + "</center></td><td><center>" + 
+                            parser.errSint.get(i).getColumn() + "</center></td><td><center>" + parser.errSint.get(i).getDescription() + 
+                            "</center></td><td><center>" + parser.errSint.get(i).getError()  + "</center></td></tr>";
+                }
+
+                // Iterar sobre los errores léxicos
+                for (int i = 0; i < scanner.errLex.size(); i++) {
+                    html += "<tr><td><center>" + scanner.errLex.get(i).getLine() + "</center></td><td><center>" + 
+                            scanner.errLex.get(i).getColumn() + "</center></td><td><center>" + scanner.errLex.get(i).getDescription() + 
+                            "</center></td><td><center>" + scanner.errLex.get(i).getError()  + "</center></td></tr>";
+                }
+
+                html += "</table></center></body></html>";
+
+                    // Guardar en un archivo llamado "errores.html"
+                    File file = new File("errores.html");
+                    BufferedWriter bw = new BufferedWriter(new FileWriter(file));
+                    bw.write(html);
+                    bw.close();
+                
+                
                 System.out.println("Analizando entrada... ");
                 LinkedList<sentencia> AST= parser.getAST();
                 
@@ -246,7 +311,6 @@ public class interfaz extends javax.swing.JFrame {
                 }
                 MiSingleton singleton = MiSingleton.obtenerInstancia();
                 jTextArea1.setText(singleton.get_consola());
-                
 
                 
             }
@@ -259,6 +323,25 @@ public class interfaz extends javax.swing.JFrame {
             
         }
     }//GEN-LAST:event_jMenuItem5ActionPerformed
+
+    private void jMenu4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenu4ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jMenu4ActionPerformed
+
+    private void ErroresActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ErroresActionPerformed
+         // Cambia la ruta a la ubicación de tu archivo HTML
+        File htmlFile = new File("errores.html");
+        
+        try {
+            Desktop.getDesktop().browse(htmlFile.toURI());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+
+
+
+    }//GEN-LAST:event_ErroresActionPerformed
 
     /**
      * @param args the command line arguments
@@ -371,6 +454,7 @@ public class interfaz extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JMenuItem Errores;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;

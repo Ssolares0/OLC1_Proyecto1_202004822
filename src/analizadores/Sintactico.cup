@@ -11,6 +11,8 @@ import abstracto.Expresions;
 import abstracto.sentencia;
 import abstracto.Types;
 import abstracto.Types.Type;
+import java.util.ArrayList;
+import dataforge.Errores;
 
 
 
@@ -21,6 +23,7 @@ import abstracto.Types.Type;
 
 parser code 
 {:  
+    public ArrayList<Errores> errSint = new ArrayList<Errores>();
 
     public LinkedList<sentencia>AST;
     
@@ -30,6 +33,7 @@ parser code
         return AST;
 
     }
+
     class Triple<T, U, V> {
     T first;
     U second;
@@ -59,17 +63,22 @@ parser code
  
     
     } 
+
     
     
    
     public void syntax_error(Symbol s)
     {
             System.err.println("Error Sintactico: "+ s.value + " - Fila: " + s.right + " - Columna: " + s.left + ". Recuperado" );
+            Errores tmp = new Errores("Sintactico",s.right,s.left, s.value+"Error de sintaxis");
+            errSint.add(tmp);
     }
 
     public void unrecovered_syntax_error(Symbol s) throws java.lang.Exception
     {
             System.err.println("Error Sintactico: "+ s.value + " - Fila: " + s.right + " - Columna: " + s.left + ". Sin recuperacion." );
+            Errores tmp = new Errores("Sintactico",s.right,s.left, s.value+"Error de sintaxis sin recuperacion");
+            errSint.add(tmp);
     }
 
 :}
