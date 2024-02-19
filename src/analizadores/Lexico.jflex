@@ -216,7 +216,7 @@ blancos = [ \t\f\r\n]+
                     tokLex.add(tmp);
                        return new Symbol(sym.max, yycolumn, yyline, yytext()); }
 
-    "Max"       { System.out.println("Reconocio palabra ,lexema: "+yytext());
+    "Min"       { System.out.println("Reconocio palabra ,lexema: "+yytext());
                     Token tmp = new Token(yytext(),"Palabra Reservada");
                     tokLex.add(tmp);
                            return new Symbol(sym.min, yycolumn, yyline, yytext()); }

@@ -15,13 +15,7 @@ public class funcionesUsar {
     public String printConsole; 
     public String numeroString;
     
-    public static void main(String[] args) {
-        operaciones("zz", 2.0, 2.0);
-    }
-    
-    
-    
-   
+
     
     public void clean(){
         //esta funcion permite limpiar la consola
@@ -54,50 +48,97 @@ public class funcionesUsar {
     
     } 
     
-    public static double operaciones(String name, double a, double b) {
+        public static Double operacionAritmetica(String id,String num){
+        String id_min = id.toLowerCase();
+        String[] partes = num.split("=");
+        String valor1 = partes[0];
+        String valor2 = partes[1];
         
-    String printConsole = ""; 
-    double resultado = 0.0; 
-    String numeroString = "";
+        System.out.println("Valor1: "+valor1);
+        System.out.println("Valor2: "+valor2);
+        
+        //pasamos a double
+        double numero1 = Double.parseDouble(valor1);
+        double numero2 = Double.parseDouble(valor2);
 
-    switch (name) {
-        case "+":
-            resultado = a + b;
-            numeroString = Double.toString(resultado);
-            System.out.println(numeroString);
-            break;
-        case "-":
-            resultado = a - b;
-            numeroString = Double.toString(resultado);
-            System.out.println(numeroString);
-            break;
-        case "*":
-            resultado = a * b;
-            numeroString = Double.toString(resultado);
-            System.out.println(numeroString);
-            break;
-        case "/":
-            
-            if (b != 0) {
-                resultado = a / b;
-                numeroString = Double.toString(resultado);
-                System.out.println(numeroString);
-            } else {
-                System.out.println("Error: División por cero no permitida.");
-            }
-            break;
-        case "%":
-            resultado = a; 
-            numeroString = Double.toString(resultado);
-            System.out.println(numeroString);
-            break;
-        default:
-            System.out.println("Error: Operación no reconocida.");
+        double resultado = 0.0; 
+        
+        //creamos el switch 
+        System.out.println("Empezamos con este ID: "+id);
+       switch (id_min) {
+            case "sum":
+                resultado = numero1 + numero2;
+                System.out.println("sum: "+resultado);
+                break;
+            case "res":
+                resultado = numero1 - numero2;
+                System.out.println("res: "+resultado);
+                break;
+            case "mul":
+                resultado = numero1 * numero2;
+                System.out.println("mul: "+resultado);
+                break;
+            case "div":
+
+                if (numero2 != 0) {
+                    resultado = numero1 / numero2;
+                    System.out.println("div: "+resultado);
+
+                } else {
+                    System.out.println("Error: División por cero no permitida.");
+                }
+                break;
+            case "mod":
+                resultado = numero1; 
+                System.out.println("Mod: "+resultado);
+                
+
+                break;
+            default:
+                System.out.println("Error: Operación no reconocida.");
+        }
+        
+            return resultado;
+    
     }
+    
+    public static Double operacionEstadistica(String id,String num){
+        String id_min = id.toLowerCase();
+        String[] partes = num.split("=");
+        // Crear un arreglo de tipo double para almacenar los números
+        double[] numeros = new double[partes.length];
+        // Convertir cada elemento de la lista de cadenas a double
+        for (int i = 0; i < partes.length; i++) {
+            numeros[i] = Double.parseDouble(partes[i]);
+        }
+        
+        double resultado = 0.0; 
+        
+        switch (id_min) {
+            case "media":
+                // Calcular la suma de los números
+                double suma = 0;
+                for (double numero : numeros) {
+                    suma += numero;
+                }
+                // Calcular el promedio
+                double promedio = suma / numeros.length;
 
-    printConsole += "Operacion: " + name + " Resultado: " + Double.toString(resultado);
-
-    return resultado;
-}
+                // Imprimir el promedio
+                System.out.println("La media es: " + promedio);
+                
+                resultado = promedio;
+                
+                break;
+            default:
+                System.out.println("Error: Operacion no reconocida.");
+        }
+        
+       
+        return resultado;
+    
+    }
+    
+    
     
 }

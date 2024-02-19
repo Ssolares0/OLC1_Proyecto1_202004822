@@ -13,7 +13,7 @@ import abstracto.Types;
 import abstracto.Types.Type;
 import java.util.ArrayList;
 import dataforge.Errores;
-//import dataforge.funcionesUsar;
+import analizadores.funcionesUsar;
 
 
 
@@ -35,22 +35,7 @@ parser code
 
     }
 
-    class Triple<T, U, V> {
-    T first;
-    U second;
-    V third;
 
-    Triple(T first, U second, V third) {
-        this.first = first;
-        this.second = second;
-        this.third = third;
-        }
-    }   
-    public String operacion(String id,String num){
-        System.out.println(id+num);
-        return num;
-    
-    }
 
     public static String buscarVariable(String id){
         declaracion miDeclaracion = new declaracion("miID", "miValor", 1, 1);
@@ -117,7 +102,8 @@ non terminal print IMPRIMIR_EXP;
 non terminal valores_variable;
 non terminal print IMPRIMIR_ARRAY;
 non terminal declaracionArray Dec_Arreglo;
-non terminal OP_ARITMETICA,OP_ESTADISTICA;
+non terminal OP_ARITMETICA;
+non terminal OP_ESTADISTICA;
 non terminal Exp_Arreglo;
 non terminal LLAMADA_EXP;
 non terminal LinkedList<sentencia>INSTRUCCIONES;
@@ -165,50 +151,52 @@ Dec_Arreglo::= ARR DOSPUNTOS TIPO:tipo_arr DOSPUNTOS DOSPUNTOS ARROBA ID: id_arr
 // ---------------------------->imprimir una expresion<---------------------------------------------
 IMPRIMIR_EXP ::=  CONSOLE DOSPUNTOS DOSPUNTOS PRINT IGUAL EXP_SUCESIVAS: exp_s {: RESULT = new print(exp_s,exp_sright, exp_sleft); :};
 
-
-//--------------------------->Operaciones ARITMETICAS Y ESTADISTICAS<-----------------------------------------------------------
-
-OP_ARITMETICA ::= 
-                 sum: sum PAR_IZQ OP:val PAR_DER {:RESULT =operacion(sum,val.toString());:}
-               | res PAR_IZQ OP PAR_DER
-               | mul PAR_IZQ OP PAR_DER
-               | mod PAR_IZQ OP PAR_DER
-               | div PAR_IZQ OP PAR_DER; 
-
-OP_ESTADISTICA::= media    PAR_IZQ COR_IZQ OP3 COR_DER PAR_DER 
-                | mediana  PAR_IZQ COR_IZQ OP3 COR_DER PAR_DER
-                | moda     PAR_IZQ COR_IZQ OP3 COR_DER PAR_DER
-                | varianza PAR_IZQ COR_IZQ OP3 COR_DER PAR_DER
-                | max      PAR_IZQ COR_IZQ OP3 COR_DER PAR_DER
-                | min      PAR_IZQ COR_IZQ OP3 COR_DER PAR_DER; 
-
-
-
-OP::= 
-      OP COMA OP2: val {:RESULT = val;:}
-      | OP2;
-
-OP2::= OP_ARITMETICA {::}
-        | OP_ESTADISTICA {::}
-        |NUMERO: num {:RESULT=num; :};
-        
-
-OP3::= 
-      OP3 COMA OP4
-      | OP4;
-
-OP4::=  OP_ESTADISTICA
-        |OP_ARITMETICA
-        |NUMERO ;
-
-
-
-
 // ---------------------------->imprimir un ARREGLO<---------------------------------------------
 
 IMPRIMIR_ARRAY ::= CONSOLE DOSPUNTOS DOSPUNTOS COLUMN IGUAL EXP_TITULO ASSIGN2 COR_IZQ EXP_SUCESIVAS: exp_s {: RESULT = new print(exp_s,exp_sright, exp_sleft); :} COR_DER ; 
 
     EXP_TITULO ::= CADENA | ID;
+
+
+
+//--------------------------->Operaciones ARITMETICAS Y ESTADISTICAS<-----------------------------------------------------------
+
+OP_ARITMETICA ::= 
+                 sum: sum PAR_IZQ OP:val PAR_DER {:double resultado = funcionesUsar.operacionAritmetica(sum, val.toString()); RESULT =resultado;:}
+               | res: res PAR_IZQ OP:val PAR_DER {:double resultado = funcionesUsar.operacionAritmetica(res, val.toString()); RESULT =resultado;:}
+               | mul: mul PAR_IZQ OP:val PAR_DER {:double resultado = funcionesUsar.operacionAritmetica(mul, val.toString()); RESULT =resultado;:}
+               | mod: mod PAR_IZQ OP:val PAR_DER {:double resultado = funcionesUsar.operacionAritmetica(mod, val.toString()); RESULT =resultado;:}
+               | div: div PAR_IZQ OP:val PAR_DER {:double resultado = funcionesUsar.operacionAritmetica(div, val.toString()); RESULT =resultado;:};
+
+OP_ESTADISTICA::= media:media        PAR_IZQ COR_IZQ OP3:val COR_DER PAR_DER {:double resultado = funcionesUsar.operacionEstadistica(media, val.toString()); RESULT =resultado;:}
+                | mediana:mediana    PAR_IZQ COR_IZQ OP3:val COR_DER PAR_DER {:double resultado = funcionesUsar.operacionEstadistica(mediana, val.toString()); RESULT =resultado;:}
+                | moda:moda          PAR_IZQ COR_IZQ OP3:val COR_DER PAR_DER {:double resultado = funcionesUsar.operacionEstadistica(moda, val.toString()); RESULT =resultado;:}
+                | varianza: varianza PAR_IZQ COR_IZQ OP3:val COR_DER PAR_DER {:double resultado = funcionesUsar.operacionEstadistica(varianza, val.toString()); RESULT =resultado;:}
+                | max: max           PAR_IZQ COR_IZQ OP3:val COR_DER PAR_DER {:double resultado = funcionesUsar.operacionEstadistica(max, val.toString()); RESULT =resultado;:}
+                | min: min           PAR_IZQ COR_IZQ OP3:val COR_DER PAR_DER {:double resultado = funcionesUsar.operacionEstadistica(min, val.toString()); RESULT =resultado;:};
+
+
+
+OP::= 
+      OP:val1 COMA OP2: val2 {:RESULT = val1.toString()+"="+val2.toString();:}
+      | OP2:val {:RESULT =val;:};
+
+OP2::= OP_ARITMETICA:resuAri {:RESULT= resuAri;:}
+        | OP_ESTADISTICA {::}
+        |NUMERO: num {:RESULT=num; :};
+        
+
+OP3::= 
+       OP3:val1 COMA OP4: val2 {:RESULT = val1.toString()+"="+val2.toString();:}
+      | OP4:val {:RESULT =val;:};
+
+OP4::=  OP_ESTADISTICA: resuEst {:RESULT= resuEst; :}
+        |OP_ARITMETICA: num {:RESULT =num; :}
+        |NUMERO:  num {:RESULT=num; :};
+
+
+//----------------------------------------------------------------------------------------------------------------------------------------
+
 
 
 
@@ -221,25 +209,20 @@ EXP_SUCESIVAS::= EXP_SUCESIVAS:exp_s COMA valores_print: val {: RESULT = exp_s; 
 
 
 
-             
 
-//EXP ::= sum PAR_IZQ valores_variable COMA valores_variable PAR_DER {: :}
-//        |res PAR_IZQ valores_variable COMA valores_variable PAR_DER {: :};
-
-valores_print::=            NUMERO: num {:RESULT = new Valores(num,Valores.Datatype.DECIMAL,numright,numleft); :}
+valores_print::=      NUMERO: num {:RESULT = new Valores(num,Valores.Datatype.DECIMAL,numright,numleft); :}
                     | CADENA: cad {:RESULT = new Valores(cad,Valores.Datatype.CADENA,cadright,cadleft); :}
-                    | OP_ARITMETICA {::};
+                    | OP_ARITMETICA:opeari {:RESULT = new Valores(opeari.toString(),Valores.Datatype.DECIMAL,opeariright,opearileft); :}
+                    | OP_ESTADISTICA:opeEst {:RESULT = new Valores(opeEst.toString(),Valores.Datatype.DECIMAL,opeEstright,opeEstleft); :};
                     //| ID: id_var {: RESULT= miDeclaracion.obtenerValorPorID(id_var); :};
 
 valores_variable ::= NUMERO: numero {: RESULT = numero; :}
                    |CADENA: cadena {: RESULT = cadena; :}
-                  | OP_ARITMETICA {:RESULT= "prueba";:}
-                  |OP_ESTADISTICA {:RESULT= "prueba2";:};
+                  |OP_ARITMETICA: operAri {:RESULT= operAri;:}
+                  |OP_ESTADISTICA: operEst {:RESULT= operEst;:};
                   //| ID: var {::};
 
 
-//LLAMADA_EXP::= ID_VARIABLE PAR_IZQ EXP_SUCESIVAS PAR_DER
- //                               |ID_VARIABLE PAR_IZQ PAR_DER;
-//valores_PRINT::= Dec_Arreglo;
+
 
                             

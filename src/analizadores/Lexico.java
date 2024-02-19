@@ -109,18 +109,18 @@ public class Lexico implements java_cup.runtime.Scanner {
     "\1\0\1\1\1\2\1\3\2\1\1\4\1\5\1\6"+
     "\1\1\1\7\1\10\1\11\1\1\1\12\1\13\12\14"+
     "\1\15\1\16\1\1\2\3\1\0\1\17\1\0\1\20"+
-    "\2\0\1\21\5\14\1\0\11\14\1\0\1\7\1\0"+
-    "\1\22\3\14\1\23\1\14\1\23\1\24\1\25\1\14"+
-    "\1\26\1\27\2\14\1\0\2\30\1\31\1\32\1\31"+
-    "\1\33\3\14\1\0\1\14\1\0\1\14\1\0\1\34"+
-    "\2\14\1\0\1\14\2\0\2\14\1\0\1\14\1\0"+
-    "\2\35\1\36\1\14\1\36\1\14\1\0\1\37\1\40"+
-    "\1\14\1\0\1\41\1\0\1\14\1\0\2\14\1\0"+
-    "\2\42\1\0\2\43\1\44\1\14\2\0\2\45\2\0"+
-    "\1\46";
+    "\2\0\1\21\5\14\1\0\6\14\1\0\4\14\1\0"+
+    "\1\7\1\0\1\22\3\14\1\23\1\14\1\23\1\24"+
+    "\1\25\1\14\1\26\1\27\1\30\1\26\2\14\1\0"+
+    "\2\31\1\32\1\33\1\32\1\34\3\14\1\0\1\14"+
+    "\1\0\1\14\1\0\1\35\2\14\1\0\1\14\2\0"+
+    "\2\14\1\0\1\14\1\0\2\36\1\37\1\14\1\37"+
+    "\1\14\1\0\1\40\1\41\1\14\1\0\1\42\1\0"+
+    "\1\14\1\0\2\14\1\0\2\43\1\0\2\44\1\45"+
+    "\1\14\2\0\2\46\2\0\1\47";
 
   private static int [] zzUnpackAction() {
-    int [] result = new int[129];
+    int [] result = new int[133];
     int offset = 0;
     offset = zzUnpackAction(ZZ_ACTION_PACKED_0, offset, result);
     return result;
@@ -151,20 +151,20 @@ public class Lexico implements java_cup.runtime.Scanner {
     "\0\u030e\0\u033c\0\56\0\56\0\u036a\0\56\0\u0398\0\270"+
     "\0\56\0\346\0\56\0\u03c6\0\u03f4\0\56\0\u0422\0\u0450"+
     "\0\u047e\0\u04ac\0\u04da\0\u0508\0\u0536\0\u0564\0\u0592\0\u05c0"+
-    "\0\u05ee\0\u061c\0\u064a\0\u0678\0\u06a6\0\u06d4\0\u03c6\0\u0702"+
-    "\0\u01cc\0\u0730\0\u075e\0\u078c\0\u01cc\0\u07ba\0\56\0\u07e8"+
-    "\0\u01cc\0\u0816\0\u0844\0\u01cc\0\u0872\0\u08a0\0\u08ce\0\u01cc"+
-    "\0\56\0\u01cc\0\u08fc\0\56\0\u03f4\0\u092a\0\u0958\0\u0986"+
-    "\0\u09b4\0\u09e2\0\u0a10\0\u0a3e\0\u0a6c\0\u01cc\0\u0a9a\0\u0ac8"+
-    "\0\u0af6\0\u0b24\0\u0b52\0\u0b80\0\u0bae\0\u0bdc\0\u0c0a\0\u0c38"+
-    "\0\u0c66\0\u0c94\0\u0cc2\0\u01cc\0\u0cf0\0\56\0\u0d1e\0\u0d4c"+
-    "\0\56\0\u01cc\0\u0d7a\0\u0da8\0\u01cc\0\u0dd6\0\u0e04\0\u0e32"+
-    "\0\u0e60\0\u0e8e\0\u0ebc\0\u01cc\0\56\0\u0eea\0\u01cc\0\56"+
-    "\0\u01cc\0\u0f18\0\u0f46\0\u0f74\0\u01cc\0\56\0\u0fa2\0\u0fd0"+
-    "\0\56";
+    "\0\u05ee\0\u061c\0\u064a\0\u0678\0\u06a6\0\u06d4\0\u0702\0\u0730"+
+    "\0\u03c6\0\u075e\0\u01cc\0\u078c\0\u07ba\0\u07e8\0\u01cc\0\u0816"+
+    "\0\56\0\u0844\0\u01cc\0\u0872\0\u01cc\0\u08a0\0\u01cc\0\56"+
+    "\0\u08ce\0\u08fc\0\u092a\0\u01cc\0\56\0\u01cc\0\u0958\0\56"+
+    "\0\u03f4\0\u0986\0\u09b4\0\u09e2\0\u0a10\0\u0a3e\0\u0a6c\0\u0a9a"+
+    "\0\u0ac8\0\u01cc\0\u0af6\0\u0b24\0\u0b52\0\u0b80\0\u0bae\0\u0bdc"+
+    "\0\u0c0a\0\u0c38\0\u0c66\0\u0c94\0\u0cc2\0\u0cf0\0\u0d1e\0\u01cc"+
+    "\0\u0d4c\0\56\0\u0d7a\0\u0da8\0\56\0\u01cc\0\u0dd6\0\u0e04"+
+    "\0\u01cc\0\u0e32\0\u0e60\0\u0e8e\0\u0ebc\0\u0eea\0\u0f18\0\u01cc"+
+    "\0\56\0\u0f46\0\u01cc\0\56\0\u01cc\0\u0f74\0\u0fa2\0\u0fd0"+
+    "\0\u01cc\0\56\0\u0ffe\0\u102c\0\56";
 
   private static int [] zzUnpackRowMap() {
-    int [] result = new int[129];
+    int [] result = new int[133];
     int offset = 0;
     offset = zzUnpackRowMap(ZZ_ROWMAP_PACKED_0, offset, result);
     return result;
@@ -199,54 +199,56 @@ public class Lexico implements java_cup.runtime.Scanner {
     "\22\0\1\22\6\0\7\22\1\50\4\22\1\51\10\22"+
     "\22\0\1\22\6\0\10\22\1\52\3\22\1\53\10\22"+
     "\2\0\1\54\17\0\1\22\6\0\13\22\1\55\11\22"+
-    "\22\0\1\22\6\0\1\56\3\22\1\57\7\22\1\60"+
-    "\4\22\1\61\3\22\22\0\1\22\6\0\16\22\1\62"+
-    "\6\22\22\0\1\22\6\0\4\22\1\63\20\22\22\0"+
-    "\1\22\6\0\21\22\1\64\3\22\22\0\1\22\6\0"+
-    "\1\65\24\22\52\0\1\66\11\0\1\36\71\0\1\67"+
-    "\37\0\6\45\1\70\47\45\16\0\1\22\6\0\16\22"+
-    "\1\71\6\22\22\0\1\22\6\0\1\72\24\22\22\0"+
-    "\1\22\6\0\11\22\1\73\1\22\1\74\11\22\22\0"+
-    "\1\22\6\0\22\22\1\75\2\22\22\0\1\22\6\0"+
-    "\21\22\1\76\3\22\53\0\1\77\24\0\1\22\6\0"+
-    "\3\22\1\100\21\22\22\0\1\22\6\0\23\22\1\101"+
-    "\1\22\22\0\1\22\6\0\3\22\1\102\21\22\22\0"+
-    "\1\22\6\0\3\22\1\103\21\22\22\0\1\22\6\0"+
-    "\11\22\1\104\13\22\22\0\1\22\6\0\10\22\1\105"+
-    "\3\22\1\106\10\22\2\0\1\107\17\0\1\22\6\0"+
-    "\17\22\1\110\5\22\3\0\1\111\16\0\1\22\6\0"+
-    "\12\22\1\112\12\22\22\0\1\22\6\0\16\22\1\113"+
-    "\6\22\43\0\1\114\16\0\6\45\1\70\14\45\1\115"+
-    "\32\45\16\0\1\22\6\0\16\22\1\116\6\22\22\0"+
-    "\1\22\6\0\21\22\1\117\3\22\22\0\1\22\6\0"+
-    "\17\22\1\120\5\22\3\0\1\121\16\0\1\22\6\0"+
-    "\1\22\1\122\23\22\11\0\1\123\10\0\1\22\6\0"+
-    "\25\22\22\0\1\22\6\0\10\22\1\124\14\22\2\0"+
-    "\1\125\17\0\1\22\6\0\1\126\24\22\22\0\1\22"+
-    "\6\0\13\22\1\127\11\22\22\0\1\22\6\0\6\22"+
-    "\1\130\16\22\44\0\1\131\33\0\1\22\6\0\10\22"+
-    "\1\132\14\22\2\0\1\133\17\0\1\22\6\0\25\22"+
-    "\1\134\21\0\1\22\6\0\12\22\1\135\12\22\22\0"+
-    "\1\22\6\0\14\22\1\136\10\22\45\0\1\137\32\0"+
-    "\1\22\6\0\11\22\1\140\13\22\46\0\1\141\31\0"+
-    "\1\22\6\0\1\142\24\22\31\0\1\143\46\0\1\22"+
-    "\6\0\20\22\1\144\4\22\22\0\1\22\6\0\16\22"+
-    "\1\145\6\22\51\0\1\146\26\0\1\22\6\0\1\147"+
-    "\24\22\31\0\1\150\103\0\1\151\20\0\1\22\6\0"+
-    "\13\22\1\152\11\22\22\0\1\22\6\0\11\22\1\153"+
-    "\13\22\42\0\1\154\35\0\1\22\6\0\4\22\1\155"+
-    "\20\22\47\0\1\156\30\0\1\22\6\0\13\22\1\157"+
-    "\11\22\44\0\1\160\33\0\1\22\6\0\1\161\24\22"+
-    "\22\0\1\22\6\0\13\22\1\162\11\22\44\0\1\163"+
-    "\33\0\1\22\6\0\4\22\1\164\20\22\35\0\1\165"+
-    "\65\0\1\166\32\0\1\22\6\0\1\167\24\22\31\0"+
-    "\1\170\46\0\1\22\6\0\12\22\1\171\12\22\22\0"+
-    "\1\22\6\0\24\22\1\172\55\0\1\173\37\0\1\174"+
-    "\40\0\1\22\6\0\1\175\24\22\31\0\1\176\73\0"+
-    "\1\177\37\0\1\200\67\0\1\201\16\0";
+    "\22\0\1\22\6\0\1\56\3\22\1\57\3\22\1\60"+
+    "\3\22\1\61\4\22\1\62\3\22\2\0\1\63\17\0"+
+    "\1\22\6\0\16\22\1\64\6\22\22\0\1\22\6\0"+
+    "\4\22\1\65\20\22\22\0\1\22\6\0\21\22\1\66"+
+    "\3\22\22\0\1\22\6\0\1\67\24\22\52\0\1\70"+
+    "\11\0\1\36\71\0\1\71\37\0\6\45\1\72\47\45"+
+    "\16\0\1\22\6\0\16\22\1\73\6\22\22\0\1\22"+
+    "\6\0\1\74\24\22\22\0\1\22\6\0\11\22\1\75"+
+    "\1\22\1\76\11\22\22\0\1\22\6\0\22\22\1\77"+
+    "\2\22\22\0\1\22\6\0\21\22\1\100\3\22\53\0"+
+    "\1\101\24\0\1\22\6\0\3\22\1\102\21\22\22\0"+
+    "\1\22\6\0\23\22\1\103\1\22\22\0\1\22\6\0"+
+    "\3\22\1\104\21\22\22\0\1\22\6\0\13\22\1\105"+
+    "\11\22\22\0\1\22\6\0\3\22\1\106\21\22\22\0"+
+    "\1\22\6\0\11\22\1\107\13\22\44\0\1\110\33\0"+
+    "\1\22\6\0\10\22\1\111\3\22\1\112\10\22\2\0"+
+    "\1\113\17\0\1\22\6\0\17\22\1\114\5\22\3\0"+
+    "\1\115\16\0\1\22\6\0\12\22\1\116\12\22\22\0"+
+    "\1\22\6\0\16\22\1\117\6\22\43\0\1\120\16\0"+
+    "\6\45\1\72\14\45\1\121\32\45\16\0\1\22\6\0"+
+    "\16\22\1\122\6\22\22\0\1\22\6\0\21\22\1\123"+
+    "\3\22\22\0\1\22\6\0\17\22\1\124\5\22\3\0"+
+    "\1\125\16\0\1\22\6\0\1\22\1\126\23\22\11\0"+
+    "\1\127\10\0\1\22\6\0\25\22\22\0\1\22\6\0"+
+    "\10\22\1\130\14\22\2\0\1\131\17\0\1\22\6\0"+
+    "\1\132\24\22\22\0\1\22\6\0\13\22\1\133\11\22"+
+    "\22\0\1\22\6\0\6\22\1\134\16\22\44\0\1\135"+
+    "\33\0\1\22\6\0\10\22\1\136\14\22\2\0\1\137"+
+    "\17\0\1\22\6\0\25\22\1\140\21\0\1\22\6\0"+
+    "\12\22\1\141\12\22\22\0\1\22\6\0\14\22\1\142"+
+    "\10\22\45\0\1\143\32\0\1\22\6\0\11\22\1\144"+
+    "\13\22\46\0\1\145\31\0\1\22\6\0\1\146\24\22"+
+    "\31\0\1\147\46\0\1\22\6\0\20\22\1\150\4\22"+
+    "\22\0\1\22\6\0\16\22\1\151\6\22\51\0\1\152"+
+    "\26\0\1\22\6\0\1\153\24\22\31\0\1\154\103\0"+
+    "\1\155\20\0\1\22\6\0\13\22\1\156\11\22\22\0"+
+    "\1\22\6\0\11\22\1\157\13\22\42\0\1\160\35\0"+
+    "\1\22\6\0\4\22\1\161\20\22\47\0\1\162\30\0"+
+    "\1\22\6\0\13\22\1\163\11\22\44\0\1\164\33\0"+
+    "\1\22\6\0\1\165\24\22\22\0\1\22\6\0\13\22"+
+    "\1\166\11\22\44\0\1\167\33\0\1\22\6\0\4\22"+
+    "\1\170\20\22\35\0\1\171\65\0\1\172\32\0\1\22"+
+    "\6\0\1\173\24\22\31\0\1\174\46\0\1\22\6\0"+
+    "\12\22\1\175\12\22\22\0\1\22\6\0\24\22\1\176"+
+    "\55\0\1\177\37\0\1\200\40\0\1\22\6\0\1\201"+
+    "\24\22\31\0\1\202\73\0\1\203\37\0\1\204\67\0"+
+    "\1\205\16\0";
 
   private static int [] zzUnpacktrans() {
-    int [] result = new int[4094];
+    int [] result = new int[4186];
     int offset = 0;
     offset = zzUnpacktrans(ZZ_TRANS_PACKED_0, offset, result);
     return result;
@@ -291,16 +293,17 @@ public class Lexico implements java_cup.runtime.Scanner {
   private static final String ZZ_ATTRIBUTE_PACKED_0 =
     "\1\0\1\11\4\1\3\11\2\1\2\11\1\1\2\11"+
     "\12\1\2\11\1\1\1\11\1\1\1\0\1\11\1\0"+
-    "\1\11\2\0\1\11\5\1\1\0\11\1\1\0\1\1"+
-    "\1\0\6\1\1\11\7\1\1\0\1\1\1\11\2\1"+
-    "\1\11\4\1\1\0\1\1\1\0\1\1\1\0\3\1"+
-    "\1\0\1\1\2\0\2\1\1\0\1\1\1\0\4\1"+
-    "\1\11\1\1\1\0\1\11\2\1\1\0\1\1\1\0"+
-    "\1\1\1\0\2\1\1\0\1\1\1\11\1\0\1\1"+
-    "\1\11\2\1\2\0\1\1\1\11\2\0\1\11";
+    "\1\11\2\0\1\11\5\1\1\0\6\1\1\0\4\1"+
+    "\1\0\1\1\1\0\6\1\1\11\6\1\1\11\2\1"+
+    "\1\0\1\1\1\11\2\1\1\11\4\1\1\0\1\1"+
+    "\1\0\1\1\1\0\3\1\1\0\1\1\2\0\2\1"+
+    "\1\0\1\1\1\0\4\1\1\11\1\1\1\0\1\11"+
+    "\2\1\1\0\1\1\1\0\1\1\1\0\2\1\1\0"+
+    "\1\1\1\11\1\0\1\1\1\11\2\1\2\0\1\1"+
+    "\1\11\2\0\1\11";
 
   private static int [] zzUnpackAttribute() {
-    int [] result = new int[129];
+    int [] result = new int[133];
     int offset = 0;
     offset = zzUnpackAttribute(ZZ_ATTRIBUTE_PACKED_0, offset, result);
     return result;
@@ -811,17 +814,17 @@ public class Lexico implements java_cup.runtime.Scanner {
                         errLex.add(tmp);
             }
           // fall through
-          case 39: break;
+          case 40: break;
           case 2:
             { 
             }
           // fall through
-          case 40: break;
+          case 41: break;
           case 3:
             { System.out.println("Reconocio comentario una linea,lexema: "+yytext());
             }
           // fall through
-          case 41: break;
+          case 42: break;
           case 4:
             { System.out.println("Reconocio PARENTESIS IZQ ,lexema: "+yytext());
             Token tmp = new Token(yytext(),"delimitador");
@@ -829,7 +832,7 @@ public class Lexico implements java_cup.runtime.Scanner {
             return new Symbol(sym.PAR_IZQ, yycolumn, yyline, yytext());
             }
           // fall through
-          case 42: break;
+          case 43: break;
           case 5:
             { System.out.println("Reconocio PARENTESIS DER ,lexema: "+yytext());  
             Token tmp = new Token(yytext(),"delimitador");
@@ -837,7 +840,7 @@ public class Lexico implements java_cup.runtime.Scanner {
             return new Symbol(sym.PAR_DER, yycolumn, yyline, yytext());
             }
           // fall through
-          case 43: break;
+          case 44: break;
           case 6:
             { System.out.println("Reconocio coma ,lexema: "+yytext());
             Token tmp = new Token(yytext(),"delimitador");
@@ -845,7 +848,7 @@ public class Lexico implements java_cup.runtime.Scanner {
             return new Symbol(sym.COMA, yycolumn, yyline, yytext());
             }
           // fall through
-          case 44: break;
+          case 45: break;
           case 7:
             { System.out.println("Reconocio un numero,lexema: "+yytext());
                 Token tmp = new Token(yytext(),"Numero");
@@ -853,7 +856,7 @@ public class Lexico implements java_cup.runtime.Scanner {
                return new Symbol(sym.NUMERO, yycolumn, yyline, yytext());
             }
           // fall through
-          case 45: break;
+          case 46: break;
           case 8:
             { System.out.println("Reconocio Dos puntos ,lexema: "+yytext());
             Token tmp = new Token(yytext(),"delimitador");
@@ -861,7 +864,7 @@ public class Lexico implements java_cup.runtime.Scanner {
             return new Symbol(sym.DOSPUNTOS, yycolumn, yyline, yytext());
             }
           // fall through
-          case 46: break;
+          case 47: break;
           case 9:
             { System.out.println("Reconocio punto y coma,lexema: "+yytext());
 
@@ -870,7 +873,7 @@ public class Lexico implements java_cup.runtime.Scanner {
             return new Symbol(sym.PUNTOYCOMA, yycolumn, yyline, yytext());
             }
           // fall through
-          case 47: break;
+          case 48: break;
           case 10:
             { System.out.println("Reconocio Signo igual ,lexema: "+yytext());
             Token tmp = new Token(yytext(),"operador");
@@ -878,7 +881,7 @@ public class Lexico implements java_cup.runtime.Scanner {
             return new Symbol(sym.IGUAL, yycolumn, yyline, yytext());
             }
           // fall through
-          case 48: break;
+          case 49: break;
           case 11:
             { System.out.println("Reconocio ARROBA  ,lexema: "+yytext());
             Token tmp = new Token(yytext(),"simbolo");
@@ -886,7 +889,7 @@ public class Lexico implements java_cup.runtime.Scanner {
             return new Symbol(sym.ARROBA, yycolumn, yyline, yytext());
             }
           // fall through
-          case 49: break;
+          case 50: break;
           case 12:
             { System.out.println("Reconocio el id de una declaracion de variable,lexema: "+yytext());
             Token tmp = new Token(yytext(),"ID VARIABLE");
@@ -894,7 +897,7 @@ public class Lexico implements java_cup.runtime.Scanner {
               return new Symbol(sym.ID, yycolumn, yyline, yytext());
             }
           // fall through
-          case 50: break;
+          case 51: break;
           case 13:
             { System.out.println("Reconocio Corchete izquierdo ,lexema: "+yytext());
             Token tmp = new Token(yytext(),"delimitador");
@@ -902,7 +905,7 @@ public class Lexico implements java_cup.runtime.Scanner {
             return new Symbol(sym.COR_IZQ, yycolumn, yyline, yytext());
             }
           // fall through
-          case 51: break;
+          case 52: break;
           case 14:
             { System.out.println("Reconocio Corchete derecho ,lexema: "+yytext());
             Token tmp = new Token(yytext(),"delimitador");
@@ -910,7 +913,7 @@ public class Lexico implements java_cup.runtime.Scanner {
             return new Symbol(sym.COR_DER, yycolumn, yyline, yytext());
             }
           // fall through
-          case 52: break;
+          case 53: break;
           case 15:
             { System.out.println("Reconocio una cadena,lexema: "+yytext());
                 Token tmp = new Token(yytext(),"Cadena");
@@ -918,7 +921,7 @@ public class Lexico implements java_cup.runtime.Scanner {
                  return new Symbol(sym.CADENA, yycolumn, yyline, yytext());
             }
           // fall through
-          case 53: break;
+          case 54: break;
           case 16:
             { System.out.println("Reconocio Assignacion llave derecha  ,lexema: "+yytext());
             Token tmp = new Token(yytext(),"delimitador");
@@ -926,7 +929,7 @@ public class Lexico implements java_cup.runtime.Scanner {
             return new Symbol(sym.ASSIGN2, yycolumn, yyline, yytext());
             }
           // fall through
-          case 54: break;
+          case 55: break;
           case 17:
             { System.out.println("Reconocio Assignacion llave ,lexema: "+yytext());
             Token tmp = new Token(yytext(),"delimitador");
@@ -934,7 +937,7 @@ public class Lexico implements java_cup.runtime.Scanner {
             return new Symbol(sym.ASSIGN, yycolumn, yyline, yytext());
             }
           // fall through
-          case 55: break;
+          case 56: break;
           case 18:
             { System.out.println("Reconocio palabra ,lexema: "+yytext());
                     Token tmp = new Token(yytext(),"Palabra Reservada");
@@ -942,7 +945,7 @@ public class Lexico implements java_cup.runtime.Scanner {
                     return new Symbol(sym.ARR, yycolumn, yyline, yytext());
             }
           // fall through
-          case 56: break;
+          case 57: break;
           case 19:
             { System.out.println("Reconocio palabra ,lexema: "+yytext());
                     Token tmp = new Token(yytext(),"Palabra Reservada");
@@ -950,7 +953,7 @@ public class Lexico implements java_cup.runtime.Scanner {
                        return new Symbol(sym.div, yycolumn, yyline, yytext());
             }
           // fall through
-          case 57: break;
+          case 58: break;
           case 20:
             { System.out.println("Reconocio palabra ,lexema: "+yytext());
                     Token tmp = new Token(yytext(),"Palabra Reservada");
@@ -958,7 +961,7 @@ public class Lexico implements java_cup.runtime.Scanner {
                         return new Symbol(sym.END, yycolumn, yyline, yytext());
             }
           // fall through
-          case 58: break;
+          case 59: break;
           case 21:
             { System.out.println("Reconocio palabra ,lexema: "+yytext());
                     Token tmp = new Token(yytext(),"Palabra Reservada");
@@ -966,140 +969,148 @@ public class Lexico implements java_cup.runtime.Scanner {
                        return new Symbol(sym.max, yycolumn, yyline, yytext());
             }
           // fall through
-          case 59: break;
+          case 60: break;
           case 22:
+            { System.out.println("Reconocio palabra ,lexema: "+yytext());
+                    Token tmp = new Token(yytext(),"Palabra Reservada");
+                    tokLex.add(tmp);
+                           return new Symbol(sym.min, yycolumn, yyline, yytext());
+            }
+          // fall through
+          case 61: break;
+          case 23:
             { System.out.println("Reconocio palabra ,lexema: "+yytext());
                     Token tmp = new Token(yytext(),"Palabra Reservada");
                     tokLex.add(tmp);
                        return new Symbol(sym.mod, yycolumn, yyline, yytext());
             }
           // fall through
-          case 60: break;
-          case 23:
+          case 62: break;
+          case 24:
             { System.out.println("Reconocio palabra ,lexema: "+yytext());
                     Token tmp = new Token(yytext(),"Palabra Reservada");
                     tokLex.add(tmp);
                        return new Symbol(sym.mul, yycolumn, yyline, yytext());
             }
           // fall through
-          case 61: break;
-          case 24:
+          case 63: break;
+          case 25:
             { System.out.println("Reconocio palabra ,lexema: "+yytext());
                     Token tmp = new Token(yytext(),"Palabra Reservada");
                     tokLex.add(tmp);
                        return new Symbol(sym.res, yycolumn, yyline, yytext());
             }
           // fall through
-          case 62: break;
-          case 25:
+          case 64: break;
+          case 26:
             { System.out.println("Reconocio palabra ,lexema: "+yytext());
                     Token tmp = new Token(yytext(),"Palabra Reservada");
                     tokLex.add(tmp);
                        return new Symbol(sym.sum, yycolumn, yyline, yytext());
             }
           // fall through
-          case 63: break;
-          case 26:
+          case 65: break;
+          case 27:
             { System.out.println("Reconocio palabra ,lexema: "+yytext());
                     Token tmp = new Token(yytext(),"Palabra Reservada");
                     tokLex.add(tmp);
                       return new Symbol(sym.VAR, yycolumn, yyline, yytext());
             }
           // fall through
-          case 64: break;
-          case 27:
+          case 66: break;
+          case 28:
             { System.out.println("Reconocio comentario multi linea: "+yytext());
             }
           // fall through
-          case 65: break;
-          case 28:
+          case 67: break;
+          case 29:
             { System.out.println("Reconocio palabra ,lexema: "+yytext());
                     Token tmp = new Token(yytext(),"Palabra Reservada");
                     tokLex.add(tmp);
                        return new Symbol(sym.moda, yycolumn, yyline, yytext());
             }
           // fall through
-          case 66: break;
-          case 29:
+          case 68: break;
+          case 30:
             { System.out.println("Reconocio palabra ,lexema: "+yytext());
                     Token tmp = new Token(yytext(),"Palabra Reservada");
                     tokLex.add(tmp);
                        return new Symbol(sym.media, yycolumn, yyline, yytext());
             }
           // fall through
-          case 67: break;
-          case 30:
+          case 69: break;
+          case 31:
             { System.out.println("Reconocio palabra ,lexema: "+yytext());
                     Token tmp = new Token(yytext(),"Palabra Reservada");
                     tokLex.add(tmp);
                        return new Symbol(sym.PRINT, yycolumn, yyline, yytext());
             }
           // fall through
-          case 68: break;
-          case 31:
+          case 70: break;
+          case 32:
             { System.out.println("Reconocio tipo de dato ,lexema: "+yytext());
                     Token tmp = new Token(yytext(),"Palabra Reservada");
                     tokLex.add(tmp);
                     return new Symbol(sym.CHAR, yycolumn, yyline, yytext());
             }
           // fall through
-          case 69: break;
-          case 32:
+          case 71: break;
+          case 33:
             { System.out.println("Reconocio palabra ,lexema: "+yytext());
                     Token tmp = new Token(yytext(),"Palabra Reservada");
                     tokLex.add(tmp);
                        return new Symbol(sym.COLUMN, yycolumn, yyline, yytext());
             }
           // fall through
-          case 70: break;
-          case 33:
+          case 72: break;
+          case 34:
             { System.out.println("Reconocio tipo de dato ,lexema: "+yytext());
                     Token tmp = new Token(yytext(),"Palabra Reservada");
                     tokLex.add(tmp);
                     return new Symbol(sym.DOUBLE, yycolumn, yyline, yytext());
             }
           // fall through
-          case 71: break;
-          case 34:
+          case 73: break;
+          case 35:
             { System.out.println("Reconocio palabra ,lexema: "+yytext());
                     Token tmp = new Token(yytext(),"Palabra Reservada");
                     tokLex.add(tmp);
                        return new Symbol(sym.CONSOLE, yycolumn, yyline, yytext());
             }
           // fall through
-          case 72: break;
-          case 35:
+          case 74: break;
+          case 36:
             { System.out.println("Reconocio palabra ,lexema: "+yytext());
                     Token tmp = new Token(yytext(),"Palabra Reservada");
                     tokLex.add(tmp);
                        return new Symbol(sym.mediana, yycolumn, yyline, yytext());
             }
           // fall through
-          case 73: break;
-          case 36:
+          case 75: break;
+          case 37:
             { System.out.println("Reconocio palabra ,lexema: "+yytext());
                     Token tmp = new Token(yytext(),"Palabra Reservada");
                     tokLex.add(tmp);
                        return new Symbol(sym.PROGRAM, yycolumn, yyline, yytext());
             }
           // fall through
-          case 74: break;
-          case 37:
+          case 76: break;
+          case 38:
             { System.out.println("Reconocio palabra ,lexema: "+yytext());
                     Token tmp = new Token(yytext(),"Palabra Reservada");
                     tokLex.add(tmp);
                        return new Symbol(sym.varianza, yycolumn, yyline, yytext());
             }
           // fall through
-          case 75: break;
-          case 38:
+          case 77: break;
+          case 39:
             { System.out.println("Reconocio palabra ,lexema: "+yytext());
                     Token tmp = new Token(yytext(),"Palabra Reservada");
                     tokLex.add(tmp);
                     return new Symbol(sym.ENDPROGRAM, yycolumn, yyline, yytext());
             }
           // fall through
-          case 76: break;
+          case 78: break;
           default:
             zzScanError(ZZ_NO_MATCH);
         }
