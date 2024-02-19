@@ -8,38 +8,44 @@ package analizadores;
 /** CUP generated class containing symbol constants. */
 public class sym {
   /* terminals */
-  public static final int PUNTOYCOMA = 10;
-  public static final int ARR = 28;
-  public static final int sum = 20;
-  public static final int DOSPUNTOS = 9;
-  public static final int CADENA = 3;
-  public static final int IGUAL = 16;
-  public static final int CHAR = 27;
-  public static final int COLUMN = 14;
-  public static final int ASSIGN2 = 8;
-  public static final int END = 29;
-  public static final int CONSOLE = 13;
-  public static final int ID = 11;
-  public static final int PROGRAM = 30;
-  public static final int COMA = 4;
-  public static final int div = 24;
-  public static final int EOF = 0;
-  public static final int ID_ARRAY = 12;
-  public static final int ENDPROGRAM = 31;
-  public static final int PAR_IZQ = 17;
-  public static final int PRINT = 15;
-  public static final int error = 1;
-  public static final int NUMERO = 2;
   public static final int PAR_DER = 18;
-  public static final int ASSIGN = 7;
-  public static final int COR_IZQ = 5;
+  public static final int NUMERO = 2;
+  public static final int DOSPUNTOS = 9;
   public static final int mul = 22;
-  public static final int COR_DER = 6;
-  public static final int ARROBA = 19;
-  public static final int VAR = 25;
+  public static final int ASSIGN2 = 8;
+  public static final int CHAR = 33;
   public static final int mod = 23;
-  public static final int DOUBLE = 26;
+  public static final int PUNTOYCOMA = 10;
+  public static final int ID_ARRAY = 12;
+  public static final int DOUBLE = 32;
+  public static final int COR_DER = 6;
+  public static final int moda = 27;
+  public static final int IGUAL = 16;
+  public static final int COLUMN = 14;
+  public static final int sum = 20;
+  public static final int ARROBA = 19;
+  public static final int ENDPROGRAM = 37;
+  public static final int ASSIGN = 7;
+  public static final int max = 29;
+  public static final int ID = 11;
+  public static final int EOF = 0;
+  public static final int PROGRAM = 36;
+  public static final int error = 1;
+  public static final int COMA = 4;
+  public static final int CADENA = 3;
+  public static final int PAR_IZQ = 17;
   public static final int res = 21;
+  public static final int media = 25;
+  public static final int COR_IZQ = 5;
+  public static final int varianza = 28;
+  public static final int END = 35;
+  public static final int ARR = 34;
+  public static final int div = 24;
+  public static final int min = 30;
+  public static final int VAR = 31;
+  public static final int PRINT = 15;
+  public static final int CONSOLE = 13;
+  public static final int mediana = 26;
   public static final String[] terminalNames = new String[] {
   "EOF",
   "error",
@@ -66,6 +72,12 @@ public class sym {
   "mul",
   "mod",
   "div",
+  "media",
+  "mediana",
+  "moda",
+  "varianza",
+  "max",
+  "min",
   "VAR",
   "DOUBLE",
   "CHAR",

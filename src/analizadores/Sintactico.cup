@@ -92,7 +92,7 @@ action code
 //------> Declaración de terminales
 terminal String NUMERO,CADENA,COMA,COR_IZQ,COR_DER,ASSIGN,ASSIGN2,DOSPUNTOS,PUNTOYCOMA;
 terminal String ID,ID_ARRAY,CONSOLE,COLUMN,PRINT,IGUAL,PAR_IZQ,PAR_DER,ARROBA;
-terminal String sum,res,mul,mod,div;
+terminal String sum,res,mul,mod,div,media,mediana,moda,varianza,max,min;
 terminal String VAR,DOUBLE,CHAR,ARR,END,PROGRAM,ENDPROGRAM;
 
 
@@ -102,7 +102,7 @@ non terminal INICIO;
 non terminal sentencia INSTRUCCION;
 non terminal declaracion DECLARACION;
 non terminal TIPO;
-non terminal OP,OP2;
+non terminal OP,OP2,OP3,OP4;
 non terminal EXP;
 non terminal EXP_TITULO;
 non terminal Expresions valores_print;
@@ -111,16 +111,16 @@ non terminal print IMPRIMIR_EXP;
 non terminal valores_variable;
 non terminal print IMPRIMIR_ARRAY;
 non terminal declaracionArray Dec_Arreglo;
-non terminal OP_ARITMETICA;
+non terminal OP_ARITMETICA,OP_ESTADISTICA;
 non terminal Exp_Arreglo;
 non terminal LLAMADA_EXP;
 non terminal LinkedList<sentencia>INSTRUCCIONES;
 non terminal LinkedList<Expresions>EXP_SUCESIVAS;
 
+
 // Asociatividades y Prioridades 
 precedence left sum, res;
 precedence left mul, div, mod;
-
 
 
 
@@ -160,24 +160,42 @@ Dec_Arreglo::= ARR DOSPUNTOS TIPO:tipo_arr DOSPUNTOS DOSPUNTOS ARROBA ID: id_arr
 IMPRIMIR_EXP ::=  CONSOLE DOSPUNTOS DOSPUNTOS PRINT IGUAL EXP_SUCESIVAS: exp_s {: RESULT = new print(exp_s,exp_sright, exp_sleft); :};
 
 
-//--------------------------->Operaciones<-----------------------------------------------------------
+//--------------------------->Operaciones ARITMETICAS Y ESTADISTICAS<-----------------------------------------------------------
 
 OP_ARITMETICA ::= 
-                sum PAR_IZQ OP PAR_DER
+                 sum PAR_IZQ OP PAR_DER
                | res PAR_IZQ OP PAR_DER
                | mul PAR_IZQ OP PAR_DER
                | mod PAR_IZQ OP PAR_DER
                | div PAR_IZQ OP PAR_DER; 
+
+OP_ESTADISTICA::= media    PAR_IZQ COR_IZQ OP3 COR_DER PAR_DER 
+                | mediana  PAR_IZQ COR_IZQ OP3 COR_DER PAR_DER
+                | moda     PAR_IZQ COR_IZQ OP3 COR_DER PAR_DER
+                | varianza PAR_IZQ COR_IZQ OP3 COR_DER PAR_DER
+                | max      PAR_IZQ COR_IZQ OP3 COR_DER PAR_DER
+                | min      PAR_IZQ COR_IZQ OP3 COR_DER PAR_DER; 
+
+
 
 OP::= 
       OP COMA OP2
       | OP2;
 
 OP2::= OP_ARITMETICA
+        | OP_ESTADISTICA
         |NUMERO;
+        
+
+OP3::= 
+      OP3 COMA OP4
+      | OP4;
+
+OP4::=  OP_ESTADISTICA
+        |OP_ARITMETICA
+        |NUMERO ;
 
 
-               
 
 
 // ---------------------------->imprimir un ARREGLO<---------------------------------------------
@@ -208,7 +226,8 @@ valores_print::=            NUMERO: num {:RESULT = new Valores(num,Valores.Datat
 
 valores_variable ::= NUMERO: numero {: RESULT = numero; :}
                    |CADENA: cadena {: RESULT = cadena; :}
-                  | OP_ARITMETICA {:RESULT= "prueba";:};
+                  | OP_ARITMETICA {:RESULT= "prueba";:}
+                  |OP_ESTADISTICA {:RESULT= "prueba2";:};
                   //| ID: var {::};
 
 

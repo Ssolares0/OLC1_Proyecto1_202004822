@@ -12,8 +12,6 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.FileReader;
 import java.io.IOException;
-import analizadores.Lexico;
-import analizadores.Sintactico;
 import java.io.StringReader;
 import java.util.LinkedList;
 import java.util.logging.Level;
@@ -72,6 +70,7 @@ public class interfaz extends javax.swing.JFrame {
         jMenuItem5 = new javax.swing.JMenuItem();
         jMenu4 = new javax.swing.JMenu();
         Errores = new javax.swing.JMenuItem();
+        jMenuItem6 = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("DataForge");
@@ -159,6 +158,14 @@ public class interfaz extends javax.swing.JFrame {
             }
         });
         jMenu4.add(Errores);
+
+        jMenuItem6.setText("Tokens");
+        jMenuItem6.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem6ActionPerformed(evt);
+            }
+        });
+        jMenu4.add(jMenuItem6);
 
         jMenuBar1.add(jMenu4);
 
@@ -257,8 +264,45 @@ public class interfaz extends javax.swing.JFrame {
                 Sintactico parser = new Sintactico(scanner);
                 parser.parse();
                 
+                // Crear el estilo del HTML tokens
+                String htmlstyle2 = "<!DOCTYPE html>"+
+                                   "<html>"+
+                                   "<head>" +
+                                   "<meta http-equiv=\"Content-Type\" content=\"text/html; charset=iso-8859-1\">" +
+                                   "<title>Tokens</title>"+
+                                   "</head>"+
+                                   "<style>"+
+                                   "table, th {background-color: #D7C0AE;} td { border: 1px solid rgb(31, 31, 31);"+
+                                   "border-collapse: collapse;"+
+                                   "background-color: #D7C0AE;"+
+                                   "}"+
+                                   "th:nth-child(even),td:nth-child(even) {"+
+                                   "background-color: #EEE3CB;"+
+                                   "}"+
+                                   "</style>"+
+                                   "<body bgcolor=\"B7C4CF\">"+
+                                   "<center>";
+
+                // Crear el contenido de la tabla
+                String html2 =  htmlstyle2 + "<table border=1><tr><th>Descripcion</th><th>Tipo</th></tr>";
+
+                // Iterar sobre los errores lexicos
+                for (int i = 0; i < scanner.tokLex.size(); i++) {
+                    html2 +=  "</center></td><td><center>" + scanner.tokLex.get(i).getDescription() + 
+                            "</center></td><td><center>" + scanner.tokLex.get(i).getToken()  + "</center></td></tr>";
+                }
+
                 
-                // Crear el estilo del HTML
+                html2 += "</table></center></body></html>";
+
+                    // Guardar en un archivo llamado "errores.html"
+                    File file = new File("Tokens.html");
+                    BufferedWriter bw = new BufferedWriter(new FileWriter(file));
+                    bw.write(html2);
+                    bw.close();
+                
+                
+                // Crear el estilo del HTML errores
                 String htmlstyle = "<!DOCTYPE html>"+
                                    "<html>"+
                                    "<head>" +
@@ -296,11 +340,11 @@ public class interfaz extends javax.swing.JFrame {
 
                 html += "</table></center></body></html>";
 
-                    // Guardar en un archivo llamado "errores.html"
-                    File file = new File("errores.html");
-                    BufferedWriter bw = new BufferedWriter(new FileWriter(file));
-                    bw.write(html);
-                    bw.close();
+                // Guardar en un archivo llamado "errores.html"
+                File file2 = new File("errores.html");
+                BufferedWriter bw2 = new BufferedWriter(new FileWriter(file2));
+                bw2.write(html2);
+                bw2.close();
                 
                 
                 System.out.println("Analizando entrada... ");
@@ -342,6 +386,17 @@ public class interfaz extends javax.swing.JFrame {
 
 
     }//GEN-LAST:event_ErroresActionPerformed
+
+    private void jMenuItem6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem6ActionPerformed
+            // TODO add your handling code here:
+            File htmlFile = new File("tokens.html");
+        
+        try {
+            Desktop.getDesktop().browse(htmlFile.toURI());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }//GEN-LAST:event_jMenuItem6ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -468,6 +523,7 @@ public class interfaz extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem3;
     private javax.swing.JMenuItem jMenuItem4;
     private javax.swing.JMenuItem jMenuItem5;
+    private javax.swing.JMenuItem jMenuItem6;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     javax.swing.JTabbedPane jTabbedPane1;

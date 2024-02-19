@@ -11,15 +11,12 @@ package dataforge;
 public class Token {
     //Atributos
     private String token;
-    private int line;
-    private int column;
+   
     private String description;
 
     //Constructor
-    public Token(String token, int line, int column, String description) {
+    public Token(String token, String description) {
         this.token = token;
-        this.line = line;
-        this.column = column;
         this.description = description;
     }
 
@@ -30,18 +27,7 @@ public class Token {
     public void setToken(String token) {
         this.token = token;
     }
-    public int getLine() {
-        return line;
-    }
-    public void setLine(int line) {
-        this.line = line;
-    }
-    public int getColumn() {
-        return column;
-    }
-    public void setColumn(int column) {
-        this.column = column;
-    }
+   
     public String getDescription() {
         return description;
     }

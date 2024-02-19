@@ -15,5 +15,8 @@ console::column = "test" -> [10, 15.5, 61.1] end;
 <! esto es un comentario multilinea
 de prueba !>
 
+! operacion estadistica anidada
+var:double:: med1 <- Media([1,2,SUM(2,2)])  end;
+
 END PROGRAM
 
