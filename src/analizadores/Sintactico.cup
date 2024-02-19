@@ -13,6 +13,7 @@ import abstracto.Types;
 import abstracto.Types.Type;
 import java.util.ArrayList;
 import dataforge.Errores;
+//import dataforge.funcionesUsar;
 
 
 
@@ -45,6 +46,11 @@ parser code
         this.third = third;
         }
     }   
+    public String operacion(String id,String num){
+        System.out.println(id+num);
+        return num;
+    
+    }
 
     public static String buscarVariable(String id){
         declaracion miDeclaracion = new declaracion("miID", "miValor", 1, 1);
@@ -163,7 +169,7 @@ IMPRIMIR_EXP ::=  CONSOLE DOSPUNTOS DOSPUNTOS PRINT IGUAL EXP_SUCESIVAS: exp_s {
 //--------------------------->Operaciones ARITMETICAS Y ESTADISTICAS<-----------------------------------------------------------
 
 OP_ARITMETICA ::= 
-                 sum PAR_IZQ OP PAR_DER
+                 sum: sum PAR_IZQ OP:val PAR_DER {:RESULT =operacion(sum,val.toString());:}
                | res PAR_IZQ OP PAR_DER
                | mul PAR_IZQ OP PAR_DER
                | mod PAR_IZQ OP PAR_DER
@@ -179,12 +185,12 @@ OP_ESTADISTICA::= media    PAR_IZQ COR_IZQ OP3 COR_DER PAR_DER
 
 
 OP::= 
-      OP COMA OP2
+      OP COMA OP2: val {:RESULT = val;:}
       | OP2;
 
-OP2::= OP_ARITMETICA
-        | OP_ESTADISTICA
-        |NUMERO;
+OP2::= OP_ARITMETICA {::}
+        | OP_ESTADISTICA {::}
+        |NUMERO: num {:RESULT=num; :};
         
 
 OP3::= 
@@ -221,7 +227,8 @@ EXP_SUCESIVAS::= EXP_SUCESIVAS:exp_s COMA valores_print: val {: RESULT = exp_s; 
 //        |res PAR_IZQ valores_variable COMA valores_variable PAR_DER {: :};
 
 valores_print::=            NUMERO: num {:RESULT = new Valores(num,Valores.Datatype.DECIMAL,numright,numleft); :}
-                    | CADENA: cad {:RESULT = new Valores(cad,Valores.Datatype.CADENA,cadright,cadleft); :};
+                    | CADENA: cad {:RESULT = new Valores(cad,Valores.Datatype.CADENA,cadright,cadleft); :}
+                    | OP_ARITMETICA {::};
                     //| ID: id_var {: RESULT= miDeclaracion.obtenerValorPorID(id_var); :};
 
 valores_variable ::= NUMERO: numero {: RESULT = numero; :}

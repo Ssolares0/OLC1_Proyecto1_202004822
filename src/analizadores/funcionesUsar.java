@@ -31,6 +31,9 @@ public class funcionesUsar {
          //resultado == 2.2;
     }
     
+    public void imprr(String a){
+    }
+    
 
 
     public static String buscarVariable(String id){
