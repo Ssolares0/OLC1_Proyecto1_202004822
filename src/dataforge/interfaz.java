@@ -264,42 +264,6 @@ public class interfaz extends javax.swing.JFrame {
                 Sintactico parser = new Sintactico(scanner);
                 parser.parse();
                 
-                // Crear el estilo del HTML tokens
-                String htmlstyle2 = "<!DOCTYPE html>"+
-                                   "<html>"+
-                                   "<head>" +
-                                   "<meta http-equiv=\"Content-Type\" content=\"text/html; charset=iso-8859-1\">" +
-                                   "<title>Tokens</title>"+
-                                   "</head>"+
-                                   "<style>"+
-                                   "table, th {background-color: #D7C0AE;} td { border: 1px solid rgb(31, 31, 31);"+
-                                   "border-collapse: collapse;"+
-                                   "background-color: #D7C0AE;"+
-                                   "}"+
-                                   "th:nth-child(even),td:nth-child(even) {"+
-                                   "background-color: #EEE3CB;"+
-                                   "}"+
-                                   "</style>"+
-                                   "<body bgcolor=\"B7C4CF\">"+
-                                   "<center>";
-
-                // Crear el contenido de la tabla
-                String html2 =  htmlstyle2 + "<table border=1><tr><th>Descripcion</th><th>Tipo</th></tr>";
-
-                // Iterar sobre los errores lexicos
-                for (int i = 0; i < scanner.tokLex.size(); i++) {
-                    html2 +=  "</center></td><td><center>" + scanner.tokLex.get(i).getDescription() + 
-                            "</center></td><td><center>" + scanner.tokLex.get(i).getToken()  + "</center></td></tr>";
-                }
-
-                
-                html2 += "</table></center></body></html>";
-
-                    // Guardar en un archivo llamado "errores.html"
-                    File file = new File("Tokens.html");
-                    BufferedWriter bw = new BufferedWriter(new FileWriter(file));
-                    bw.write(html2);
-                    bw.close();
                 
                 
                 // Crear el estilo del HTML errores
@@ -341,13 +305,51 @@ public class interfaz extends javax.swing.JFrame {
                 html += "</table></center></body></html>";
 
                 // Guardar en un archivo llamado "errores.html"
-                File file2 = new File("errores.html");
+                File file = new File("errores.html");
+                BufferedWriter bw = new BufferedWriter(new FileWriter(file));
+                bw.write(html);
+                bw.close();
+                
+                // Crear el estilo del HTML tokens
+                String htmlstyle2 = "<!DOCTYPE html>"+
+                                   "<html>"+
+                                   "<head>" +
+                                   "<meta http-equiv=\"Content-Type\" content=\"text/html; charset=iso-8859-1\">" +
+                                   "<title>Tokens</title>"+
+                                   "</head>"+
+                                   "<style>"+
+                                   "table, th {background-color: #D7C0AE;} td { border: 1px solid rgb(31, 31, 31);"+
+                                   "border-collapse: collapse;"+
+                                   "background-color: #D7C0AE;"+
+                                   "}"+
+                                   "th:nth-child(even),td:nth-child(even) {"+
+                                   "background-color: #EEE3CB;"+
+                                   "}"+
+                                   "</style>"+
+                                   "<body bgcolor=\"B7C4CF\">"+
+                                   "<center>";
+
+                // Crear el contenido de la tabla
+                String html2 =  htmlstyle2 + "<table border=1><tr><th>Descripcion</th><th>Tipo</th></tr>";
+
+                // Iterar sobre los token lexicos
+                for (int i = 0; i < scanner.tokLex.size(); i++) {
+                    html2 +=  "</center></td><td><center>" + scanner.tokLex.get(i).getDescription() + 
+                            "</center></td><td><center>" + scanner.tokLex.get(i).getToken()  + "</center></td></tr>";
+                }
+
+                
+                html2 += "</table></center></body></html>";
+
+                // Guardar en un archivo llamado "errores.html"
+                File file2 = new File("Tokens.html");
                 BufferedWriter bw2 = new BufferedWriter(new FileWriter(file2));
                 bw2.write(html2);
                 bw2.close();
                 
                 
                 System.out.println("Analizando entrada... ");
+               
                 LinkedList<sentencia> AST= parser.getAST();
                 
                 for(int i=0; i<AST.size(); i++){
@@ -355,6 +357,10 @@ public class interfaz extends javax.swing.JFrame {
                 }
                 MiSingleton singleton = MiSingleton.obtenerInstancia();
                 jTextArea1.setText(singleton.get_consola());
+               
+                    
+                
+                
 
                 
             }

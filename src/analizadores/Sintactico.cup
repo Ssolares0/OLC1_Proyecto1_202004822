@@ -5,6 +5,7 @@ import java_cup.runtime.*;
 import java.util.LinkedList;
 import expressions.Valores;
 import sentence.print;
+import sentence.erro;
 import sentence.declaracionArray;
 import sentence.declaracion;
 import abstracto.Expresions;
@@ -128,11 +129,12 @@ INICIO ::= PROGRAM INSTRUCCIONES:b ENDPROGRAM {: parser.AST=b; :};
 
 INSTRUCCIONES ::= INSTRUCCIONES:a INSTRUCCION:b {: RESULT= a; RESULT.add(b); :}
                 | INSTRUCCION: a                 {: RESULT = new LinkedList<>(); RESULT.add(a); :};
-
+                
 INSTRUCCION::=  IMPRIMIR_EXP:a END PUNTOYCOMA {:RESULT =a; :}
                |IMPRIMIR_ARRAY:a END PUNTOYCOMA {: RESULT=a; :}
                |DECLARACION:a END PUNTOYCOMA {: RESULT=a; :}
-               |Dec_Arreglo:a END PUNTOYCOMA {:RESULT=a; :};
+               |Dec_Arreglo:a END PUNTOYCOMA {:RESULT=a; :}
+               |error:e END PUNTOYCOMA {:RESULT= new erro("error sint"); :};
 
 
 //--------------------------> La Declaracion de una variable<----------------

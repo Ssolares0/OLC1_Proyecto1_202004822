@@ -6,6 +6,7 @@ package analizadores;
 
 import sentence.declaracion;
 import abstracto.Expresions;
+import java.util.Arrays;
 /**
  *
  * @author sebastiansolares
@@ -130,8 +131,29 @@ public class funcionesUsar {
                 resultado = promedio;
                 
                 break;
-            default:
-                System.out.println("Error: Operacion no reconocida.");
+                
+            case "mediana":
+                
+                 
+                //Ordenar la lista de números
+                Arrays.sort(numeros);
+                
+                int n = numeros.length;
+                
+                if (n % 2 == 0) {
+                    // Si la lista tiene un número par de elementos, la mediana es el promedio de los dos valores centrales
+                    resultado = (numeros[n / 2 - 1] + numeros[n / 2]) / 2.0;
+                    System.out.println("La mediana es: "+ resultado);
+                } else {
+                    // Si la lista tiene un número impar de elementos, la mediana es el valor central
+                    resultado = numeros[n / 2];
+                    System.out.println("La mediana es: "+ resultado);
+                }
+
+                    break;
+                    
+                default:
+                    System.out.println("Error: Operacion no reconocida.");
         }
         
        
