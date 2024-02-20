@@ -477,7 +477,8 @@ public class interfaz extends javax.swing.JFrame {
         
     
     private void openArchivo(){
-        JPanel newPanel = new JPanel();
+       
+        
         
         JFileChooser fileChooser = new JFileChooser();
         int result = fileChooser.showOpenDialog(this);
@@ -489,12 +490,13 @@ public class interfaz extends javax.swing.JFrame {
             // verificamos la extensión del archivo
             if (selectedFile.getName().toLowerCase().endsWith(".df")) {
                 String contenido = readContenidoArchivo(selectedFile);
-                // Crear JTextArea para mostrar el contenido
-                JTextArea textArea = new JTextArea(contenido);
-                JScrollPane scrollPane = new JScrollPane(textArea);
-
-                // Agregar pestaña al JTabbedPane
-                jTabbedPane1.addTab(selectedFile.getName(), scrollPane);
+                 JPanel newPanel = new JPanel(new BorderLayout());
+                 JTextArea textArea = new JTextArea(contenido);
+                 JScrollPane scrollPane = new JScrollPane(textArea);
+                 newPanel.add(scrollPane, BorderLayout.CENTER);
+                
+   
+                 jTabbedPane1.addTab(selectedFile.getName(), newPanel);
             }else {
                 JOptionPane.showMessageDialog(this, "Por favor, seleccione un archivo con extensión .df", "Error", JOptionPane.ERROR_MESSAGE);
             }

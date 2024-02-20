@@ -18,5 +18,16 @@ de prueba !>
 ! operacion estadistica anidada
 var:double:: med1 <- Media([1,2,SUM(2,2)])  end;
 
+
+graphBar(
+titulo::char[] = "ESTADISTICA1" end;
+ejeX::char[] = ["1","2"] end;
+ejeY::double = [1,2,3] end;
+tituloX::char[] = "Grafica Barras" end;
+tituloY::char[] = "valores" end;
+EXEC graphBar end;
+) end;
+
+
 END PROGRAM
 

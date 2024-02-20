@@ -86,6 +86,11 @@ terminal String NUMERO,CADENA,COMA,COR_IZQ,COR_DER,ASSIGN,ASSIGN2,DOSPUNTOS,PUNT
 terminal String ID,ID_ARRAY,CONSOLE,COLUMN,PRINT,IGUAL,PAR_IZQ,PAR_DER,ARROBA;
 terminal String sum,res,mul,mod,div,media,mediana,moda,varianza,max,min;
 terminal String VAR,DOUBLE,CHAR,ARR,END,PROGRAM,ENDPROGRAM;
+terminal String graphbar,graphpie,graphline,histogram;
+terminal String titulo,ejex,ejey,titulox,tituloy,values,label,exec;             
+
+    
+    
 
 
 
@@ -95,10 +100,8 @@ non terminal sentencia INSTRUCCION;
 non terminal declaracion DECLARACION;
 non terminal TIPO;
 non terminal OP,OP2,OP3,OP4;
-non terminal EXP;
 non terminal EXP_TITULO;
 non terminal Expresions valores_print;
-non terminal valores_PRINT;
 non terminal print IMPRIMIR_EXP;
 non terminal valores_variable;
 non terminal print IMPRIMIR_ARRAY;
@@ -106,9 +109,10 @@ non terminal declaracionArray Dec_Arreglo;
 non terminal OP_ARITMETICA;
 non terminal OP_ESTADISTICA;
 non terminal Exp_Arreglo;
-non terminal LLAMADA_EXP;
 non terminal LinkedList<sentencia>INSTRUCCIONES;
 non terminal LinkedList<Expresions>EXP_SUCESIVAS;
+
+non terminal GRAFBARRAS,SENTENCIAS_BAR,TITULO_BAR,TITULOX_BAR,TITULOY_BAR,EJEX_BAR,EJEY_BAR,EXEC_BAR;
 
 
 // Asociatividades y Prioridades 
@@ -134,6 +138,7 @@ INSTRUCCION::=  IMPRIMIR_EXP:a END PUNTOYCOMA {:RESULT =a; :}
                |IMPRIMIR_ARRAY:a END PUNTOYCOMA {: RESULT=a; :}
                |DECLARACION:a END PUNTOYCOMA {: RESULT=a; :}
                |Dec_Arreglo:a END PUNTOYCOMA {:RESULT=a; :}
+               |GRAFBARRAS END PUNTOYCOMA {::}
                |error:e END PUNTOYCOMA {:RESULT= new erro("error sint"); :};
 
 
@@ -184,7 +189,7 @@ OP::=
       | OP2:val {:RESULT =val;:};
 
 OP2::= OP_ARITMETICA:resuAri {:RESULT= resuAri;:}
-        | OP_ESTADISTICA {::}
+        | OP_ESTADISTICA: resuEst {:RESULT= resuEst; :}
         |NUMERO: num {:RESULT=num; :};
         
 
@@ -199,6 +204,26 @@ OP4::=  OP_ESTADISTICA: resuEst {:RESULT= resuEst; :}
 
 //----------------------------------------------------------------------------------------------------------------------------------------
 
+//--------------------------->Funciones de graficas<--------------------------------------------------------------------------------------
+
+
+
+GRAFBARRAS::= graphbar PAR_IZQ SENTENCIAS_BAR PAR_DER;
+
+
+SENTENCIAS_BAR::= TITULO_BAR
+                  |EJEX_BAR
+                  |EJEY_BAR
+                  |TITULOX_BAR
+                  |TITULOY_BAR
+                  |EXEC_BAR;
+
+TITULO_BAR::= titulo DOSPUNTOS DOSPUNTOS CHAR IGUAL CADENA END PUNTOYCOMA;
+EJEX_BAR ::= ejex DOSPUNTOS DOSPUNTOS CHAR IGUAL COR_IZQ EXP_SUCESIVAS COR_DER END PUNTOYCOMA;
+EJEY_BAR ::= ejey DOSPUNTOS DOSPUNTOS DOUBLE IGUAL COR_IZQ EXP_SUCESIVAS COR_DER END PUNTOYCOMA;
+TITULOX_BAR ::= titulox DOSPUNTOS DOSPUNTOS CHAR CADENA END PUNTOYCOMA;
+TITULOY_BAR ::= tituloy DOSPUNTOS DOSPUNTOS CHAR CADENA END PUNTOYCOMA;
+EXEC_BAR ::= exec graphbar END PUNTOYCOMA;
 
 
 

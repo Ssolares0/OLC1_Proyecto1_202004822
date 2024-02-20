@@ -221,8 +221,69 @@ blancos = [ \t\f\r\n]+
                     tokLex.add(tmp);
                            return new Symbol(sym.min, yycolumn, yyline, yytext()); }
 
-    
 
+    "graphBar"  { System.out.println("Reconocio palabra ,lexema: "+yytext());
+                    Token tmp = new Token(yytext(),"Palabra Reservada");
+                    tokLex.add(tmp);
+                           return new Symbol(sym.graphbar, yycolumn, yyline, yytext()); }
+    
+   "graphPie"  { System.out.println("Reconocio palabra ,lexema: "+yytext());
+                    Token tmp = new Token(yytext(),"Palabra Reservada");
+                    tokLex.add(tmp);
+                           return new Symbol(sym.graphpie, yycolumn, yyline, yytext()); }
+
+    "graphLine"  { System.out.println("Reconocio palabra ,lexema: "+yytext());
+                    Token tmp = new Token(yytext(),"Palabra Reservada");
+                    tokLex.add(tmp);
+                           return new Symbol(sym.graphline, yycolumn, yyline, yytext()); } 
+
+
+    "Histogram"  { System.out.println("Reconocio palabra ,lexema: "+yytext());
+                    Token tmp = new Token(yytext(),"Palabra Reservada");
+                    tokLex.add(tmp);
+                           return new Symbol(sym.histogram, yycolumn, yyline, yytext()); }
+
+    "titulo"  { System.out.println("Reconocio palabra ,lexema: "+yytext());
+                    Token tmp = new Token(yytext(),"Palabra Reservada");
+                    tokLex.add(tmp);
+                           return new Symbol(sym.titulo, yycolumn, yyline, yytext()); }
+
+    "ejeX"  { System.out.println("Reconocio palabra ,lexema: "+yytext());
+                    Token tmp = new Token(yytext(),"Palabra Reservada");
+                    tokLex.add(tmp);
+                           return new Symbol(sym.ejex, yycolumn, yyline, yytext()); }
+
+    "ejeY"  { System.out.println("Reconocio palabra ,lexema: "+yytext());
+                    Token tmp = new Token(yytext(),"Palabra Reservada");
+                    tokLex.add(tmp);
+                           return new Symbol(sym.ejey, yycolumn, yyline, yytext()); }
+
+    "tituloX"  { System.out.println("Reconocio palabra ,lexema: "+yytext());
+                    Token tmp = new Token(yytext(),"Palabra Reservada");
+                    tokLex.add(tmp);
+                           return new Symbol(sym.titulox, yycolumn, yyline, yytext()); }
+
+    "tituloY"  { System.out.println("Reconocio palabra ,lexema: "+yytext());
+                    Token tmp = new Token(yytext(),"Palabra Reservada");
+                    tokLex.add(tmp);
+                           return new Symbol(sym.tituloy, yycolumn, yyline, yytext()); }
+
+    "values"  { System.out.println("Reconocio palabra ,lexema: "+yytext());
+                    Token tmp = new Token(yytext(),"Palabra Reservada");
+                    tokLex.add(tmp);
+                           return new Symbol(sym.values, yycolumn, yyline, yytext()); }
+
+    "label"  { System.out.println("Reconocio palabra ,lexema: "+yytext());
+                    Token tmp = new Token(yytext(),"Palabra Reservada");
+                    tokLex.add(tmp);
+                           return new Symbol(sym.label, yycolumn, yyline, yytext()); }
+
+   "EXEC"  { System.out.println("Reconocio palabra ,lexema: "+yytext());
+                    Token tmp = new Token(yytext(),"Palabra Reservada");
+                    tokLex.add(tmp);
+                           return new Symbol(sym.exec, yycolumn, yyline, yytext()); }
+    
+    
 
 
 
