@@ -21,11 +21,18 @@ var:double:: med1 <- Media([1,2,SUM(2,2)])  end;
 
 graphBar(
 titulo::char[] = "ESTADISTICA1" end;
-ejeX::char[] = ["1","2"] end;
-ejeY::double = [1,2,3] end;
+ejeX::char[] = ["Sebas","LUIS","alex"] end;
+ejeY::double = [67,25,80] end;
 tituloX::char[] = "Grafica Barras" end;
 tituloY::char[] = "valores" end;
 EXEC graphBar end;
+) end;
+
+graphPie(
+label::char[] = ["Uno", "Dos", "Tres"] end;
+values::double = [50, 30, 20] end;
+titulo::char[] = "Ejemplo de una grafica" end;
+EXEC graphPie end;
 ) end;
 
 

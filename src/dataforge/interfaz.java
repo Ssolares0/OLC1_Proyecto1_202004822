@@ -18,6 +18,8 @@ import java.util.logging.Logger;
 import singleton.MiSingleton;
 import analizadores.Sintactico;
 import analizadores.Lexico;
+import java.awt.event.ActionEvent;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import org.jfree.chart.ChartFactory;
@@ -25,6 +27,8 @@ import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
 import org.jfree.chart.plot.PlotOrientation;
 import org.jfree.data.category.DefaultCategoryDataset;
+import org.jfree.data.general.DefaultPieDataset;
+import java.util.List;
 
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
@@ -37,6 +41,9 @@ import org.jfree.data.category.DefaultCategoryDataset;
 public class interfaz extends javax.swing.JFrame {
 
     private JTabbedPane tabbedPane;
+    public List<JFreeChart> list_graficas;
+    public int currentIndex;
+    public ChartPanel chartPanel;
 
     /**
      * Creates new form interfaz
@@ -86,8 +93,18 @@ public class interfaz extends javax.swing.JFrame {
         jScrollPane1.setViewportView(jTextArea1);
 
         jButton1.setText("Anterior");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
         jButton2.setText("Siguiente");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -220,7 +237,6 @@ public class interfaz extends javax.swing.JFrame {
                         .addComponent(jLabel1)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(18, 18, 18)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jButton1)
                             .addComponent(jButton2))
@@ -266,6 +282,12 @@ public class interfaz extends javax.swing.JFrame {
         String tituloX = "";
         String tituloY = "";
         String EXEC = "";
+        String titulo_pie = "";
+        String label_pie = "";
+        String values_pie = "";
+
+        list_graficas = new ArrayList<>();
+        currentIndex = 0;
 
         try {
 
@@ -396,9 +418,16 @@ public class interfaz extends javax.swing.JFrame {
 
                 for (int i = 0; i < listEjey.length; i++) {
 
-                    int valor = Integer.parseInt(listEjey[i]); // Convertir el valor de String a int
-                   
-                    datos.setValue(valor, listEjex[i], "SS"); // Asignar el valor y las etiquetas al conjunto de datos
+                    try {
+                        int valor = Integer.parseInt(listEjey[i]); // Convertir el valor de String a int
+
+                        datos.setValue(valor, listEjex[i], "SS");
+
+                    } catch (Exception e) {
+                        System.out.println("no hay valores en la grafica barras");
+                    }
+
+                  
                 }
 
                 JFreeChart grafica_barras = ChartFactory.createBarChart3D(
@@ -411,15 +440,64 @@ public class interfaz extends javax.swing.JFrame {
                         true,
                         false
                 );
+                list_graficas.add(grafica_barras);
 
-                ChartPanel grafb = new ChartPanel(grafica_barras);
-                grafb.setPreferredSize(new Dimension(350,350));
+                for (Map.Entry<String, String> entry : parser.graficasPie.entrySet()) {
+                    String clave = entry.getKey();
+                    String valor = entry.getValue();
+
+                    // Asignar los valores a las variables según la clave
+                    switch (clave) {
+                        case "label":
+                            label_pie = valor;
+                            System.out.println(label_pie);
+
+                            break;
+                        case "values":
+                            values_pie = valor;
+                            System.out.println(values_pie);
+                            break;
+                        case "titulo":
+                            titulo_pie = valor;
+                            break;
+
+                    }
+
+                }
+                String[] list_labelpie = label_pie.split("=");
+                String[] list_valuepie = values_pie.split("=");
+
+                DefaultPieDataset datos_pie = new DefaultPieDataset();
+
+                for (int i = 0; i < listEjey.length; i++) {
+                    try {
+                        int valor = Integer.parseInt(list_valuepie[i]); // Convertir el valor de String a int
+                        datos_pie.setValue(list_labelpie[i], valor);
+                    } catch (Exception e) {
+                        System.out.println("No hay valores en la lista de grafica pie");
+                    }
+
+                    // Asignar el valor y las etiquetas al conjunto de datos
+                }
+
+                JFreeChart grafica_pie = ChartFactory.createPieChart(
+                        titulo_pie,
+                        datos_pie,
+                        true,
+                        true,
+                        false
+                );
+
+                list_graficas.add(grafica_pie);
+
+                // Configurar el panel de la gráfica
+                ChartPanel grafb = new ChartPanel(list_graficas.get(currentIndex));
                 
 
                 jPanel1.setLayout(new BorderLayout());
-                jPanel1.add(grafb, BorderLayout.NORTH);
-                pack();
-                repaint();
+                jPanel1.setPreferredSize(new Dimension(350,350));
+                jPanel1.add(grafb, BorderLayout.CENTER);
+                
 
                 System.out.println("Analizando entrada... ");
 
@@ -468,6 +546,21 @@ public class interfaz extends javax.swing.JFrame {
             e.printStackTrace();
         }
     }//GEN-LAST:event_jMenuItem6ActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:
+        // Mostrar la gráfica anterior
+        currentIndex = (currentIndex - 1 + list_graficas.size()) % list_graficas.size();
+        updateChartPanel();
+
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        // TODO add your handling code here:
+        // Mostrar la siguiente gráfica
+        currentIndex = (currentIndex + 1) % list_graficas.size();
+        updateChartPanel();
+    }//GEN-LAST:event_jButton2ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -565,8 +658,12 @@ public class interfaz extends javax.swing.JFrame {
         }
     }
 
-    private void newGraficaBarras() {
-
+    public void updateChartPanel() {
+        jPanel1.removeAll();
+        jPanel1.add(new ChartPanel(list_graficas.get(currentIndex)), BorderLayout.CENTER);
+        jPanel1.revalidate();
+        
+        jPanel1.repaint();
     }
 
     private String readContenidoArchivo(java.io.File file) {
