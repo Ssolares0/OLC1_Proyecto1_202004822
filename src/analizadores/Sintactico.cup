@@ -15,6 +15,7 @@ import abstracto.Types.Type;
 import java.util.ArrayList;
 import dataforge.Errores;
 import analizadores.funcionesUsar;
+import java.util.HashMap;
 
 
 
@@ -26,6 +27,8 @@ import analizadores.funcionesUsar;
 parser code 
 {:  
     public ArrayList<Errores> errSint = new ArrayList<Errores>();
+
+    public HashMap<String,String> graficasBarras = new HashMap<String,String>();
 
     public LinkedList<sentencia>AST;
     
@@ -112,7 +115,7 @@ non terminal Exp_Arreglo;
 non terminal LinkedList<sentencia>INSTRUCCIONES;
 non terminal LinkedList<Expresions>EXP_SUCESIVAS;
 
-non terminal GRAFBARRAS,SENTENCIAS_BAR,TITULO_BAR,TITULOX_BAR,TITULOY_BAR,EJEX_BAR,EJEY_BAR,EXEC_BAR;
+non terminal GRAFBARRAS,SENTENCIAS_BAR,BAR,TITULO_BAR,TITULOX_BAR,TITULOY_BAR,EJEX_BAR,EJEY_BAR,EXEC_BAR;
 
 
 // Asociatividades y Prioridades 
@@ -208,22 +211,25 @@ OP4::=  OP_ESTADISTICA: resuEst {:RESULT= resuEst; :}
 
 
 
-GRAFBARRAS::= graphbar PAR_IZQ SENTENCIAS_BAR PAR_DER;
+GRAFBARRAS::= graphbar PAR_IZQ SENTENCIAS_BAR  PAR_DER;
 
 
-SENTENCIAS_BAR::= TITULO_BAR
-                  |EJEX_BAR
-                  |EJEY_BAR
-                  |TITULOX_BAR
-                  |TITULOY_BAR
-                  |EXEC_BAR;
+SENTENCIAS_BAR::= SENTENCIAS_BAR BAR
+                  | BAR;
 
-TITULO_BAR::= titulo DOSPUNTOS DOSPUNTOS CHAR IGUAL CADENA END PUNTOYCOMA;
-EJEX_BAR ::= ejex DOSPUNTOS DOSPUNTOS CHAR IGUAL COR_IZQ EXP_SUCESIVAS COR_DER END PUNTOYCOMA;
-EJEY_BAR ::= ejey DOSPUNTOS DOSPUNTOS DOUBLE IGUAL COR_IZQ EXP_SUCESIVAS COR_DER END PUNTOYCOMA;
-TITULOX_BAR ::= titulox DOSPUNTOS DOSPUNTOS CHAR CADENA END PUNTOYCOMA;
-TITULOY_BAR ::= tituloy DOSPUNTOS DOSPUNTOS CHAR CADENA END PUNTOYCOMA;
-EXEC_BAR ::= exec graphbar END PUNTOYCOMA;
+BAR::= TITULO_BAR END PUNTOYCOMA
+        |EJEX_BAR END PUNTOYCOMA
+        |EJEY_BAR END PUNTOYCOMA
+        |TITULOX_BAR END PUNTOYCOMA
+        |TITULOY_BAR END PUNTOYCOMA
+        |EXEC_BAR END PUNTOYCOMA;
+
+TITULO_BAR::= titulo:titulo DOSPUNTOS DOSPUNTOS CHAR IGUAL CADENA:cad {:graficasBarras.put(titulo,cad);:} ;
+EJEX_BAR ::= ejex:eje_x DOSPUNTOS DOSPUNTOS CHAR IGUAL COR_IZQ EXP_SUCESIVAS:exp_s COR_DER {:graficasBarras.put(eje_x,"s");:} ;
+EJEY_BAR ::= ejey:eje_y DOSPUNTOS DOSPUNTOS DOUBLE IGUAL COR_IZQ EXP_SUCESIVAS:exp_s COR_DER {:graficasBarras.put(eje_y,"s");:};
+TITULOX_BAR ::= titulox:titulo_x DOSPUNTOS DOSPUNTOS CHAR IGUAL CADENA:cad {:graficasBarras.put(titulo_x,cad);:} ;
+TITULOY_BAR ::= tituloy:titulo_y DOSPUNTOS DOSPUNTOS CHAR IGUAL CADENA:cad {:graficasBarras.put(titulo_y,cad);:};
+EXEC_BAR ::= exec:ex graphbar:graph_ {:graficasBarras.put(ex,graph_);:} ;
 
 
 
