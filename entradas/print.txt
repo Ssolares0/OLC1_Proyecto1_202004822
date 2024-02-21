@@ -1,0 +1,4 @@
+PROGRAM
+console::print = "hola",1 ,"jaja" end;
+console::print = "ss",1 ,"jaja" end;
+END PROGRAM

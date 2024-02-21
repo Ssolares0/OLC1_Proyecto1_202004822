@@ -29,6 +29,8 @@ parser code
     public ArrayList<Errores> errSint = new ArrayList<Errores>();
 
     public HashMap<String,String> graficasBarras = new HashMap<String,String>();
+    
+    
 
     public LinkedList<sentencia>AST;
     
@@ -112,8 +114,10 @@ non terminal declaracionArray Dec_Arreglo;
 non terminal OP_ARITMETICA;
 non terminal OP_ESTADISTICA;
 non terminal Exp_Arreglo;
+non terminal valores_grafica;
 non terminal LinkedList<sentencia>INSTRUCCIONES;
 non terminal LinkedList<Expresions>EXP_SUCESIVAS;
+non terminal  EXP_SUCESIVASGRAF;
 
 non terminal GRAFBARRAS,SENTENCIAS_BAR,BAR,TITULO_BAR,TITULOX_BAR,TITULOY_BAR,EJEX_BAR,EJEY_BAR,EXEC_BAR;
 
@@ -141,7 +145,7 @@ INSTRUCCION::=  IMPRIMIR_EXP:a END PUNTOYCOMA {:RESULT =a; :}
                |IMPRIMIR_ARRAY:a END PUNTOYCOMA {: RESULT=a; :}
                |DECLARACION:a END PUNTOYCOMA {: RESULT=a; :}
                |Dec_Arreglo:a END PUNTOYCOMA {:RESULT=a; :}
-               |GRAFBARRAS END PUNTOYCOMA {::}
+               |GRAFBARRAS END PUNTOYCOMA {:RESULT= new erro("error sint");:}
                |error:e END PUNTOYCOMA {:RESULT= new erro("error sint"); :};
 
 
@@ -225,8 +229,8 @@ BAR::= TITULO_BAR END PUNTOYCOMA
         |EXEC_BAR END PUNTOYCOMA;
 
 TITULO_BAR::= titulo:titulo DOSPUNTOS DOSPUNTOS CHAR IGUAL CADENA:cad {:graficasBarras.put(titulo,cad);:} ;
-EJEX_BAR ::= ejex:eje_x DOSPUNTOS DOSPUNTOS CHAR IGUAL COR_IZQ EXP_SUCESIVAS:exp_s COR_DER {:graficasBarras.put(eje_x,"s");:} ;
-EJEY_BAR ::= ejey:eje_y DOSPUNTOS DOSPUNTOS DOUBLE IGUAL COR_IZQ EXP_SUCESIVAS:exp_s COR_DER {:graficasBarras.put(eje_y,"s");:};
+EJEX_BAR ::= ejex:eje_x DOSPUNTOS DOSPUNTOS CHAR IGUAL COR_IZQ EXP_SUCESIVASGRAF:exp_s COR_DER {:graficasBarras.put(eje_x,exp_s.toString());:} ;
+EJEY_BAR ::= ejey:eje_y DOSPUNTOS DOSPUNTOS DOUBLE IGUAL COR_IZQ EXP_SUCESIVASGRAF:exp_s COR_DER {:graficasBarras.put(eje_y,exp_s.toString());:};
 TITULOX_BAR ::= titulox:titulo_x DOSPUNTOS DOSPUNTOS CHAR IGUAL CADENA:cad {:graficasBarras.put(titulo_x,cad);:} ;
 TITULOY_BAR ::= tituloy:titulo_y DOSPUNTOS DOSPUNTOS CHAR IGUAL CADENA:cad {:graficasBarras.put(titulo_y,cad);:};
 EXEC_BAR ::= exec:ex graphbar:graph_ {:graficasBarras.put(ex,graph_);:} ;
@@ -237,10 +241,20 @@ TIPO ::= CHAR: char_ {: RESULT = char_; :}
         | DOUBLE: num {: RESULT = num; :};
 
 
+EXP_SUCESIVASGRAF ::= EXP_SUCESIVASGRAF:val1 COMA valores_grafica: val2 {:RESULT = val1.toString()+"="+val2.toString();:}
+                 | valores_grafica: val {:RESULT =val;:};
+
+
 EXP_SUCESIVAS::= EXP_SUCESIVAS:exp_s COMA valores_print: val {: RESULT = exp_s; RESULT.add(val); :}
                  | valores_print: val {:RESULT = new LinkedList<>(); RESULT.add(val); :};
 
 
+
+
+valores_grafica::=      NUMERO: num {:RESULT =num;:} 
+                    | CADENA: cad {:RESULT = cad;:};
+                   
+                    //| ID: id_var {: RESULT= miDeclaracion.obtenerValorPorID(id_var); :};
 
 
 valores_print::=      NUMERO: num {:RESULT = new Valores(num,Valores.Datatype.DECIMAL,numright,numleft); :}

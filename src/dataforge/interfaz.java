@@ -1,6 +1,5 @@
 package dataforge;
 
-
 import abstracto.sentencia;
 import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
@@ -19,21 +18,25 @@ import java.util.logging.Logger;
 import singleton.MiSingleton;
 import analizadores.Sintactico;
 import analizadores.Lexico;
-
-
+import java.util.HashMap;
+import java.util.Map;
+import org.jfree.chart.ChartFactory;
+import org.jfree.chart.ChartPanel;
+import org.jfree.chart.JFreeChart;
+import org.jfree.chart.plot.PlotOrientation;
+import org.jfree.data.category.DefaultCategoryDataset;
 
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
-
 /**
  *
  * @author Sebastian S
  */
 public class interfaz extends javax.swing.JFrame {
+
     private JTabbedPane tabbedPane;
-    
 
     /**
      * Creates new form interfaz
@@ -55,10 +58,9 @@ public class interfaz extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         jTextArea1 = new javax.swing.JTextArea();
         jTabbedPane1 = new javax.swing.JTabbedPane();
-        jScrollPane2 = new javax.swing.JScrollPane();
-        jTextArea2 = new javax.swing.JTextArea();
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
+        jPanel1 = new javax.swing.JPanel();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         jMenuItem1 = new javax.swing.JMenuItem();
@@ -83,13 +85,20 @@ public class interfaz extends javax.swing.JFrame {
         jTextArea1.setRows(5);
         jScrollPane1.setViewportView(jTextArea1);
 
-        jTextArea2.setColumns(20);
-        jTextArea2.setRows(5);
-        jScrollPane2.setViewportView(jTextArea2);
-
         jButton1.setText("Anterior");
 
         jButton2.setText("Siguiente");
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 276, Short.MAX_VALUE)
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 267, Short.MAX_VALUE)
+        );
 
         jMenuBar1.setBackground(new java.awt.Color(204, 255, 255));
 
@@ -177,22 +186,22 @@ public class interfaz extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(21, 21, 21)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
                         .addComponent(jScrollPane1)
                         .addContainerGap())
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 400, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 207, Short.MAX_VALUE)
-                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 291, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(39, 39, 39))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel1)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jButton1)
                         .addGap(56, 56, 56)
                         .addComponent(jButton2)
-                        .addGap(80, 80, 80))))
+                        .addGap(80, 80, 80))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 400, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 215, Short.MAX_VALUE)
+                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(46, 46, 46))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -201,9 +210,10 @@ public class interfaz extends javax.swing.JFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addGap(28, 28, 28)
                         .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 318, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(47, 47, 47)
-                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 285, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(24, 24, 24)))
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 26, Short.MAX_VALUE)
@@ -223,15 +233,15 @@ public class interfaz extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
-            // TODO add your handling code here:
-            
-            newArchivo();
-            
+        // TODO add your handling code here:
+
+        newArchivo();
+
     }//GEN-LAST:event_jMenuItem1ActionPerformed
 
     private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
         // TODO add your handling code here:
-        openArchivo();  
+        openArchivo();
     }//GEN-LAST:event_jMenuItem2ActionPerformed
 
     private void jMenuItem3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem3ActionPerformed
@@ -250,56 +260,60 @@ public class interfaz extends javax.swing.JFrame {
 
     private void jMenuItem5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem5ActionPerformed
         // TODO add your handling code here:
-        
-        try{
-            
+        String titulo = "";
+        String ejex = "";
+        String ejey = "";
+        String tituloX = "";
+        String tituloY = "";
+        String EXEC = "";
+
+        try {
+
             int selectedIndex = jTabbedPane1.getSelectedIndex();
             if (selectedIndex != -1) {
                 JPanel selectedPanel = (JPanel) jTabbedPane1.getComponentAt(selectedIndex);
                 JTextArea textArea = (JTextArea) ((JScrollPane) selectedPanel.getComponent(0)).getViewport().getView();
                 String dato = textArea.getText();
                 System.out.println(dato);
-                
+
                 Lexico scanner = new Lexico(new java.io.StringReader(dato));
                 Sintactico parser = new Sintactico(scanner);
                 parser.parse();
-                
-                
-                
+
                 // Crear el estilo del HTML errores
-                String htmlstyle = "<!DOCTYPE html>"+
-                                   "<html>"+
-                                   "<head>" +
-                                   "<meta http-equiv=\"Content-Type\" content=\"text/html; charset=iso-8859-1\">" +
-                                   "<title>Errores</title>"+
-                                   "</head>"+
-                                   "<style>"+
-                                   "table, th {background-color: #D7C0AE;} td { border: 1px solid rgb(31, 31, 31);"+
-                                   "border-collapse: collapse;"+
-                                   "background-color: #D7C0AE;"+
-                                   "}"+
-                                   "th:nth-child(even),td:nth-child(even) {"+
-                                   "background-color: #EEE3CB;"+
-                                   "}"+
-                                   "</style>"+
-                                   "<body bgcolor=\"B7C4CF\">"+
-                                   "<center>";
+                String htmlstyle = "<!DOCTYPE html>"
+                        + "<html>"
+                        + "<head>"
+                        + "<meta http-equiv=\"Content-Type\" content=\"text/html; charset=iso-8859-1\">"
+                        + "<title>Errores</title>"
+                        + "</head>"
+                        + "<style>"
+                        + "table, th {background-color: #D7C0AE;} td { border: 1px solid rgb(31, 31, 31);"
+                        + "border-collapse: collapse;"
+                        + "background-color: #D7C0AE;"
+                        + "}"
+                        + "th:nth-child(even),td:nth-child(even) {"
+                        + "background-color: #EEE3CB;"
+                        + "}"
+                        + "</style>"
+                        + "<body bgcolor=\"B7C4CF\">"
+                        + "<center>";
 
                 // Crear el contenido de la tabla
-                String html =  htmlstyle + "<table border=1><tr><th>Linea</th><th>Columna</th><th>Descripcion</th><th>Tipo</th></tr>";
+                String html = htmlstyle + "<table border=1><tr><th>Linea</th><th>Columna</th><th>Descripcion</th><th>Tipo</th></tr>";
 
                 // Iterar sobre los errores sintácticos
                 for (int i = 0; i < parser.errSint.size(); i++) {
-                    html += "<tr><td><center>" + parser.errSint.get(i).getLine() + "</center></td><td><center>" + 
-                            parser.errSint.get(i).getColumn() + "</center></td><td><center>" + parser.errSint.get(i).getDescription() + 
-                            "</center></td><td><center>" + parser.errSint.get(i).getError()  + "</center></td></tr>";
+                    html += "<tr><td><center>" + parser.errSint.get(i).getLine() + "</center></td><td><center>"
+                            + parser.errSint.get(i).getColumn() + "</center></td><td><center>" + parser.errSint.get(i).getDescription()
+                            + "</center></td><td><center>" + parser.errSint.get(i).getError() + "</center></td></tr>";
                 }
 
                 // Iterar sobre los errores léxicos
                 for (int i = 0; i < scanner.errLex.size(); i++) {
-                    html += "<tr><td><center>" + scanner.errLex.get(i).getLine() + "</center></td><td><center>" + 
-                            scanner.errLex.get(i).getColumn() + "</center></td><td><center>" + scanner.errLex.get(i).getDescription() + 
-                            "</center></td><td><center>" + scanner.errLex.get(i).getError()  + "</center></td></tr>";
+                    html += "<tr><td><center>" + scanner.errLex.get(i).getLine() + "</center></td><td><center>"
+                            + scanner.errLex.get(i).getColumn() + "</center></td><td><center>" + scanner.errLex.get(i).getDescription()
+                            + "</center></td><td><center>" + scanner.errLex.get(i).getError() + "</center></td></tr>";
                 }
 
                 html += "</table></center></body></html>";
@@ -309,36 +323,35 @@ public class interfaz extends javax.swing.JFrame {
                 BufferedWriter bw = new BufferedWriter(new FileWriter(file));
                 bw.write(html);
                 bw.close();
-                
+
                 // Crear el estilo del HTML tokens
-                String htmlstyle2 = "<!DOCTYPE html>"+
-                                   "<html>"+
-                                   "<head>" +
-                                   "<meta http-equiv=\"Content-Type\" content=\"text/html; charset=iso-8859-1\">" +
-                                   "<title>Tokens</title>"+
-                                   "</head>"+
-                                   "<style>"+
-                                   "table, th {background-color: #D7C0AE;} td { border: 1px solid rgb(31, 31, 31);"+
-                                   "border-collapse: collapse;"+
-                                   "background-color: #D7C0AE;"+
-                                   "}"+
-                                   "th:nth-child(even),td:nth-child(even) {"+
-                                   "background-color: #EEE3CB;"+
-                                   "}"+
-                                   "</style>"+
-                                   "<body bgcolor=\"B7C4CF\">"+
-                                   "<center>";
+                String htmlstyle2 = "<!DOCTYPE html>"
+                        + "<html>"
+                        + "<head>"
+                        + "<meta http-equiv=\"Content-Type\" content=\"text/html; charset=iso-8859-1\">"
+                        + "<title>Tokens</title>"
+                        + "</head>"
+                        + "<style>"
+                        + "table, th {background-color: #D7C0AE;} td { border: 1px solid rgb(31, 31, 31);"
+                        + "border-collapse: collapse;"
+                        + "background-color: #D7C0AE;"
+                        + "}"
+                        + "th:nth-child(even),td:nth-child(even) {"
+                        + "background-color: #EEE3CB;"
+                        + "}"
+                        + "</style>"
+                        + "<body bgcolor=\"B7C4CF\">"
+                        + "<center>";
 
                 // Crear el contenido de la tabla
-                String html2 =  htmlstyle2 + "<table border=1><tr><th>Descripcion</th><th>Tipo</th></tr>";
+                String html2 = htmlstyle2 + "<table border=1><tr><th>Descripcion</th><th>Tipo</th></tr>";
 
                 // Iterar sobre los token lexicos
                 for (int i = 0; i < scanner.tokLex.size(); i++) {
-                    html2 +=  "</center></td><td><center>" + scanner.tokLex.get(i).getDescription() + 
-                            "</center></td><td><center>" + scanner.tokLex.get(i).getToken()  + "</center></td></tr>";
+                    html2 += "</center></td><td><center>" + scanner.tokLex.get(i).getDescription()
+                            + "</center></td><td><center>" + scanner.tokLex.get(i).getToken() + "</center></td></tr>";
                 }
 
-                
                 html2 += "</table></center></body></html>";
 
                 // Guardar en un archivo llamado "errores.html"
@@ -346,31 +359,85 @@ public class interfaz extends javax.swing.JFrame {
                 BufferedWriter bw2 = new BufferedWriter(new FileWriter(file2));
                 bw2.write(html2);
                 bw2.close();
+
+                // Recorrer el HashMap para obtener las claves y los valores
+                for (Map.Entry<String, String> entry : parser.graficasBarras.entrySet()) {
+                    String clave = entry.getKey();
+                    String valor = entry.getValue();
+
+                    // Asignar los valores a las variables según la clave
+                    switch (clave) {
+                        case "ejeX":
+                            ejex = valor;
+                            System.out.println(ejex);
+                            break;
+                        case "ejeY":
+                            ejey = valor;
+                            break;
+                        case "tituloX":
+                            tituloX = valor;
+                            break;
+                        case "tituloY":
+                            tituloY = valor;
+
+                            break;
+                        case "titulo":
+                            titulo = valor;
+                            break;
+                        // Agregar más casos según sea necesario para más claves
+                    }
+
+                }
+
+                String[] listEjex = ejex.split("=");
+                String[] listEjey = ejey.split("=");
+
+                DefaultCategoryDataset datos = new DefaultCategoryDataset();
+
+                for (int i = 0; i < listEjey.length; i++) {
+
+                    int valor = Integer.parseInt(listEjey[i]); // Convertir el valor de String a int
+                   
+                    datos.setValue(valor, listEjex[i], "SS"); // Asignar el valor y las etiquetas al conjunto de datos
+                }
+
+                JFreeChart grafica_barras = ChartFactory.createBarChart3D(
+                        titulo,
+                        tituloX,
+                        tituloY,
+                        datos,
+                        PlotOrientation.VERTICAL,
+                        true,
+                        true,
+                        false
+                );
+
+                ChartPanel grafb = new ChartPanel(grafica_barras);
+                grafb.setPreferredSize(new Dimension(350,350));
                 
-                
+
+                jPanel1.setLayout(new BorderLayout());
+                jPanel1.add(grafb, BorderLayout.NORTH);
+                pack();
+                repaint();
+
                 System.out.println("Analizando entrada... ");
-               
-                LinkedList<sentencia> AST= parser.getAST();
-                
-                for(int i=0; i<AST.size(); i++){
-                AST.get(i).ejecutar();
+
+                LinkedList<sentencia> AST = parser.getAST();
+
+                for (int i = 0; i < AST.size(); i++) {
+                    AST.get(i).ejecutar();
                 }
                 MiSingleton singleton = MiSingleton.obtenerInstancia();
                 jTextArea1.setText(singleton.get_consola());
-               
-                    
-                
-                
 
-                
             }
-   
-            
-        }catch(Exception e){
-            
+
+        } catch (Exception e) {
+
             System.out.println("Ocurrio un error al mandar la entrada");
-            Logger.getLogger(interfaz.class.getName()).log(Level.SEVERE,null,e);
-            
+            Logger.getLogger(interfaz.class.getName()).log(Level.SEVERE, null, e);
+
         }
     }//GEN-LAST:event_jMenuItem5ActionPerformed
 
@@ -379,9 +446,9 @@ public class interfaz extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenu4ActionPerformed
 
     private void ErroresActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ErroresActionPerformed
-         // Cambia la ruta a la ubicación de tu archivo HTML
+        // Cambia la ruta a la ubicación de tu archivo HTML
         File htmlFile = new File("errores.html");
-        
+
         try {
             Desktop.getDesktop().browse(htmlFile.toURI());
         } catch (IOException e) {
@@ -389,14 +456,12 @@ public class interfaz extends javax.swing.JFrame {
         }
 
 
-
-
     }//GEN-LAST:event_ErroresActionPerformed
 
     private void jMenuItem6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem6ActionPerformed
-            // TODO add your handling code here:
-            File htmlFile = new File("tokens.html");
-        
+        // TODO add your handling code here:
+        File htmlFile = new File("tokens.html");
+
         try {
             Desktop.getDesktop().browse(htmlFile.toURI());
         } catch (IOException e) {
@@ -438,10 +503,9 @@ public class interfaz extends javax.swing.JFrame {
             }
         });
     }
-    
-    private void newArchivo(){
-        
-        
+
+    private void newArchivo() {
+
         JPanel newPanel = new JPanel(new BorderLayout());
         JTextArea textArea = new JTextArea();
         JScrollPane scrollPane = new JScrollPane(textArea);
@@ -450,8 +514,9 @@ public class interfaz extends javax.swing.JFrame {
         jTabbedPane1.addTab("undefined", newPanel);
         int lastIndex = jTabbedPane1.getTabCount() - 1;
         jTabbedPane1.setSelectedIndex(lastIndex);
-    
+
     }
+
     private void guardarArchivo() {
         int selectedIndex = jTabbedPane1.getSelectedIndex();
         if (selectedIndex != -1) {
@@ -472,37 +537,38 @@ public class interfaz extends javax.swing.JFrame {
                 }
             }
         }
-    
+
     }
-        
-    
-    private void openArchivo(){
-       
-        
-        
+
+    private void openArchivo() {
+
         JFileChooser fileChooser = new JFileChooser();
         int result = fileChooser.showOpenDialog(this);
 
         if (result == JFileChooser.APPROVE_OPTION) {
             // Seleccionar un archivo
             java.io.File selectedFile = fileChooser.getSelectedFile();
-            
+
             // verificamos la extensión del archivo
             if (selectedFile.getName().toLowerCase().endsWith(".df")) {
                 String contenido = readContenidoArchivo(selectedFile);
-                 JPanel newPanel = new JPanel(new BorderLayout());
-                 JTextArea textArea = new JTextArea(contenido);
-                 JScrollPane scrollPane = new JScrollPane(textArea);
-                 newPanel.add(scrollPane, BorderLayout.CENTER);
-                
-   
-                 jTabbedPane1.addTab(selectedFile.getName(), newPanel);
-            }else {
+                JPanel newPanel = new JPanel(new BorderLayout());
+                JTextArea textArea = new JTextArea(contenido);
+                JScrollPane scrollPane = new JScrollPane(textArea);
+                newPanel.add(scrollPane, BorderLayout.CENTER);
+
+                jTabbedPane1.addTab(selectedFile.getName(), newPanel);
+            } else {
                 JOptionPane.showMessageDialog(this, "Por favor, seleccione un archivo con extensión .df", "Error", JOptionPane.ERROR_MESSAGE);
             }
-            
+
         }
     }
+
+    private void newGraficaBarras() {
+
+    }
+
     private String readContenidoArchivo(java.io.File file) {
         StringBuilder contenido = new StringBuilder();
         try (BufferedReader br = new BufferedReader(new FileReader(file))) {
@@ -532,12 +598,10 @@ public class interfaz extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem4;
     private javax.swing.JMenuItem jMenuItem5;
     private javax.swing.JMenuItem jMenuItem6;
+    public javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JScrollPane jScrollPane2;
     javax.swing.JTabbedPane jTabbedPane1;
     private javax.swing.JTextArea jTextArea1;
-    private javax.swing.JTextArea jTextArea2;
     // End of variables declaration//GEN-END:variables
-    
-    
+
 }
