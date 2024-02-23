@@ -20,22 +20,27 @@ public class print implements sentencia{
     
     private int Line = 0;
     private int Column =0;
+    private String titulo ="";
     private LinkedList<Expresions> exps;
     
     
-    public print(LinkedList<Expresions> exps, int Line, int Column){
+    public print(LinkedList<Expresions> exps, int Line, int Column,String titulo){
         
        this.Column = Column;
        this.Line = Line;
+       this.titulo =titulo;
        this.exps = exps;
     
     }
     
     @Override
     public Object ejecutar(){
+        
         MiSingleton singleton = MiSingleton.obtenerInstancia();
         
-        singleton.add_consola("! Salida: ");
+        
+        singleton.add_consola(titulo);
+        
         
         for(Expresions exp: this.exps){
             Types run_exp = exp.ejecutarexp();
@@ -43,6 +48,7 @@ public class print implements sentencia{
             if(run_exp != null){     
                 if(run_exp.getType() == Type.STRING){
                     singleton.add_consola(run_exp.getString_val());
+                    
                 }else{
                     singleton.add_consola(Double.toString(run_exp.getDouble_val()));
                 }
@@ -51,6 +57,7 @@ public class print implements sentencia{
         }
         
         singleton.add_consola("\n");
+        
         
     
         return null;

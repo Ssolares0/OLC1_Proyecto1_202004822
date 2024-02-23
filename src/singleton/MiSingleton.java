@@ -30,7 +30,9 @@ public class MiSingleton {
     private String consola = "";
     
     public void add_consola(String data) {
+        
         this.consola += data;
+        
     }
 
     public String get_consola() {

@@ -7,6 +7,9 @@ package analizadores;
 import sentence.declaracion;
 import abstracto.Expresions;
 import java.util.Arrays;
+import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.Map;
 
 /**
  *
@@ -44,8 +47,6 @@ public class funcionesUsar {
         return valorEncontrado;
 
     }
-
-    
 
     public static Double operacionAritmetica(String id, String num) {
         String id_min = id.toLowerCase();
@@ -101,119 +102,124 @@ public class funcionesUsar {
     }
 
     public static Double operacionEstadistica(String id, String num) {
+        try {
+            String id_min = id.toLowerCase();
+            String[] partes = num.split(",");
+            // Crear un arreglo de tipo double para almacenar los números
+            double[] numeros = new double[partes.length];
+            // Convertir cada elemento de la lista de cadenas a double
+            for (int i = 0; i < partes.length; i++) {
+                numeros[i] = Double.parseDouble(partes[i]);
+            }
+            double media = 0.0;
+            double resultado = 0.0;
 
-        String id_min = id.toLowerCase();
-        String[] partes = num.split("=");
-        // Crear un arreglo de tipo double para almacenar los números
-        double[] numeros = new double[partes.length];
-        // Convertir cada elemento de la lista de cadenas a double
-        for (int i = 0; i < partes.length; i++) {
-            numeros[i] = Double.parseDouble(partes[i]);
-        }
-        double media = 0.0;
-        double resultado = 0.0;
+            switch (id_min) {
+                case "media":
+                    // Calcular la suma de los números
+                    double suma = 0;
+                    for (double numero : numeros) {
+                        suma += numero;
+                    }
+                    // Calcular el promedio
+                    double promedio = suma / numeros.length;
 
-        switch (id_min) {
-            case "media":
-                // Calcular la suma de los números
-                double suma = 0;
-                for (double numero : numeros) {
-                    suma += numero;
-                }
-                // Calcular el promedio
-                double promedio = suma / numeros.length;
+                    // Imprimir el promedio
+                    System.out.println("La media es: " + promedio);
 
-                // Imprimir el promedio
-                System.out.println("La media es: " + promedio);
+                    resultado = promedio;
+                    media = promedio;
 
-                resultado = promedio;
-                media = promedio;
+                    break;
 
-                break;
+                case "mediana":
 
-            case "mediana":
+                    //Ordenar la lista de números
+                    Arrays.sort(numeros);
 
-                //Ordenar la lista de números
-                Arrays.sort(numeros);
+                    int n = numeros.length;
 
-                int n = numeros.length;
+                    if (n % 2 == 0) {
+                        // Si la lista tiene un número par de elementos, la mediana es el promedio de los dos valores centrales
+                        resultado = (numeros[n / 2 - 1] + numeros[n / 2]) / 2.0;
+                        System.out.println("La mediana es: " + resultado);
+                    } else {
+                        // Si la lista tiene un número impar de elementos, la mediana es el valor central
+                        resultado = numeros[n / 2];
+                        System.out.println("La mediana es: " + resultado);
+                    }
 
-                if (n % 2 == 0) {
-                    // Si la lista tiene un número par de elementos, la mediana es el promedio de los dos valores centrales
-                    resultado = (numeros[n / 2 - 1] + numeros[n / 2]) / 2.0;
-                    System.out.println("La mediana es: " + resultado);
-                } else {
-                    // Si la lista tiene un número impar de elementos, la mediana es el valor central
-                    resultado = numeros[n / 2];
-                    System.out.println("La mediana es: " + resultado);
-                }
+                    break;
 
-                break;
+                case "moda":
+                    int maximoNumRepeticiones = 0;
+                    double moda = 0;
 
-            case "moda":
-                int maximoNumRepeticiones = 0;
-                double moda = 0;
+                    for (int i = 0; i < numeros.length; i++) {
+                        int numRepeticiones = 0;
+                        for (int j = 0; j < numeros.length; j++) {
+                            if (numeros[i] == numeros[j]) {
+                                numRepeticiones++;
+                            }
+                            if (numRepeticiones > maximoNumRepeticiones) {
+                                moda = numeros[i];
 
-                for (int i = 0; i < numeros.length; i++) {
-                    int numRepeticiones = 0;
-                    for (int j = 0; j < numeros.length; j++) {
-                        if (numeros[i] == numeros[j]) {
-                            numRepeticiones++;
+                                maximoNumRepeticiones = numRepeticiones;
+                            }
                         }
-                        if (numRepeticiones > maximoNumRepeticiones) {
-                            moda = numeros[i];
+                    }
+                    resultado = moda;
+                    System.out.println("la moda es: " + moda);
+                    break;
 
-                            maximoNumRepeticiones = numRepeticiones;
+                case "varianza":
+                    for (int i = 0; i < numeros.length; i++) {
+                        double rango;
+                        rango = Math.pow(numeros[i] - media, 2f);
+                        resultado = resultado + rango;
+                    }
+                    resultado = resultado / numeros.length;
+                    System.out.println("la varianza es: " + resultado);
+                    break;
+                case "max":
+                    double numeromayor;
+                    numeromayor = numeros[0];
+                    for (int i = 0; i < numeros.length; i++) {
+
+                        if (numeros[i] > numeromayor) {
+                            numeromayor = numeros[i];
+
                         }
                     }
-                }
-                resultado = moda;
-                System.out.println("la moda es: " + moda);
-                break;
+                    resultado = numeromayor;
+                    System.out.println("el max es: " + resultado);
+                    break;
 
-            case "varianza":
-                for (int i = 0; i < numeros.length; i++) {
-                    double rango;
-                    rango = Math.pow(numeros[i] - media, 2f);
-                    resultado = resultado + rango;
-                }
-                resultado = resultado / numeros.length;
-                System.out.println("la varianza es: " + resultado);
-                break;
-            case "max":
-                double numeromayor;
-                numeromayor = numeros[0];
-                for (int i = 0; i < numeros.length; i++) {
+                case "min":
+                    double numeromenor;
+                    numeromenor = numeros[0];
+                    for (int i = 0; i < numeros.length; i++) {
 
-                    if (numeros[i] > numeromayor) {
-                        numeromayor = numeros[i];
+                        if (numeros[i] < numeromenor) {
+                            numeromenor = numeros[i];
 
+                        }
                     }
-                }
-                resultado = numeromayor;
-                System.out.println("el max es: " + resultado);
-                break;
+                    resultado = numeromenor;
 
-            case "min":
-                double numeromenor;
-                numeromenor = numeros[0];
-                for (int i = 0; i < numeros.length; i++) {
+                    System.out.println("el min es: " + resultado);
+                    break;
+                default:
+                    System.out.println("Error: Operacion no reconocida.");
 
-                    if (numeros[i] < numeromenor) {
-                        numeromenor = numeros[i];
+            }
 
-                    }
-                }
-                resultado = numeromenor;
+            return resultado;
 
-                System.out.println("el min es: " + resultado);
-                break;
-            default:
-                System.out.println("Error: Operacion no reconocida.");
-
+        } catch (Exception e) {
+            System.out.println("ocurrio un error al intentar hacer una op estadistica");
+            return 0.0;
         }
-
-        return resultado;
 
     }
 

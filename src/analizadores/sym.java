@@ -11,53 +11,52 @@ public class sym {
   public static final int PAR_DER = 18;
   public static final int NUMERO = 2;
   public static final int DOSPUNTOS = 9;
-  public static final int mul = 22;
+  public static final int mul = 21;
   public static final int ASSIGN2 = 8;
-  public static final int CHAR = 33;
-  public static final int mod = 23;
+  public static final int CHAR = 32;
+  public static final int mod = 22;
   public static final int PUNTOYCOMA = 10;
   public static final int ID_ARRAY = 12;
-  public static final int graphpie = 39;
-  public static final int DOUBLE = 32;
+  public static final int graphpie = 38;
+  public static final int DOUBLE = 31;
   public static final int COR_DER = 6;
-  public static final int moda = 27;
-  public static final int graphbar = 38;
+  public static final int moda = 26;
+  public static final int graphbar = 37;
   public static final int IGUAL = 16;
   public static final int COLUMN = 14;
-  public static final int sum = 20;
-  public static final int ARROBA = 19;
-  public static final int ENDPROGRAM = 37;
+  public static final int sum = 19;
+  public static final int ENDPROGRAM = 36;
   public static final int ASSIGN = 7;
-  public static final int max = 29;
+  public static final int max = 28;
   public static final int ID = 11;
   public static final int EOF = 0;
-  public static final int PROGRAM = 36;
+  public static final int PROGRAM = 35;
   public static final int error = 1;
   public static final int COMA = 4;
   public static final int CADENA = 3;
-  public static final int exec = 49;
-  public static final int histogram = 41;
-  public static final int graphline = 40;
+  public static final int exec = 48;
+  public static final int histogram = 40;
+  public static final int graphline = 39;
   public static final int PAR_IZQ = 17;
-  public static final int res = 21;
-  public static final int tituloy = 46;
-  public static final int media = 25;
-  public static final int titulox = 45;
-  public static final int titulo = 42;
+  public static final int res = 20;
+  public static final int tituloy = 45;
+  public static final int media = 24;
+  public static final int titulox = 44;
+  public static final int titulo = 41;
   public static final int COR_IZQ = 5;
-  public static final int label = 48;
-  public static final int varianza = 28;
-  public static final int END = 35;
-  public static final int ARR = 34;
-  public static final int div = 24;
-  public static final int ejey = 44;
-  public static final int min = 30;
-  public static final int values = 47;
-  public static final int ejex = 43;
-  public static final int VAR = 31;
+  public static final int label = 47;
+  public static final int varianza = 27;
+  public static final int END = 34;
+  public static final int ARR = 33;
+  public static final int div = 23;
+  public static final int ejey = 43;
+  public static final int min = 29;
+  public static final int values = 46;
+  public static final int ejex = 42;
+  public static final int VAR = 30;
   public static final int PRINT = 15;
   public static final int CONSOLE = 13;
-  public static final int mediana = 26;
+  public static final int mediana = 25;
   public static final String[] terminalNames = new String[] {
   "EOF",
   "error",
@@ -78,7 +77,6 @@ public class sym {
   "IGUAL",
   "PAR_IZQ",
   "PAR_DER",
-  "ARROBA",
   "sum",
   "res",
   "mul",

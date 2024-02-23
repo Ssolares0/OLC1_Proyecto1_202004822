@@ -37,7 +37,7 @@ comentario_multL = "<!"([^\r\n]* (\r|\n|\r\n?)?)*"!>"
 
 numero = [0-9]+("."[0-9]+)?
 id = [a-zA-Z_][a-zA-Z0-9_]*
-//id_array = @([a-zA-Z_][a-zA-Z0-9_]*)
+id_array = @([a-zA-Z_][a-zA-Z0-9_]*)
 cadena = [\'][^\']*[\']|[\"][^\"]*[\"]
 blancos = [ \t\f\r\n]+
 
@@ -102,10 +102,7 @@ blancos = [ \t\f\r\n]+
             tokLex.add(tmp);
             return new Symbol(sym.PAR_DER, yycolumn, yyline, yytext()); }
 
-    "@"   { System.out.println("Reconocio ARROBA  ,lexema: "+yytext());
-            Token tmp = new Token(yytext(),"simbolo");
-            tokLex.add(tmp);
-            return new Symbol(sym.ARROBA, yycolumn, yyline, yytext()); }
+    
 
 
 
@@ -304,10 +301,12 @@ blancos = [ \t\f\r\n]+
     {id}  { System.out.println("Reconocio el id de una declaracion de variable,lexema: "+yytext());
             Token tmp = new Token(yytext(),"ID VARIABLE");
             tokLex.add(tmp);
-              return new Symbol(sym.ID, yycolumn, yyline, yytext());}
+            return new Symbol(sym.ID, yycolumn, yyline, yytext());}
 
-    //{id_array}  { System.out.println("Reconocio el id de un array ,lexema: "+yytext());
-    //          return new Symbol(sym.ID_ARRAY, yycolumn, yyline, yytext());}
+    {id_array}  { System.out.println("Reconocio el id de un array ,lexema: "+yytext());
+                Token tmp = new Token(yytext(),"ID ARRAY");
+                tokLex.add(tmp);
+              return new Symbol(sym.ID_ARRAY, yycolumn, yyline, yytext());}
 
 
     {cadena}  { System.out.println("Reconocio una cadena,lexema: "+yytext());

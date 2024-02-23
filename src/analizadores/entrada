@@ -36,5 +36,19 @@ EXEC graphPie end;
 ) end;
 
 
+
+END PROGRAM
+
+PROGRAM
+! Variables
+var:double:: notaAprobar <- 61 end;
+var:char[]:: labelAprobar <- "Nota Minima" end;
+
+! Arreglos
+arr:double:: @notas <- [notaAprobar, MUL(75, 0.45), DIV(SUM(80,20), RES(75,25))] end;
+arr:char[]:: @labels <- [labelAprobar, "P1", "P2"] end;
+!Prints
+var:char[]:: titulo1 <- "Titulo histograma" end;
+console::column = "test" -> [10, 15.5, 61.1] end;
 END PROGRAM
 
