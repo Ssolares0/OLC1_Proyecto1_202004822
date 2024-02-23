@@ -30,6 +30,7 @@ parser code
 
     public HashMap<String,String> graficasBarras = new HashMap<String,String>();
     public HashMap<String,String> graficasPie = new HashMap<String,String>();
+    public HashMap<String,String> variablesNorm = new HashMap<String,String>();
     
 
     public LinkedList<sentencia>AST;
@@ -42,24 +43,22 @@ parser code
     }
 
 
+    public String findvariable(String id) {
+        String var_valor = "";
 
-    public static String buscarVariable(String id){
-        declaracion miDeclaracion = new declaracion("miID", "miValor", 1, 1);
-
-        // Llamada a la función obtenerValorPorID
-        String valorEncontrado = miDeclaracion.obtenerValorPorID(id);
-
-        if (valorEncontrado != null) {
-            System.out.println("Valor encontrado: " + valorEncontrado);
-            return valorEncontrado;
+        if (variablesNorm.containsKey(id)) {
+            var_valor= variablesNorm.get(id);
+            
         } else {
-            System.out.println("ID no encontrado.");
+            System.out.println("No se encontro la variable");
         }
-        return valorEncontrado;
+
+        return var_valor;
+    }
+
+
+
     
- 
-    
-    } 
 
     
     
@@ -102,7 +101,7 @@ terminal String titulo,ejex,ejey,titulox,tituloy,values,label,exec;
 //------> Declaración de no terminales
 non terminal INICIO;
 non terminal sentencia INSTRUCCION;
-non terminal declaracion DECLARACION;
+non terminal DECLARACION;
 non terminal TIPO;
 non terminal OP,OP2,OP3,OP4;
 non terminal EXP_TITULO;
@@ -118,6 +117,7 @@ non terminal valores_grafica;
 non terminal LinkedList<sentencia>INSTRUCCIONES;
 non terminal LinkedList<Expresions>EXP_SUCESIVAS;
 non terminal  EXP_SUCESIVASGRAF;
+non terminal ID_DECLA;
 
 non terminal GRAFBARRAS,SENTENCIAS_BAR,BAR,TITULO_BAR,TITULOX_BAR,TITULOY_BAR,EJEX_BAR,EJEY_BAR,EXEC_BAR;
 non terminal GRAFPIE,SENTENCIAS_PIE,PIE,TITULO_PIE,EXEC_PIE,LABEL_PIE,VALUES_PIE;
@@ -144,16 +144,16 @@ INSTRUCCIONES ::= INSTRUCCIONES:a INSTRUCCION:b {: RESULT= a; RESULT.add(b); :}
                 
 INSTRUCCION::=  IMPRIMIR_EXP:a END PUNTOYCOMA {:RESULT =a; :}
                |IMPRIMIR_ARRAY:a END PUNTOYCOMA {: RESULT=a; :}
-               |DECLARACION:a END PUNTOYCOMA {: RESULT=a; :}
-               |Dec_Arreglo:a END PUNTOYCOMA {:RESULT=a; :}
-               |GRAFBARRAS END PUNTOYCOMA {:RESULT= new erro("error sint");:}
+               |DECLARACION:a END PUNTOYCOMA {: RESULT=new erro("declarada variable"); :}
+               |Dec_Arreglo:a END PUNTOYCOMA {:RESULT=new erro("declarada arreglo");:}
+               |GRAFBARRAS END PUNTOYCOMA {:RESULT= new erro("nuevagraficabarras");:}
                |GRAFPIE END PUNTOYCOMA {:RESULT= new erro("NUEVA GRAFICA PIE");:}
                |error:e END PUNTOYCOMA {:RESULT= new erro("error sint"); :};
 
 
 //--------------------------> La Declaracion de una variable<----------------
 
-DECLARACION ::= VAR DOSPUNTOS TIPO DOSPUNTOS DOSPUNTOS ID: id_var ASSIGN valores_variable: exp_va {:RESULT = new declaracion(id_var,exp_va.toString(),exp_varight,exp_valeft); :};
+DECLARACION ::= VAR DOSPUNTOS TIPO DOSPUNTOS DOSPUNTOS ID: id_var ASSIGN valores_variable: exp_va {:RESULT = variablesNorm.put(id_var,exp_va.toString());:};//{:RESULT = new declaracion(id_var,exp_va.toString(),exp_varight,exp_valeft);  :};
    
 
 // ----------------------------> DECLARACION DE UN ARREGLO <----------------------------------------
@@ -183,6 +183,7 @@ OP_ARITMETICA ::=
                | mul: mul PAR_IZQ OP:val PAR_DER {:double resultado = funcionesUsar.operacionAritmetica(mul, val.toString()); RESULT =resultado;:}
                | mod: mod PAR_IZQ OP:val PAR_DER {:double resultado = funcionesUsar.operacionAritmetica(mod, val.toString()); RESULT =resultado;:}
                | div: div PAR_IZQ OP:val PAR_DER {:double resultado = funcionesUsar.operacionAritmetica(div, val.toString()); RESULT =resultado;:};
+               
 
 OP_ESTADISTICA::= media:media        PAR_IZQ COR_IZQ OP3:val COR_DER PAR_DER {:double resultado = funcionesUsar.operacionEstadistica(media, val.toString()); RESULT =resultado;:}
                 | mediana:mediana    PAR_IZQ COR_IZQ OP3:val COR_DER PAR_DER {:double resultado = funcionesUsar.operacionEstadistica(mediana, val.toString()); RESULT =resultado;:}
@@ -199,7 +200,8 @@ OP::=
 
 OP2::= OP_ARITMETICA:resuAri {:RESULT= resuAri;:}
         | OP_ESTADISTICA: resuEst {:RESULT= resuEst; :}
-        |NUMERO: num {:RESULT=num; :};
+        |NUMERO: num {:RESULT=num; :}
+        |ID_DECLA:id_var{: RESULT=id_var; :};
         
 
 OP3::= 
@@ -287,8 +289,10 @@ valores_grafica::=      NUMERO: num {:RESULT =num;:}
 valores_print::=      NUMERO: num {:RESULT = new Valores(num,Valores.Datatype.DECIMAL,numright,numleft); :}
                     | CADENA: cad {:RESULT = new Valores(cad,Valores.Datatype.CADENA,cadright,cadleft); :}
                     | OP_ARITMETICA:opeari {:RESULT = new Valores(opeari.toString(),Valores.Datatype.DECIMAL,opeariright,opearileft); :}
-                    | OP_ESTADISTICA:opeEst {:RESULT = new Valores(opeEst.toString(),Valores.Datatype.DECIMAL,opeEstright,opeEstleft); :};
-                    //| ID: id_var {: RESULT= miDeclaracion.obtenerValorPorID(id_var); :};
+                    | OP_ESTADISTICA:opeEst {:RESULT = new Valores(opeEst.toString(),Valores.Datatype.DECIMAL,opeEstright,opeEstleft); :}
+                    | ID_DECLA: id_var {: RESULT = new Valores(id_var.toString(),Valores.Datatype.DECIMAL,id_varright,id_varleft); :};
+
+ID_DECLA::= ID:id_ {: RESULT = findvariable(id_); :};
 
 valores_variable ::= NUMERO: numero {: RESULT = numero; :}
                    |CADENA: cadena {: RESULT = cadena; :}

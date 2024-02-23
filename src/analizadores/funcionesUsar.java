@@ -45,6 +45,8 @@ public class funcionesUsar {
 
     }
 
+    
+
     public static Double operacionAritmetica(String id, String num) {
         String id_min = id.toLowerCase();
         String[] partes = num.split("=");
@@ -185,13 +187,13 @@ public class funcionesUsar {
 
                     if (numeros[i] > numeromayor) {
                         numeromayor = numeros[i];
-                        
+
                     }
                 }
                 resultado = numeromayor;
                 System.out.println("el max es: " + resultado);
                 break;
-                
+
             case "min":
                 double numeromenor;
                 numeromenor = numeros[0];
@@ -199,8 +201,8 @@ public class funcionesUsar {
 
                     if (numeros[i] < numeromenor) {
                         numeromenor = numeros[i];
-                        
-                    }   
+
+                    }
                 }
                 resultado = numeromenor;
 
