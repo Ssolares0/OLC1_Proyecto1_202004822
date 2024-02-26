@@ -32,7 +32,7 @@ import java.util.ArrayList;
 //entero = [0-9]+
 
 comentario_oneL = "!"[^\r\n]* (\r|\n|\r\n)?
-comentario_multL = "<!"([^\r\n]* (\r|\n|\r\n?)?)*"!>"
+comentario_multL = \<\!([^"!>"]|[\r|\f|\s|\t|\n])*\!\>
 
 
 numero = [0-9]+("."[0-9]+)?

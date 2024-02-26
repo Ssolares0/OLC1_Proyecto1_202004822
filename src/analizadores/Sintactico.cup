@@ -6,6 +6,7 @@ import java.util.LinkedList;
 import expressions.Valores;
 import sentence.print;
 import sentence.erro;
+import sentence.func;
 import sentence.declaracionArray;
 import sentence.declaracion;
 import abstracto.Expresions;
@@ -20,6 +21,7 @@ import java.util.Map;
 
 
 
+
 //------> Codigo para el parser
 //------> Declaracion de variables, funciones y funciones de error
 
@@ -31,6 +33,7 @@ parser code
 
     public HashMap<String,String> graficasBarras = new HashMap<String,String>();
     public HashMap<String,String> graficasPie = new HashMap<String,String>();
+    public HashMap<String,String> graficaLineal = new HashMap<String,String>();
     public HashMap<String,String> variablesNorm = new HashMap<String,String>();
     Map<String, String> variablesArr = new HashMap<>();
     public LinkedList<String> list_sucesiva = new LinkedList<>();
@@ -140,6 +143,7 @@ non terminal ID_DECLA,ARR_DECLA;
 
 non terminal GRAFBARRAS,SENTENCIAS_BAR,BAR,TITULO_BAR,TITULOX_BAR,TITULOY_BAR,EJEX_BAR,EJEY_BAR,EXEC_BAR;
 non terminal GRAFPIE,SENTENCIAS_PIE,PIE,TITULO_PIE,EXEC_PIE,LABEL_PIE,VALUES_PIE;
+non terminal GRAFLINEAL,SENTENCIAS_LINE,LINE,TITULO_LINE,TITULOX_LINE,TITULOY_LINE,EJEX_LINE,EJEY_LINE,EXEC_LINE;
 
 
 // Asociatividades y Prioridades 
@@ -157,16 +161,19 @@ start with INICIO;
 
 //---------->Gramatica para el inicio<-------------
 INICIO ::= PROGRAM INSTRUCCIONES:b ENDPROGRAM {: parser.AST=b; :};
+            
 
 INSTRUCCIONES ::= INSTRUCCIONES:a INSTRUCCION:b {: RESULT= a; RESULT.add(b); :}
                 | INSTRUCCION: a                 {: RESULT = new LinkedList<>(); RESULT.add(a); :};
                 
+                
 INSTRUCCION::=  IMPRIMIR_EXP:a END PUNTOYCOMA {:RESULT =a; :}
                |IMPRIMIR_ARRAY:a END PUNTOYCOMA {: RESULT=a; :}
-               |DECLARACION:a END PUNTOYCOMA {: RESULT=new erro("declarada variable"); :}
-               |Dec_Arreglo:a END PUNTOYCOMA {:RESULT=new erro("declarada arreglo");:}
-               |GRAFBARRAS END PUNTOYCOMA {:RESULT= new erro("nuevagraficabarras");:}
-               |GRAFPIE END PUNTOYCOMA {:RESULT= new erro("NUEVA GRAFICA PIE");:}
+               |DECLARACION:a END PUNTOYCOMA {: RESULT=new func("declarada variable"); :}
+               |Dec_Arreglo:a END PUNTOYCOMA {:RESULT=new func("declarada arreglo");:}
+               |GRAFBARRAS END PUNTOYCOMA {:RESULT= new func("nuevagraficabarras");:}
+               |GRAFPIE END PUNTOYCOMA {:RESULT= new func("NUEVA GRAFICA PIE");:}
+               |GRAFLINEAL END PUNTOYCOMA {:RESULT= new func("NUEVA GRAFICA lineal");:}
                |error:e END PUNTOYCOMA {:RESULT= new erro("error sint"); :};
 
 
@@ -258,17 +265,20 @@ BAR::= TITULO_BAR END PUNTOYCOMA
         |EJEY_BAR END PUNTOYCOMA
         |TITULOX_BAR END PUNTOYCOMA
         |TITULOY_BAR END PUNTOYCOMA
-        |EXEC_BAR END PUNTOYCOMA
-        |EXEC_PIE END PUNTOYCOMA;
+        |EXEC_BAR END PUNTOYCOMA;
+        
 
 TITULO_BAR::= titulo:titulo DOSPUNTOS DOSPUNTOS CHAR IGUAL CADENA:cad {:graficasBarras.put(titulo,cad);:} ;
+
 EJEX_BAR ::= ejex:eje_x DOSPUNTOS DOSPUNTOS CHAR IGUAL COR_IZQ EXP_SUCESIVASGRAF:exp_s COR_DER {:graficasBarras.put(eje_x,exp_s.toString());:} ;
 EJEY_BAR ::= ejey:eje_y DOSPUNTOS DOSPUNTOS DOUBLE IGUAL COR_IZQ EXP_SUCESIVASGRAF:exp_s COR_DER {:graficasBarras.put(eje_y,exp_s.toString());:};
-TITULOX_BAR ::= titulox:titulo_x DOSPUNTOS DOSPUNTOS CHAR IGUAL CADENA:cad {:graficasBarras.put(titulo_x,cad);:} ;
-TITULOY_BAR ::= tituloy:titulo_y DOSPUNTOS DOSPUNTOS CHAR IGUAL CADENA:cad {:graficasBarras.put(titulo_y,cad);:};
+TITULOX_BAR ::= titulox:titulo_x DOSPUNTOS DOSPUNTOS CHAR IGUAL valores_grafica:cad {:graficasBarras.put(titulo_x,cad.toString());:} ;
+TITULOY_BAR ::= tituloy:titulo_y DOSPUNTOS DOSPUNTOS CHAR IGUAL valores_grafica:cad {:graficasBarras.put(titulo_y,cad.toString());:};
 EXEC_BAR ::= exec:ex graphbar:graph_ {:graficasBarras.put(ex,graph_);:};
 
-//----------------------------------------------------------GRAFICA PIE
+
+
+//----------------------------------------------------------GRAFICA PIE------------------------------------------------------------------------------------
 
 
 GRAFPIE::= graphpie PAR_IZQ SENTENCIAS_PIE  PAR_DER;
@@ -282,15 +292,36 @@ SENTENCIAS_PIE::= SENTENCIAS_PIE PIE
             |VALUES_PIE END PUNTOYCOMA
             |EXEC_PIE END PUNTOYCOMA;
 
-TITULO_PIE ::= titulo:titulo DOSPUNTOS DOSPUNTOS CHAR IGUAL CADENA:cad {:graficasPie.put(titulo,cad);:} ;
+TITULO_PIE ::= titulo:titulo DOSPUNTOS DOSPUNTOS CHAR IGUAL valores_grafica:cad {:graficasPie.put(titulo,cad.toString());:} ;
 LABEL_PIE ::= label:lab DOSPUNTOS DOSPUNTOS CHAR IGUAL COR_IZQ EXP_SUCESIVASGRAF:exp_s COR_DER {:graficasPie.put(lab,exp_s.toString());:};
 VALUES_PIE::= values:valu DOSPUNTOS DOSPUNTOS DOUBLE IGUAL COR_IZQ EXP_SUCESIVASGRAF:exp_s COR_DER {:graficasPie.put(valu,exp_s.toString());:};
 EXEC_PIE ::= exec:ex graphpie:graph_ {:graficasPie.put(ex,graph_);:};
 
 
+//----------------------------------------------------------GRAFICA LINEAL------------------------------------------------------------------------------------
 
+GRAFLINEAL ::= graphline PAR_IZQ SENTENCIAS_LINE  PAR_DER;
 
+SENTENCIAS_LINE::= SENTENCIAS_LINE LINE
+                    |LINE;
 
+        LINE ::= TITULO_LINE END PUNTOYCOMA
+                |EJEX_LINE END PUNTOYCOMA
+                |EJEY_LINE END PUNTOYCOMA
+                |TITULOX_LINE END PUNTOYCOMA
+                |TITULOY_LINE END PUNTOYCOMA
+                |EXEC_LINE END PUNTOYCOMA;
+               
+TITULO_LINE::= titulo:titulo DOSPUNTOS DOSPUNTOS CHAR IGUAL CADENA:cad {:graficaLineal.put(titulo,cad);:} ;
+EJEX_LINE ::= ejex:eje_x DOSPUNTOS DOSPUNTOS CHAR IGUAL COR_IZQ EXP_SUCESIVASGRAF:exp_s COR_DER {:graficaLineal.put(eje_x,exp_s.toString());:} 
+              |ejex:eje_x DOSPUNTOS DOSPUNTOS CHAR IGUAL EXP_SUCESIVASGRAF:exp_s {:graficaLineal.put(eje_x,exp_s.toString());:} ;
+
+EJEY_LINE ::= ejey:eje_y DOSPUNTOS DOSPUNTOS DOUBLE IGUAL COR_IZQ EXP_SUCESIVASGRAF:exp_s COR_DER {:graficaLineal.put(eje_y,exp_s.toString());:}
+                |ejey:eje_y DOSPUNTOS DOSPUNTOS DOUBLE IGUAL  EXP_SUCESIVASGRAF:exp_s  {:graficaLineal.put(eje_y,exp_s.toString());:};
+
+TITULOX_LINE ::= titulox:titulo_x DOSPUNTOS DOSPUNTOS CHAR IGUAL valores_grafica:cad {:graficaLineal.put(titulo_x,cad.toString());:} ;
+TITULOY_LINE ::= tituloy:titulo_y DOSPUNTOS DOSPUNTOS CHAR IGUAL valores_grafica:cad {:graficaLineal.put(titulo_y,cad.toString());:};
+EXEC_LINE ::= exec:ex graphline:graph_ {:graficaLineal.put(ex,graph_);:};
 
 
 
@@ -312,9 +343,9 @@ EXP_SUCESIVASARR::=EXP_SUCESIVASARR:exp_s COMA valores_variable: val {: RESULT =
 
 
 valores_grafica::=      NUMERO: num {:RESULT =num;:} 
-                    | CADENA: cad {:RESULT = cad;:};
-                   
-                    //| ID: id_var {: RESULT= miDeclaracion.obtenerValorPorID(id_var); :};
+                    | CADENA: cad {:RESULT = cad;:}
+                    | ID_DECLA: id_var {: RESULT= id_var; :}
+                    | ARR_DECLA:id_arr {:RESULT= id_arr;:};
 
 
 valores_print::=      NUMERO: num {:RESULT = new Valores(num,Valores.Datatype.DECIMAL,numright,numleft); :}

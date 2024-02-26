@@ -29,6 +29,7 @@ import org.jfree.chart.plot.PlotOrientation;
 import org.jfree.data.category.DefaultCategoryDataset;
 import org.jfree.data.general.DefaultPieDataset;
 import java.util.List;
+import org.jfree.data.xy.XYSeries;
 
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
@@ -281,6 +282,11 @@ public class interfaz extends javax.swing.JFrame {
         String ejey = "";
         String tituloX = "";
         String tituloY = "";
+        String titulo_line = "";
+        String ejex_line = "";
+        String ejey_line = "";
+        String tituloX_line = "";
+        String tituloY_line = "";
         String EXEC = "";
         String titulo_pie = "";
         String label_pie = "";
@@ -427,7 +433,6 @@ public class interfaz extends javax.swing.JFrame {
                         System.out.println("no hay valores en la grafica barras");
                     }
 
-                  
                 }
 
                 JFreeChart grafica_barras = ChartFactory.createBarChart3D(
@@ -490,14 +495,64 @@ public class interfaz extends javax.swing.JFrame {
 
                 list_graficas.add(grafica_pie);
 
+                for (Map.Entry<String, String> entry_line : parser.graficaLineal.entrySet()) {
+                    String clave = entry_line.getKey();
+                    String valor = entry_line.getValue();
+
+                    switch (clave) {
+                        case "ejeX":
+                            ejex_line = valor;
+                            System.out.println("en lineal"+ejex_line);
+                            break;
+                        case "ejeY":
+                            ejey_line = valor;
+                            break;
+                        case "tituloX":
+                            tituloX_line = valor;
+                            break;
+                        case "tituloY":
+                            tituloY_line = valor;
+
+                            break;
+                        case "titulo":
+                            titulo_line = valor;
+                            break;
+                        // Agregar más casos según sea necesario para más claves
+                    }
+                }
+                String[] listEjex_line = ejex_line.split("[=,]");
+                String[] listEjey_line = ejey_line.split("[=,]");
+               
+
+                DefaultCategoryDataset dataset = new DefaultCategoryDataset();
+
+                for (int i = 0; i < listEjey_line.length; i++) {
+
+                    try {
+                        int valor = Integer.parseInt(listEjey_line[i]); // Convertir el valor de String a int
+
+                        dataset.setValue(valor, "SS", listEjex_line[i]);
+
+                    } catch (Exception e) {
+                        System.out.println("no hay valores en la grafica lineal");
+                    }
+
+                }
+                JFreeChart graficaLineal = ChartFactory.createLineChart(
+                        titulo_line, // Título del gráfico
+                        tituloX_line, // Etiqueta del eje X
+                        tituloY_line, // Etiqueta del eje Y
+                        dataset // Conjunto de datos
+                );
+
+                list_graficas.add(graficaLineal);
+
                 // Configurar el panel de la gráfica
                 ChartPanel grafb = new ChartPanel(list_graficas.get(currentIndex));
-                
 
                 jPanel1.setLayout(new BorderLayout());
-                jPanel1.setPreferredSize(new Dimension(350,350));
+                jPanel1.setPreferredSize(new Dimension(350, 350));
                 jPanel1.add(grafb, BorderLayout.CENTER);
-                
 
                 System.out.println("Analizando entrada... ");
 
@@ -662,7 +717,7 @@ public class interfaz extends javax.swing.JFrame {
         jPanel1.removeAll();
         jPanel1.add(new ChartPanel(list_graficas.get(currentIndex)), BorderLayout.CENTER);
         jPanel1.revalidate();
-        
+
         jPanel1.repaint();
     }
 
