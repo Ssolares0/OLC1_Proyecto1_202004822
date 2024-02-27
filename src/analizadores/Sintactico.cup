@@ -35,7 +35,7 @@ parser code
     public HashMap<String,String> graficasPie = new HashMap<String,String>();
     public HashMap<String,String> graficaLineal = new HashMap<String,String>();
     public HashMap<String,String> variablesNorm = new HashMap<String,String>();
-    Map<String, String> variablesArr = new HashMap<>();
+    public Map<String, String> variablesArr = new HashMap<>();
     public LinkedList<String> list_sucesiva = new LinkedList<>();
     
 
@@ -252,7 +252,7 @@ OP4::=  OP_ESTADISTICA: resuEst {:RESULT= resuEst; :}
 
 //--------------------------->Funciones de graficas<--------------------------------------------------------------------------------------
 
-//----------------------------------------------------------GRAFICA barras
+//----------------------------------------------------------GRAFICA barras----------------------------------------------------------------
 
 GRAFBARRAS::= graphbar PAR_IZQ SENTENCIAS_BAR  PAR_DER;
 
@@ -270,8 +270,12 @@ BAR::= TITULO_BAR END PUNTOYCOMA
 
 TITULO_BAR::= titulo:titulo DOSPUNTOS DOSPUNTOS CHAR IGUAL CADENA:cad {:graficasBarras.put(titulo,cad);:} ;
 
-EJEX_BAR ::= ejex:eje_x DOSPUNTOS DOSPUNTOS CHAR IGUAL COR_IZQ EXP_SUCESIVASGRAF:exp_s COR_DER {:graficasBarras.put(eje_x,exp_s.toString());:} ;
-EJEY_BAR ::= ejey:eje_y DOSPUNTOS DOSPUNTOS DOUBLE IGUAL COR_IZQ EXP_SUCESIVASGRAF:exp_s COR_DER {:graficasBarras.put(eje_y,exp_s.toString());:};
+EJEX_BAR ::= ejex:eje_x DOSPUNTOS DOSPUNTOS CHAR IGUAL COR_IZQ EXP_SUCESIVASGRAF:exp_s COR_DER {:graficasBarras.put(eje_x,exp_s.toString());:} 
+             |ejex:eje_x DOSPUNTOS DOSPUNTOS CHAR IGUAL EXP_SUCESIVASGRAF:exp_s {:graficasBarras.put(eje_x,exp_s.toString());:} ;
+
+EJEY_BAR ::= ejey:eje_y DOSPUNTOS DOSPUNTOS DOUBLE IGUAL COR_IZQ EXP_SUCESIVASGRAF:exp_s COR_DER {:graficasBarras.put(eje_y,exp_s.toString());:}
+             |ejey:eje_y DOSPUNTOS DOSPUNTOS DOUBLE IGUAL EXP_SUCESIVASGRAF:exp_s  {:graficasBarras.put(eje_y,exp_s.toString());:};
+
 TITULOX_BAR ::= titulox:titulo_x DOSPUNTOS DOSPUNTOS CHAR IGUAL valores_grafica:cad {:graficasBarras.put(titulo_x,cad.toString());:} ;
 TITULOY_BAR ::= tituloy:titulo_y DOSPUNTOS DOSPUNTOS CHAR IGUAL valores_grafica:cad {:graficasBarras.put(titulo_y,cad.toString());:};
 EXEC_BAR ::= exec:ex graphbar:graph_ {:graficasBarras.put(ex,graph_);:};
@@ -293,8 +297,12 @@ SENTENCIAS_PIE::= SENTENCIAS_PIE PIE
             |EXEC_PIE END PUNTOYCOMA;
 
 TITULO_PIE ::= titulo:titulo DOSPUNTOS DOSPUNTOS CHAR IGUAL valores_grafica:cad {:graficasPie.put(titulo,cad.toString());:} ;
-LABEL_PIE ::= label:lab DOSPUNTOS DOSPUNTOS CHAR IGUAL COR_IZQ EXP_SUCESIVASGRAF:exp_s COR_DER {:graficasPie.put(lab,exp_s.toString());:};
-VALUES_PIE::= values:valu DOSPUNTOS DOSPUNTOS DOUBLE IGUAL COR_IZQ EXP_SUCESIVASGRAF:exp_s COR_DER {:graficasPie.put(valu,exp_s.toString());:};
+LABEL_PIE ::= label:lab DOSPUNTOS DOSPUNTOS CHAR IGUAL COR_IZQ EXP_SUCESIVASGRAF:exp_s COR_DER {:graficasPie.put(lab,exp_s.toString());:}
+              |label:lab DOSPUNTOS DOSPUNTOS CHAR IGUAL EXP_SUCESIVASGRAF:exp_s {:graficasPie.put(lab,exp_s.toString());:};
+
+VALUES_PIE::= values:valu DOSPUNTOS DOSPUNTOS DOUBLE IGUAL COR_IZQ EXP_SUCESIVASGRAF:exp_s COR_DER {:graficasPie.put(valu,exp_s.toString());:}
+               |values:valu DOSPUNTOS DOSPUNTOS DOUBLE IGUAL EXP_SUCESIVASGRAF:exp_s {:graficasPie.put(valu,exp_s.toString());:};
+
 EXEC_PIE ::= exec:ex graphpie:graph_ {:graficasPie.put(ex,graph_);:};
 
 

@@ -13,11 +13,16 @@ public class Token {
     private String token;
    
     private String description;
+    private int Fila;
+    private int Columna;
 
     //Constructor
-    public Token(String token, String description) {
+    public Token(String token, String description,int Fila, int Columna) {
         this.token = token;
         this.description = description;
+        this.Fila =Fila;
+        this.Columna=Columna;
+        
     }
 
     //Getters y Setters
@@ -33,6 +38,19 @@ public class Token {
     }
     public void setDesciption(String description) {
         this.description = description;
+    }
+    
+    public int getFila() {
+        return Fila;
+    }
+    public void setFila(int Fila) {
+        this.Fila = Fila;
+    }
+    public int getColumna() {
+        return Columna;
+    }
+    public void setColumna(int Columna) {
+        this.Columna = Columna;
     }
     
 }

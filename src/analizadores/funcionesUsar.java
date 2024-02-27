@@ -89,9 +89,14 @@ public class funcionesUsar {
                 }
                 break;
             case "mod":
-                resultado = numero1;
-                System.out.println("Mod: " + resultado);
+                
+                if (numero2 != 0) {
+                    resultado = numero1 % numero2;
+                    System.out.println("div: " + resultado);
 
+                } else {
+                    System.out.println("Error: División por cero no permitida.");
+                }
                 break;
             default:
                 System.out.println("Error: Operación no reconocida.");

@@ -347,7 +347,7 @@ public class interfaz extends javax.swing.JFrame {
                 html += "</table></center></body></html>";
 
                 // Guardar en un archivo llamado "errores.html"
-                File file = new File("errores.html");
+                File file = new File("Reportes/errores.html");
                 BufferedWriter bw = new BufferedWriter(new FileWriter(file));
                 bw.write(html);
                 bw.close();
@@ -372,21 +372,79 @@ public class interfaz extends javax.swing.JFrame {
                         + "<center>";
 
                 // Crear el contenido de la tabla
-                String html2 = htmlstyle2 + "<table border=1><tr><th>Descripcion</th><th>Tipo</th></tr>";
+                String html2 = htmlstyle2 + "<table border=1><tr><th>Descripcion</th><th>Tipo</th><th>Fila</th><th>Columna</th></tr>";
 
                 // Iterar sobre los token lexicos
                 for (int i = 0; i < scanner.tokLex.size(); i++) {
-                    html2 += "</center></td><td><center>" + scanner.tokLex.get(i).getDescription()
-                            + "</center></td><td><center>" + scanner.tokLex.get(i).getToken() + "</center></td></tr>";
+                    html2 += "<tr><td><center>" + scanner.tokLex.get(i).getDescription()+"</center></td><td><center>"
+                            + scanner.tokLex.get(i).getToken() + "</center></td><td><center>"
+                            + scanner.tokLex.get(i).getFila() + "</center></td><td><center>"
+                            + scanner.tokLex.get(i).getColumna() + "</center></td></tr>" ;
                 }
 
                 html2 += "</table></center></body></html>";
 
                 // Guardar en un archivo llamado "errores.html"
-                File file2 = new File("Tokens.html");
+                File file2 = new File("Reportes/Tokens.html");
                 BufferedWriter bw2 = new BufferedWriter(new FileWriter(file2));
                 bw2.write(html2);
                 bw2.close();
+                
+                
+                //creamos html symbolos
+                
+                // Crear el estilo del HTML tokens
+                String htmlstyle3 = "<!DOCTYPE html>"
+                        + "<html>"
+                        + "<head>"
+                        + "<meta http-equiv=\"Content-Type\" content=\"text/html; charset=iso-8859-1\">"
+                        + "<title>Simbolos</title>"
+                        + "</head>"
+                        + "<style>"
+                        + "table, th {background-color: #D7C0AE;} td { border: 1px solid rgb(31, 31, 31);"
+                        + "border-collapse: collapse;"
+                        + "background-color: #D7C0AE;"
+                        + "}"
+                        + "th:nth-child(even),td:nth-child(even) {"
+                        + "background-color: #EEE3CB;"
+                        + "}"
+                        + "</style>"
+                        + "<body bgcolor=\"B7C4CF\">"
+                        + "<center>";
+
+                // Crear el contenido de la tabla
+                String html3 = htmlstyle3 + "<table border=1><tr><th>Nombre</th><th>valor</th></tr>";
+                
+                for (Map.Entry<String, String> entry : parser.variablesNorm.entrySet()) {
+                    String key = entry.getKey();
+                    String value = entry.getValue();
+                   
+                    html3 += "<tr><td><center>" + key+"</center></td><td><center>"
+                 
+                            + value + "</center></td></tr>" ;
+                    
+                    
+                    
+                }
+                
+                for (Map.Entry<String, String> entry :parser.variablesArr.entrySet()) {
+                    String key = entry.getKey();
+                    String value = entry.getValue();
+                   
+                    html3 += "<tr><td><center>" + key+"</center></td><td><center>"
+                 
+                            + value + "</center></td></tr>" ;
+                    
+                    
+                    
+                }
+                html3 += "</table></center></body></html>";
+
+                // Guardar en un archivo llamado "errores.html"
+                File file3 = new File("Reportes/Symbolos.html");
+                BufferedWriter bw3 = new BufferedWriter(new FileWriter(file3));
+                bw3.write(html3);
+                bw3.close();
 
                 // Recorrer el HashMap para obtener las claves y los valores
                 for (Map.Entry<String, String> entry : parser.graficasBarras.entrySet()) {
@@ -417,15 +475,15 @@ public class interfaz extends javax.swing.JFrame {
 
                 }
 
-                String[] listEjex = ejex.split("=");
-                String[] listEjey = ejey.split("=");
+                String[] listEjex = ejex.split("[=,]");
+                String[] listEjey = ejey.split("[=,]");
 
                 DefaultCategoryDataset datos = new DefaultCategoryDataset();
 
                 for (int i = 0; i < listEjey.length; i++) {
 
                     try {
-                        int valor = Integer.parseInt(listEjey[i]); // Convertir el valor de String a int
+                        double valor = Double.parseDouble(listEjey[i]); // Convertir el valor de String a int
 
                         datos.setValue(valor, listEjex[i], "SS");
 
@@ -469,14 +527,14 @@ public class interfaz extends javax.swing.JFrame {
                     }
 
                 }
-                String[] list_labelpie = label_pie.split("=");
-                String[] list_valuepie = values_pie.split("=");
+                String[] list_labelpie = label_pie.split("[=,]");
+                String[] list_valuepie = values_pie.split("[=,]");
 
                 DefaultPieDataset datos_pie = new DefaultPieDataset();
 
                 for (int i = 0; i < listEjey.length; i++) {
                     try {
-                        int valor = Integer.parseInt(list_valuepie[i]); // Convertir el valor de String a int
+                        double valor = Double.parseDouble(list_valuepie[i]); // Convertir el valor de String a int
                         datos_pie.setValue(list_labelpie[i], valor);
                     } catch (Exception e) {
                         System.out.println("No hay valores en la lista de grafica pie");
@@ -506,6 +564,7 @@ public class interfaz extends javax.swing.JFrame {
                             break;
                         case "ejeY":
                             ejey_line = valor;
+                            System.out.println("en lineal y"+ejey_line);
                             break;
                         case "tituloX":
                             tituloX_line = valor;
@@ -520,6 +579,7 @@ public class interfaz extends javax.swing.JFrame {
                         // Agregar más casos según sea necesario para más claves
                     }
                 }
+                
                 String[] listEjex_line = ejex_line.split("[=,]");
                 String[] listEjey_line = ejey_line.split("[=,]");
                
@@ -529,7 +589,7 @@ public class interfaz extends javax.swing.JFrame {
                 for (int i = 0; i < listEjey_line.length; i++) {
 
                     try {
-                        int valor = Integer.parseInt(listEjey_line[i]); // Convertir el valor de String a int
+                        double valor = Double.parseDouble(listEjey_line[i]); // Convertir el valor de String a int
 
                         dataset.setValue(valor, "SS", listEjex_line[i]);
 

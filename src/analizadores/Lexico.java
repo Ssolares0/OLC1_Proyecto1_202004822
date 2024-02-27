@@ -883,7 +883,7 @@ public class Lexico implements java_cup.runtime.Scanner {
           case 54: break;
           case 4:
             { System.out.println("Reconocio PARENTESIS IZQ ,lexema: "+yytext());
-            Token tmp = new Token(yytext(),"delimitador");
+            Token tmp = new Token(yytext(),"delimitador",yyline,yycolumn);
             tokLex.add(tmp);
             return new Symbol(sym.PAR_IZQ, yycolumn, yyline, yytext());
             }
@@ -891,7 +891,7 @@ public class Lexico implements java_cup.runtime.Scanner {
           case 55: break;
           case 5:
             { System.out.println("Reconocio PARENTESIS DER ,lexema: "+yytext());  
-            Token tmp = new Token(yytext(),"delimitador");
+            Token tmp = new Token(yytext(),"delimitador",yyline,yycolumn);
             tokLex.add(tmp);
             return new Symbol(sym.PAR_DER, yycolumn, yyline, yytext());
             }
@@ -899,7 +899,7 @@ public class Lexico implements java_cup.runtime.Scanner {
           case 56: break;
           case 6:
             { System.out.println("Reconocio coma ,lexema: "+yytext());
-            Token tmp = new Token(yytext(),"delimitador");
+            Token tmp = new Token(yytext(),"delimitador",yyline,yycolumn);
             tokLex.add(tmp);
             return new Symbol(sym.COMA, yycolumn, yyline, yytext());
             }
@@ -907,7 +907,7 @@ public class Lexico implements java_cup.runtime.Scanner {
           case 57: break;
           case 7:
             { System.out.println("Reconocio un numero,lexema: "+yytext());
-                Token tmp = new Token(yytext(),"Numero");
+                Token tmp = new Token(yytext(),"Numero",yyline,yycolumn);
                    tokLex.add(tmp);
                return new Symbol(sym.NUMERO, yycolumn, yyline, yytext());
             }
@@ -915,7 +915,7 @@ public class Lexico implements java_cup.runtime.Scanner {
           case 58: break;
           case 8:
             { System.out.println("Reconocio Dos puntos ,lexema: "+yytext());
-            Token tmp = new Token(yytext(),"delimitador");
+            Token tmp = new Token(yytext(),"delimitador",yyline,yycolumn);
             tokLex.add(tmp);
             return new Symbol(sym.DOSPUNTOS, yycolumn, yyline, yytext());
             }
@@ -924,7 +924,7 @@ public class Lexico implements java_cup.runtime.Scanner {
           case 9:
             { System.out.println("Reconocio punto y coma,lexema: "+yytext());
 
-            Token tmp = new Token(yytext(),"delimitador");
+            Token tmp = new Token(yytext(),"delimitador",yyline,yycolumn);
             tokLex.add(tmp);
             return new Symbol(sym.PUNTOYCOMA, yycolumn, yyline, yytext());
             }
@@ -932,7 +932,7 @@ public class Lexico implements java_cup.runtime.Scanner {
           case 60: break;
           case 10:
             { System.out.println("Reconocio Signo igual ,lexema: "+yytext());
-            Token tmp = new Token(yytext(),"operador");
+            Token tmp = new Token(yytext(),"operador",yyline,yycolumn);
             tokLex.add(tmp);
             return new Symbol(sym.IGUAL, yycolumn, yyline, yytext());
             }
@@ -940,7 +940,7 @@ public class Lexico implements java_cup.runtime.Scanner {
           case 61: break;
           case 11:
             { System.out.println("Reconocio el id de una declaracion de variable,lexema: "+yytext());
-            Token tmp = new Token(yytext(),"ID VARIABLE");
+            Token tmp = new Token(yytext(),"ID VARIABLE",yyline,yycolumn);
             tokLex.add(tmp);
             return new Symbol(sym.ID, yycolumn, yyline, yytext());
             }
@@ -948,7 +948,7 @@ public class Lexico implements java_cup.runtime.Scanner {
           case 62: break;
           case 12:
             { System.out.println("Reconocio Corchete izquierdo ,lexema: "+yytext());
-            Token tmp = new Token(yytext(),"delimitador");
+            Token tmp = new Token(yytext(),"delimitador",yyline,yycolumn);
             tokLex.add(tmp);
             return new Symbol(sym.COR_IZQ, yycolumn, yyline, yytext());
             }
@@ -956,7 +956,7 @@ public class Lexico implements java_cup.runtime.Scanner {
           case 63: break;
           case 13:
             { System.out.println("Reconocio Corchete derecho ,lexema: "+yytext());
-            Token tmp = new Token(yytext(),"delimitador");
+            Token tmp = new Token(yytext(),"delimitador",yyline,yycolumn);
             tokLex.add(tmp);
             return new Symbol(sym.COR_DER, yycolumn, yyline, yytext());
             }
@@ -964,7 +964,7 @@ public class Lexico implements java_cup.runtime.Scanner {
           case 64: break;
           case 14:
             { System.out.println("Reconocio una cadena,lexema: "+yytext());
-                Token tmp = new Token(yytext(),"Cadena");
+                Token tmp = new Token(yytext(),"Cadena",yyline,yycolumn);
                  tokLex.add(tmp);
                  return new Symbol(sym.CADENA, yycolumn, yyline, yytext());
             }
@@ -972,7 +972,7 @@ public class Lexico implements java_cup.runtime.Scanner {
           case 65: break;
           case 15:
             { System.out.println("Reconocio Assignacion llave derecha  ,lexema: "+yytext());
-            Token tmp = new Token(yytext(),"delimitador");
+            Token tmp = new Token(yytext(),"delimitador",yyline,yycolumn);
             tokLex.add(tmp);
             return new Symbol(sym.ASSIGN2, yycolumn, yyline, yytext());
             }
@@ -980,7 +980,7 @@ public class Lexico implements java_cup.runtime.Scanner {
           case 66: break;
           case 16:
             { System.out.println("Reconocio Assignacion llave ,lexema: "+yytext());
-            Token tmp = new Token(yytext(),"delimitador");
+            Token tmp = new Token(yytext(),"delimitador",yyline,yycolumn);
             tokLex.add(tmp);
             return new Symbol(sym.ASSIGN, yycolumn, yyline, yytext());
             }
@@ -988,7 +988,7 @@ public class Lexico implements java_cup.runtime.Scanner {
           case 67: break;
           case 17:
             { System.out.println("Reconocio el id de un array ,lexema: "+yytext());
-                Token tmp = new Token(yytext(),"ID ARRAY");
+                Token tmp = new Token(yytext(),"ID ARRAY",yyline,yycolumn);
                 tokLex.add(tmp);
               return new Symbol(sym.ID_ARRAY, yycolumn, yyline, yytext());
             }
@@ -996,7 +996,7 @@ public class Lexico implements java_cup.runtime.Scanner {
           case 68: break;
           case 18:
             { System.out.println("Reconocio palabra ,lexema: "+yytext());
-                    Token tmp = new Token(yytext(),"Palabra Reservada");
+                    Token tmp = new Token(yytext(),"Palabra Reservada",yyline,yycolumn);
                     tokLex.add(tmp);
                     return new Symbol(sym.ARR, yycolumn, yyline, yytext());
             }
@@ -1004,7 +1004,7 @@ public class Lexico implements java_cup.runtime.Scanner {
           case 69: break;
           case 19:
             { System.out.println("Reconocio palabra ,lexema: "+yytext());
-                    Token tmp = new Token(yytext(),"Palabra Reservada");
+                    Token tmp = new Token(yytext(),"Palabra Reservada",yyline,yycolumn);
                     tokLex.add(tmp);
                        return new Symbol(sym.div, yycolumn, yyline, yytext());
             }
@@ -1012,7 +1012,7 @@ public class Lexico implements java_cup.runtime.Scanner {
           case 70: break;
           case 20:
             { System.out.println("Reconocio palabra ,lexema: "+yytext());
-                    Token tmp = new Token(yytext(),"Palabra Reservada");
+                    Token tmp = new Token(yytext(),"Palabra Reservada",yyline,yycolumn);
                     tokLex.add(tmp);
                         return new Symbol(sym.END, yycolumn, yyline, yytext());
             }
@@ -1020,7 +1020,7 @@ public class Lexico implements java_cup.runtime.Scanner {
           case 71: break;
           case 21:
             { System.out.println("Reconocio palabra ,lexema: "+yytext());
-                    Token tmp = new Token(yytext(),"Palabra Reservada");
+                    Token tmp = new Token(yytext(),"Palabra Reservada",yyline,yycolumn);
                     tokLex.add(tmp);
                        return new Symbol(sym.max, yycolumn, yyline, yytext());
             }
@@ -1028,7 +1028,7 @@ public class Lexico implements java_cup.runtime.Scanner {
           case 72: break;
           case 22:
             { System.out.println("Reconocio palabra ,lexema: "+yytext());
-                    Token tmp = new Token(yytext(),"Palabra Reservada");
+                    Token tmp = new Token(yytext(),"Palabra Reservada",yyline,yycolumn);
                     tokLex.add(tmp);
                            return new Symbol(sym.min, yycolumn, yyline, yytext());
             }
@@ -1036,7 +1036,7 @@ public class Lexico implements java_cup.runtime.Scanner {
           case 73: break;
           case 23:
             { System.out.println("Reconocio palabra ,lexema: "+yytext());
-                    Token tmp = new Token(yytext(),"Palabra Reservada");
+                    Token tmp = new Token(yytext(),"Palabra Reservada",yyline,yycolumn);
                     tokLex.add(tmp);
                        return new Symbol(sym.mod, yycolumn, yyline, yytext());
             }
@@ -1044,7 +1044,7 @@ public class Lexico implements java_cup.runtime.Scanner {
           case 74: break;
           case 24:
             { System.out.println("Reconocio palabra ,lexema: "+yytext());
-                    Token tmp = new Token(yytext(),"Palabra Reservada");
+                    Token tmp = new Token(yytext(),"Palabra Reservada",yyline,yycolumn);
                     tokLex.add(tmp);
                        return new Symbol(sym.mul, yycolumn, yyline, yytext());
             }
@@ -1052,7 +1052,7 @@ public class Lexico implements java_cup.runtime.Scanner {
           case 75: break;
           case 25:
             { System.out.println("Reconocio palabra ,lexema: "+yytext());
-                    Token tmp = new Token(yytext(),"Palabra Reservada");
+                    Token tmp = new Token(yytext(),"Palabra Reservada",yyline,yycolumn);
                     tokLex.add(tmp);
                        return new Symbol(sym.res, yycolumn, yyline, yytext());
             }
@@ -1060,7 +1060,7 @@ public class Lexico implements java_cup.runtime.Scanner {
           case 76: break;
           case 26:
             { System.out.println("Reconocio palabra ,lexema: "+yytext());
-                    Token tmp = new Token(yytext(),"Palabra Reservada");
+                    Token tmp = new Token(yytext(),"Palabra Reservada",yyline,yycolumn);
                     tokLex.add(tmp);
                        return new Symbol(sym.sum, yycolumn, yyline, yytext());
             }
@@ -1068,7 +1068,7 @@ public class Lexico implements java_cup.runtime.Scanner {
           case 77: break;
           case 27:
             { System.out.println("Reconocio palabra ,lexema: "+yytext());
-                    Token tmp = new Token(yytext(),"Palabra Reservada");
+                    Token tmp = new Token(yytext(),"Palabra Reservada",yyline,yycolumn);
                     tokLex.add(tmp);
                       return new Symbol(sym.VAR, yycolumn, yyline, yytext());
             }
@@ -1081,7 +1081,7 @@ public class Lexico implements java_cup.runtime.Scanner {
           case 79: break;
           case 29:
             { System.out.println("Reconocio palabra ,lexema: "+yytext());
-                    Token tmp = new Token(yytext(),"Palabra Reservada");
+                    Token tmp = new Token(yytext(),"Palabra Reservada",yyline,yycolumn);
                     tokLex.add(tmp);
                            return new Symbol(sym.ejex, yycolumn, yyline, yytext());
             }
@@ -1089,7 +1089,7 @@ public class Lexico implements java_cup.runtime.Scanner {
           case 80: break;
           case 30:
             { System.out.println("Reconocio palabra ,lexema: "+yytext());
-                    Token tmp = new Token(yytext(),"Palabra Reservada");
+                    Token tmp = new Token(yytext(),"Palabra Reservada",yyline,yycolumn);
                     tokLex.add(tmp);
                            return new Symbol(sym.ejey, yycolumn, yyline, yytext());
             }
@@ -1097,7 +1097,7 @@ public class Lexico implements java_cup.runtime.Scanner {
           case 81: break;
           case 31:
             { System.out.println("Reconocio palabra ,lexema: "+yytext());
-                    Token tmp = new Token(yytext(),"Palabra Reservada");
+                    Token tmp = new Token(yytext(),"Palabra Reservada",yyline,yycolumn);
                     tokLex.add(tmp);
                            return new Symbol(sym.exec, yycolumn, yyline, yytext());
             }
@@ -1105,7 +1105,7 @@ public class Lexico implements java_cup.runtime.Scanner {
           case 82: break;
           case 32:
             { System.out.println("Reconocio palabra ,lexema: "+yytext());
-                    Token tmp = new Token(yytext(),"Palabra Reservada");
+                    Token tmp = new Token(yytext(),"Palabra Reservada",yyline,yycolumn);
                     tokLex.add(tmp);
                        return new Symbol(sym.moda, yycolumn, yyline, yytext());
             }
@@ -1113,7 +1113,7 @@ public class Lexico implements java_cup.runtime.Scanner {
           case 83: break;
           case 33:
             { System.out.println("Reconocio palabra ,lexema: "+yytext());
-                    Token tmp = new Token(yytext(),"Palabra Reservada");
+                    Token tmp = new Token(yytext(),"Palabra Reservada",yyline,yycolumn);
                     tokLex.add(tmp);
                            return new Symbol(sym.label, yycolumn, yyline, yytext());
             }
@@ -1121,7 +1121,7 @@ public class Lexico implements java_cup.runtime.Scanner {
           case 84: break;
           case 34:
             { System.out.println("Reconocio palabra ,lexema: "+yytext());
-                    Token tmp = new Token(yytext(),"Palabra Reservada");
+                    Token tmp = new Token(yytext(),"Palabra Reservada",yyline,yycolumn);
                     tokLex.add(tmp);
                        return new Symbol(sym.media, yycolumn, yyline, yytext());
             }
@@ -1129,7 +1129,7 @@ public class Lexico implements java_cup.runtime.Scanner {
           case 85: break;
           case 35:
             { System.out.println("Reconocio palabra ,lexema: "+yytext());
-                    Token tmp = new Token(yytext(),"Palabra Reservada");
+                    Token tmp = new Token(yytext(),"Palabra Reservada",yyline,yycolumn);
                     tokLex.add(tmp);
                        return new Symbol(sym.PRINT, yycolumn, yyline, yytext());
             }
@@ -1137,7 +1137,7 @@ public class Lexico implements java_cup.runtime.Scanner {
           case 86: break;
           case 36:
             { System.out.println("Reconocio tipo de dato ,lexema: "+yytext());
-                    Token tmp = new Token(yytext(),"Palabra Reservada");
+                    Token tmp = new Token(yytext(),"Palabra Reservada",yyline,yycolumn);
                     tokLex.add(tmp);
                     return new Symbol(sym.CHAR, yycolumn, yyline, yytext());
             }
@@ -1145,7 +1145,7 @@ public class Lexico implements java_cup.runtime.Scanner {
           case 87: break;
           case 37:
             { System.out.println("Reconocio palabra ,lexema: "+yytext());
-                    Token tmp = new Token(yytext(),"Palabra Reservada");
+                    Token tmp = new Token(yytext(),"Palabra Reservada",yyline,yycolumn);
                     tokLex.add(tmp);
                        return new Symbol(sym.COLUMN, yycolumn, yyline, yytext());
             }
@@ -1153,7 +1153,7 @@ public class Lexico implements java_cup.runtime.Scanner {
           case 88: break;
           case 38:
             { System.out.println("Reconocio tipo de dato ,lexema: "+yytext());
-                    Token tmp = new Token(yytext(),"Palabra Reservada");
+                    Token tmp = new Token(yytext(),"Palabra Reservada",yyline,yycolumn);
                     tokLex.add(tmp);
                     return new Symbol(sym.DOUBLE, yycolumn, yyline, yytext());
             }
@@ -1161,7 +1161,7 @@ public class Lexico implements java_cup.runtime.Scanner {
           case 89: break;
           case 39:
             { System.out.println("Reconocio palabra ,lexema: "+yytext());
-                    Token tmp = new Token(yytext(),"Palabra Reservada");
+                    Token tmp = new Token(yytext(),"Palabra Reservada",yyline,yycolumn);
                     tokLex.add(tmp);
                            return new Symbol(sym.titulo, yycolumn, yyline, yytext());
             }
@@ -1169,7 +1169,7 @@ public class Lexico implements java_cup.runtime.Scanner {
           case 90: break;
           case 40:
             { System.out.println("Reconocio palabra ,lexema: "+yytext());
-                    Token tmp = new Token(yytext(),"Palabra Reservada");
+                    Token tmp = new Token(yytext(),"Palabra Reservada",yyline,yycolumn);
                     tokLex.add(tmp);
                            return new Symbol(sym.values, yycolumn, yyline, yytext());
             }
@@ -1177,7 +1177,7 @@ public class Lexico implements java_cup.runtime.Scanner {
           case 91: break;
           case 41:
             { System.out.println("Reconocio palabra ,lexema: "+yytext());
-                    Token tmp = new Token(yytext(),"Palabra Reservada");
+                    Token tmp = new Token(yytext(),"Palabra Reservada",yyline,yycolumn);
                     tokLex.add(tmp);
                        return new Symbol(sym.CONSOLE, yycolumn, yyline, yytext());
             }
@@ -1185,7 +1185,7 @@ public class Lexico implements java_cup.runtime.Scanner {
           case 92: break;
           case 42:
             { System.out.println("Reconocio palabra ,lexema: "+yytext());
-                    Token tmp = new Token(yytext(),"Palabra Reservada");
+                    Token tmp = new Token(yytext(),"Palabra Reservada",yyline,yycolumn);
                     tokLex.add(tmp);
                        return new Symbol(sym.mediana, yycolumn, yyline, yytext());
             }
@@ -1193,7 +1193,7 @@ public class Lexico implements java_cup.runtime.Scanner {
           case 93: break;
           case 43:
             { System.out.println("Reconocio palabra ,lexema: "+yytext());
-                    Token tmp = new Token(yytext(),"Palabra Reservada");
+                    Token tmp = new Token(yytext(),"Palabra Reservada",yyline,yycolumn);
                     tokLex.add(tmp);
                        return new Symbol(sym.PROGRAM, yycolumn, yyline, yytext());
             }
@@ -1201,7 +1201,7 @@ public class Lexico implements java_cup.runtime.Scanner {
           case 94: break;
           case 44:
             { System.out.println("Reconocio palabra ,lexema: "+yytext());
-                    Token tmp = new Token(yytext(),"Palabra Reservada");
+                    Token tmp = new Token(yytext(),"Palabra Reservada",yyline,yycolumn);
                     tokLex.add(tmp);
                            return new Symbol(sym.titulox, yycolumn, yyline, yytext());
             }
@@ -1209,7 +1209,7 @@ public class Lexico implements java_cup.runtime.Scanner {
           case 95: break;
           case 45:
             { System.out.println("Reconocio palabra ,lexema: "+yytext());
-                    Token tmp = new Token(yytext(),"Palabra Reservada");
+                    Token tmp = new Token(yytext(),"Palabra Reservada",yyline,yycolumn);
                     tokLex.add(tmp);
                            return new Symbol(sym.tituloy, yycolumn, yyline, yytext());
             }
@@ -1217,7 +1217,7 @@ public class Lexico implements java_cup.runtime.Scanner {
           case 96: break;
           case 46:
             { System.out.println("Reconocio palabra ,lexema: "+yytext());
-                    Token tmp = new Token(yytext(),"Palabra Reservada");
+                    Token tmp = new Token(yytext(),"Palabra Reservada",yyline,yycolumn);
                     tokLex.add(tmp);
                            return new Symbol(sym.graphbar, yycolumn, yyline, yytext());
             }
@@ -1225,7 +1225,7 @@ public class Lexico implements java_cup.runtime.Scanner {
           case 97: break;
           case 47:
             { System.out.println("Reconocio palabra ,lexema: "+yytext());
-                    Token tmp = new Token(yytext(),"Palabra Reservada");
+                    Token tmp = new Token(yytext(),"Palabra Reservada",yyline,yycolumn);
                     tokLex.add(tmp);
                            return new Symbol(sym.graphpie, yycolumn, yyline, yytext());
             }
@@ -1233,7 +1233,7 @@ public class Lexico implements java_cup.runtime.Scanner {
           case 98: break;
           case 48:
             { System.out.println("Reconocio palabra ,lexema: "+yytext());
-                    Token tmp = new Token(yytext(),"Palabra Reservada");
+                    Token tmp = new Token(yytext(),"Palabra Reservada",yyline,yycolumn);
                     tokLex.add(tmp);
                        return new Symbol(sym.varianza, yycolumn, yyline, yytext());
             }
@@ -1241,7 +1241,7 @@ public class Lexico implements java_cup.runtime.Scanner {
           case 99: break;
           case 49:
             { System.out.println("Reconocio palabra ,lexema: "+yytext());
-                    Token tmp = new Token(yytext(),"Palabra Reservada");
+                    Token tmp = new Token(yytext(),"Palabra Reservada",yyline,yycolumn);
                     tokLex.add(tmp);
                            return new Symbol(sym.graphline, yycolumn, yyline, yytext());
             }
@@ -1249,7 +1249,7 @@ public class Lexico implements java_cup.runtime.Scanner {
           case 100: break;
           case 50:
             { System.out.println("Reconocio palabra ,lexema: "+yytext());
-                    Token tmp = new Token(yytext(),"Palabra Reservada");
+                    Token tmp = new Token(yytext(),"Palabra Reservada",yyline,yycolumn);
                     tokLex.add(tmp);
                            return new Symbol(sym.histogram, yycolumn, yyline, yytext());
             }
@@ -1257,7 +1257,7 @@ public class Lexico implements java_cup.runtime.Scanner {
           case 101: break;
           case 51:
             { System.out.println("Reconocio palabra ,lexema: "+yytext());
-                    Token tmp = new Token(yytext(),"Palabra Reservada");
+                    Token tmp = new Token(yytext(),"Palabra Reservada",yyline,yycolumn);
                     tokLex.add(tmp);
                     return new Symbol(sym.ENDPROGRAM, yycolumn, yyline, yytext());
             }
