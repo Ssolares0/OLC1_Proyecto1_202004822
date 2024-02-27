@@ -31,6 +31,7 @@ public class MiSingleton {
     
     public void add_consola(String data) {
         
+        
         this.consola += data;
         
     }

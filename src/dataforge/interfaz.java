@@ -296,6 +296,10 @@ public class interfaz extends javax.swing.JFrame {
         String values_pie = "";
         String titulo_histo = "";
         String values_histo = "";
+        
+        
+        
+        
 
         list_graficas = new ArrayList<>();
         currentIndex = 0;
@@ -694,7 +698,9 @@ public class interfaz extends javax.swing.JFrame {
                     AST.get(i).ejecutar();
                 }
                 MiSingleton singleton = MiSingleton.obtenerInstancia();
+                
                 jTextArea1.setText(singleton.get_consola());
+                singleton.clear_console();
 
             }
 
