@@ -34,6 +34,7 @@ parser code
     public HashMap<String,String> graficasBarras = new HashMap<String,String>();
     public HashMap<String,String> graficasPie = new HashMap<String,String>();
     public HashMap<String,String> graficaLineal = new HashMap<String,String>();
+    public HashMap<String,String> graficaHisto = new HashMap<String,String>();
     public HashMap<String,String> variablesNorm = new HashMap<String,String>();
     public Map<String, String> variablesArr = new HashMap<>();
     public LinkedList<String> list_sucesiva = new LinkedList<>();
@@ -137,13 +138,14 @@ non terminal Exp_Arreglo;
 non terminal valores_grafica;
 non terminal LinkedList<sentencia>INSTRUCCIONES;
 non terminal LinkedList<Expresions>EXP_SUCESIVAS;
-non terminal  EXP_SUCESIVASGRAF;
+non terminal EXP_SUCESIVASGRAF;
 non terminal EXP_SUCESIVASARR;
 non terminal ID_DECLA,ARR_DECLA;
 
 non terminal GRAFBARRAS,SENTENCIAS_BAR,BAR,TITULO_BAR,TITULOX_BAR,TITULOY_BAR,EJEX_BAR,EJEY_BAR,EXEC_BAR;
 non terminal GRAFPIE,SENTENCIAS_PIE,PIE,TITULO_PIE,EXEC_PIE,LABEL_PIE,VALUES_PIE;
 non terminal GRAFLINEAL,SENTENCIAS_LINE,LINE,TITULO_LINE,TITULOX_LINE,TITULOY_LINE,EJEX_LINE,EJEY_LINE,EXEC_LINE;
+non terminal GRAFHISTO,SENTENCIAS_HISTO,HISTO,TITULO_HISTO,VALUES_HISTO,EXEC_HISTO;
 
 
 // Asociatividades y Prioridades 
@@ -174,6 +176,7 @@ INSTRUCCION::=  IMPRIMIR_EXP:a END PUNTOYCOMA {:RESULT =a; :}
                |GRAFBARRAS END PUNTOYCOMA {:RESULT= new func("nuevagraficabarras");:}
                |GRAFPIE END PUNTOYCOMA {:RESULT= new func("NUEVA GRAFICA PIE");:}
                |GRAFLINEAL END PUNTOYCOMA {:RESULT= new func("NUEVA GRAFICA lineal");:}
+               |GRAFHISTO END PUNTOYCOMA {:RESULT= new func("NUEVA GRAFICA HISTOGRAMA");:}
                |error:e END PUNTOYCOMA {:RESULT= new erro("error sint"); :};
 
 
@@ -330,6 +333,26 @@ EJEY_LINE ::= ejey:eje_y DOSPUNTOS DOSPUNTOS DOUBLE IGUAL COR_IZQ EXP_SUCESIVASG
 TITULOX_LINE ::= titulox:titulo_x DOSPUNTOS DOSPUNTOS CHAR IGUAL valores_grafica:cad {:graficaLineal.put(titulo_x,cad.toString());:} ;
 TITULOY_LINE ::= tituloy:titulo_y DOSPUNTOS DOSPUNTOS CHAR IGUAL valores_grafica:cad {:graficaLineal.put(titulo_y,cad.toString());:};
 EXEC_LINE ::= exec:ex graphline:graph_ {:graficaLineal.put(ex,graph_);:};
+
+
+//---------------------------------------------------------GRAFICA HISTOGRAMA---------------------------------------------------------------------------------------
+
+GRAFHISTO::= histogram PAR_IZQ SENTENCIAS_HISTO  PAR_DER;
+
+SENTENCIAS_HISTO::= SENTENCIAS_HISTO HISTO
+                  |HISTO;
+            
+                  
+    HISTO::= TITULO_HISTO END PUNTOYCOMA
+            |VALUES_HISTO END PUNTOYCOMA
+            |EXEC_HISTO END PUNTOYCOMA;
+
+TITULO_HISTO ::= titulo:titulo DOSPUNTOS DOSPUNTOS CHAR IGUAL valores_grafica:cad {:graficaHisto.put(titulo,cad.toString());:} ;
+
+VALUES_HISTO::= values:valu DOSPUNTOS DOSPUNTOS CHAR IGUAL COR_IZQ EXP_SUCESIVASGRAF:exp_s COR_DER {:graficaHisto.put(valu,exp_s.toString());:}
+               |values:valu DOSPUNTOS DOSPUNTOS CHAR IGUAL EXP_SUCESIVASGRAF:exp_s {:graficaHisto.put(valu,exp_s.toString());:};
+
+EXEC_HISTO ::= exec:ex histogram:graph_ {:graficaHisto.put(ex,graph_);:};
 
 
 

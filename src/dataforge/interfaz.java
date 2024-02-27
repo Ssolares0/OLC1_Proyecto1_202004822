@@ -29,6 +29,9 @@ import org.jfree.chart.plot.PlotOrientation;
 import org.jfree.data.category.DefaultCategoryDataset;
 import org.jfree.data.general.DefaultPieDataset;
 import java.util.List;
+import org.jfree.chart.plot.CategoryPlot;
+import org.jfree.chart.renderer.category.BarRenderer;
+import org.jfree.data.statistics.HistogramDataset;
 import org.jfree.data.xy.XYSeries;
 
 /*
@@ -291,6 +294,8 @@ public class interfaz extends javax.swing.JFrame {
         String titulo_pie = "";
         String label_pie = "";
         String values_pie = "";
+        String titulo_histo = "";
+        String values_histo = "";
 
         list_graficas = new ArrayList<>();
         currentIndex = 0;
@@ -376,10 +381,10 @@ public class interfaz extends javax.swing.JFrame {
 
                 // Iterar sobre los token lexicos
                 for (int i = 0; i < scanner.tokLex.size(); i++) {
-                    html2 += "<tr><td><center>" + scanner.tokLex.get(i).getDescription()+"</center></td><td><center>"
+                    html2 += "<tr><td><center>" + scanner.tokLex.get(i).getDescription() + "</center></td><td><center>"
                             + scanner.tokLex.get(i).getToken() + "</center></td><td><center>"
                             + scanner.tokLex.get(i).getFila() + "</center></td><td><center>"
-                            + scanner.tokLex.get(i).getColumna() + "</center></td></tr>" ;
+                            + scanner.tokLex.get(i).getColumna() + "</center></td></tr>";
                 }
 
                 html2 += "</table></center></body></html>";
@@ -389,10 +394,8 @@ public class interfaz extends javax.swing.JFrame {
                 BufferedWriter bw2 = new BufferedWriter(new FileWriter(file2));
                 bw2.write(html2);
                 bw2.close();
-                
-                
+
                 //creamos html symbolos
-                
                 // Crear el estilo del HTML tokens
                 String htmlstyle3 = "<!DOCTYPE html>"
                         + "<html>"
@@ -414,29 +417,23 @@ public class interfaz extends javax.swing.JFrame {
 
                 // Crear el contenido de la tabla
                 String html3 = htmlstyle3 + "<table border=1><tr><th>Nombre</th><th>valor</th></tr>";
-                
+
                 for (Map.Entry<String, String> entry : parser.variablesNorm.entrySet()) {
                     String key = entry.getKey();
                     String value = entry.getValue();
-                   
-                    html3 += "<tr><td><center>" + key+"</center></td><td><center>"
-                 
-                            + value + "</center></td></tr>" ;
-                    
-                    
-                    
+
+                    html3 += "<tr><td><center>" + key + "</center></td><td><center>"
+                            + value + "</center></td></tr>";
+
                 }
-                
-                for (Map.Entry<String, String> entry :parser.variablesArr.entrySet()) {
+
+                for (Map.Entry<String, String> entry : parser.variablesArr.entrySet()) {
                     String key = entry.getKey();
                     String value = entry.getValue();
-                   
-                    html3 += "<tr><td><center>" + key+"</center></td><td><center>"
-                 
-                            + value + "</center></td></tr>" ;
-                    
-                    
-                    
+
+                    html3 += "<tr><td><center>" + key + "</center></td><td><center>"
+                            + value + "</center></td></tr>";
+
                 }
                 html3 += "</table></center></body></html>";
 
@@ -451,26 +448,29 @@ public class interfaz extends javax.swing.JFrame {
                     String clave = entry.getKey();
                     String valor = entry.getValue();
 
-                    // Asignar los valores a las variables según la clave
+                    
                     switch (clave) {
                         case "ejeX":
                             ejex = valor;
-                            System.out.println(ejex);
+                            
                             break;
                         case "ejeY":
                             ejey = valor;
                             break;
                         case "tituloX":
                             tituloX = valor;
+                            tituloX = tituloX.replace("\"", "");
                             break;
                         case "tituloY":
                             tituloY = valor;
+                            tituloY = tituloY.replace("\"", "");
 
                             break;
                         case "titulo":
                             titulo = valor;
+                            titulo = titulo.replace("\"", "");
                             break;
-                        // Agregar más casos según sea necesario para más claves
+                        
                     }
 
                 }
@@ -483,7 +483,7 @@ public class interfaz extends javax.swing.JFrame {
                 for (int i = 0; i < listEjey.length; i++) {
 
                     try {
-                        double valor = Double.parseDouble(listEjey[i]); // Convertir el valor de String a int
+                        double valor = Double.parseDouble(listEjey[i]); 
 
                         datos.setValue(valor, listEjex[i], "SS");
 
@@ -513,15 +513,17 @@ public class interfaz extends javax.swing.JFrame {
                     switch (clave) {
                         case "label":
                             label_pie = valor;
-                            System.out.println(label_pie);
+                           
+                            
 
                             break;
                         case "values":
                             values_pie = valor;
-                            System.out.println(values_pie);
+                            
                             break;
                         case "titulo":
                             titulo_pie = valor;
+                            titulo_pie = titulo_pie.replace("\"", "");
                             break;
 
                     }
@@ -560,29 +562,32 @@ public class interfaz extends javax.swing.JFrame {
                     switch (clave) {
                         case "ejeX":
                             ejex_line = valor;
-                            System.out.println("en lineal"+ejex_line);
+                            
                             break;
                         case "ejeY":
                             ejey_line = valor;
-                            System.out.println("en lineal y"+ejey_line);
+                            
                             break;
                         case "tituloX":
                             tituloX_line = valor;
+                            tituloX_line = tituloX_line.replace("\"", "");
                             break;
                         case "tituloY":
                             tituloY_line = valor;
+                            tituloY_line = tituloY_line.replace("\"", "");
 
                             break;
                         case "titulo":
                             titulo_line = valor;
+                            titulo_line = titulo_line.replace("\"", "");
+                            
                             break;
                         // Agregar más casos según sea necesario para más claves
                     }
                 }
-                
+
                 String[] listEjex_line = ejex_line.split("[=,]");
                 String[] listEjey_line = ejey_line.split("[=,]");
-               
 
                 DefaultCategoryDataset dataset = new DefaultCategoryDataset();
 
@@ -606,6 +611,73 @@ public class interfaz extends javax.swing.JFrame {
                 );
 
                 list_graficas.add(graficaLineal);
+
+                //crear histograma ------------------------------------------------------------
+                for (Map.Entry<String, String> entry_histo : parser.graficaHisto.entrySet()) {
+                    String clave = entry_histo.getKey();
+                    String valor = entry_histo.getValue();
+
+                    switch (clave) {
+                        case "titulo":
+                            titulo_histo = valor;
+                            titulo_histo = titulo_histo.replace("\"", "");
+                            
+                            break;
+                        case "values":
+                            values_histo = valor;
+                            
+                            break;
+
+                    }
+                }
+                String[] listValues_histo = values_histo.split("[=,]");
+
+                try {
+                    List<Double> valueList = new ArrayList<>();
+                    List<Integer> frequencyList = new ArrayList<>();
+
+                    // Convertir a double
+                    double[] numeros = new double[listValues_histo.length];
+
+                    for (int i = 0; i < listValues_histo.length; i++) {
+
+                        numeros[i] = Double.parseDouble(listValues_histo[i]);
+
+                    }
+
+                    for (double value : numeros) {
+                        int index = valueList.indexOf(value);
+                        if (index != -1) {
+                            frequencyList.set(index, frequencyList.get(index) + 1);
+                        } else {
+                            valueList.add(value);
+                            frequencyList.add(1);
+                        }
+                    }
+
+                    DefaultCategoryDataset datahisto = new DefaultCategoryDataset();
+                    for (int i = 0; i < valueList.size(); i++) {
+                        datahisto.addValue(frequencyList.get(i), "Frecuencia", String.valueOf(valueList.get(i)));
+                    }
+
+                    // Create a chart based on the dataset
+                    JFreeChart graf_histo = ChartFactory.createBarChart(
+                            titulo_histo,
+                            "Valor",
+                            "Frecuencia",
+                            datahisto
+                    );
+                    
+                    // Personalizar el color de las barras
+                    CategoryPlot plot = graf_histo.getCategoryPlot();
+                    BarRenderer renderer = (BarRenderer) plot.getRenderer();
+                    renderer.setSeriesPaint(0, Color.BLUE);
+                    
+                    list_graficas.add(graf_histo);
+
+                } catch (Exception e) {
+                    System.out.println("error al generar grafico histograma");
+                }
 
                 // Configurar el panel de la gráfica
                 ChartPanel grafb = new ChartPanel(list_graficas.get(currentIndex));
