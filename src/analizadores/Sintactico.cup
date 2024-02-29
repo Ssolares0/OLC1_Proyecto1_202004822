@@ -15,9 +15,11 @@ import abstracto.Types;
 import abstracto.Types.Type;
 import java.util.ArrayList;
 import dataforge.Errores;
+import dataforge.Simbolos;
 import analizadores.funcionesUsar;
 import java.util.HashMap;
 import java.util.Map;
+
 
 
 
@@ -30,7 +32,7 @@ import java.util.Map;
 parser code 
 {:  
     public ArrayList<Errores> errSint = new ArrayList<Errores>();
-
+    public ArrayList<Simbolos> decSimbol = new ArrayList<Simbolos>();
     public HashMap<String,String> graficasBarras = new HashMap<String,String>();
     public HashMap<String,String> graficasPie = new HashMap<String,String>();
     public HashMap<String,String> graficaLineal = new HashMap<String,String>();
@@ -77,7 +79,12 @@ parser code
 
         return var_valor;
     }
-
+    
+    public void save_simbol(String id, String tipo ,String val,int fila,int columna){
+            
+            Simbolos tmp =new Simbolos(id,tipo,val,fila,columna);
+            decSimbol.add(tmp);
+    }
 
 
     
@@ -88,14 +95,14 @@ parser code
     public void syntax_error(Symbol s)
     {
             System.err.println("Error Sintactico: "+ s.value + " - Fila: " + s.right + " - Columna: " + s.left + ". Recuperado" );
-            Errores tmp = new Errores("Sintactico",s.right,s.left, s.value+"Error de sintaxis");
+            Errores tmp = new Errores("Sintactico",s.right,s.left, s.value+" "+Error de sintaxis");
             errSint.add(tmp);
     }
 
     public void unrecovered_syntax_error(Symbol s) throws java.lang.Exception
     {
             System.err.println("Error Sintactico: "+ s.value + " - Fila: " + s.right + " - Columna: " + s.left + ". Sin recuperacion." );
-            Errores tmp = new Errores("Sintactico",s.right,s.left, s.value+"Error de sintaxis sin recuperacion");
+            Errores tmp = new Errores("Sintactico",s.right,s.left, s.value+" "+"Error de sintaxis sin recuperacion");
             errSint.add(tmp);
     }
 
@@ -169,37 +176,36 @@ INSTRUCCIONES ::= INSTRUCCIONES:a INSTRUCCION:b {: RESULT= a; RESULT.add(b); :}
                 | INSTRUCCION: a                 {: RESULT = new LinkedList<>(); RESULT.add(a); :};
                 
                 
-INSTRUCCION::=  IMPRIMIR_EXP:a END PUNTOYCOMA {:RESULT =a; :}
-               |IMPRIMIR_ARRAY:a END PUNTOYCOMA {: RESULT=a; :}
-               |DECLARACION:a END PUNTOYCOMA {: RESULT=new func("declarada variable"); :}
-               |Dec_Arreglo:a END PUNTOYCOMA {:RESULT=new func("declarada arreglo");:}
-               |GRAFBARRAS END PUNTOYCOMA {:RESULT= new func("nuevagraficabarras");:}
-               |GRAFPIE END PUNTOYCOMA {:RESULT= new func("NUEVA GRAFICA PIE");:}
-               |GRAFLINEAL END PUNTOYCOMA {:RESULT= new func("NUEVA GRAFICA lineal");:}
-               |GRAFHISTO END PUNTOYCOMA {:RESULT= new func("NUEVA GRAFICA HISTOGRAMA");:}
+INSTRUCCION::=   IMPRIMIR_EXP:a  {:RESULT =a; :}
+               |IMPRIMIR_ARRAY:a  {: RESULT=a; :}
+               |DECLARACION:a  {: RESULT=new func("declarada variable"); :}
+               |Dec_Arreglo:a  {:RESULT=new func("declarada arreglo");:}
+               |GRAFBARRAS  {:RESULT= new func("nuevagraficabarras");:}
+               |GRAFPIE  {:RESULT= new func("NUEVA GRAFICA PIE");:}
+               |GRAFLINEAL  {:RESULT= new func("NUEVA GRAFICA lineal");:}
+               |GRAFHISTO  {:RESULT= new func("NUEVA GRAFICA HISTOGRAMA");:}
                |error:e END PUNTOYCOMA {:RESULT= new erro("error sint"); :};
+               
 
 
 //--------------------------> La Declaracion de una variable<----------------
 
-DECLARACION ::= VAR DOSPUNTOS TIPO DOSPUNTOS DOSPUNTOS ID: id_var ASSIGN valores_variable: exp_va {:RESULT = variablesNorm.put(id_var,exp_va.toString());:};//{:RESULT = new declaracion(id_var,exp_va.toString(),exp_varight,exp_valeft);  :};
-   
-
+DECLARACION ::= VAR DOSPUNTOS TIPO:tipo DOSPUNTOS DOSPUNTOS ID: id_var ASSIGN valores_variable: exp_va END PUNTOYCOMA {:RESULT = variablesNorm.put(id_var,exp_va.toString()); save_simbol(id_var,"variable"+" "+tipo.toString(),exp_va.toString(),exp_varight,exp_valeft); :};
 // ----------------------------> DECLARACION DE UN ARREGLO <----------------------------------------
 
 
 
-Dec_Arreglo::= ARR DOSPUNTOS TIPO:tipo_arr DOSPUNTOS DOSPUNTOS  ID_ARRAY: id_arr ASSIGN COR_IZQ EXP_SUCESIVASARR:exp_s COR_DER {:RESULT = variablesArr.put(id_arr,exp_s.toString()); :};
+Dec_Arreglo::= ARR DOSPUNTOS TIPO:tipo_arr DOSPUNTOS DOSPUNTOS  ID_ARRAY: id_arr ASSIGN COR_IZQ EXP_SUCESIVASARR:exp_s COR_DER END PUNTOYCOMA {:RESULT = variablesArr.put(id_arr,exp_s.toString()); save_simbol(id_arr,"arreglo"+" "+tipo_arr.toString(),"["+exp_s.toString()+"]",exp_sright,exp_sleft);  :};
 
 
 
 // ---------------------------->imprimir una expresion<---------------------------------------------
-IMPRIMIR_EXP ::=  CONSOLE DOSPUNTOS DOSPUNTOS PRINT IGUAL EXP_SUCESIVAS: exp_s {: RESULT = new print(exp_s,exp_sright, exp_sleft,"! Salida: "); :};
+IMPRIMIR_EXP ::=  CONSOLE DOSPUNTOS DOSPUNTOS PRINT IGUAL EXP_SUCESIVAS: exp_s  END PUNTOYCOMA {: RESULT = new print(exp_s,exp_sright, exp_sleft,"! Salida: "); :};
 
 // ---------------------------->imprimir un ARREGLO<---------------------------------------------
 
-IMPRIMIR_ARRAY ::= CONSOLE DOSPUNTOS DOSPUNTOS COLUMN IGUAL EXP_TITULO:titulo ASSIGN2  COR_IZQ  EXP_SUCESIVAS: exp_s {: RESULT = new print(exp_s,exp_sright, exp_sleft,"! "+titulo.toString()+": "); :} COR_DER 
-                   |CONSOLE DOSPUNTOS DOSPUNTOS COLUMN IGUAL EXP_TITULO:titulo ASSIGN2 EXP_SUCESIVAS: exp_s {: RESULT = new print(exp_s,exp_sright, exp_sleft,"! "+titulo.toString()+": "); :} ;
+IMPRIMIR_ARRAY ::= CONSOLE DOSPUNTOS DOSPUNTOS COLUMN IGUAL EXP_TITULO:titulo ASSIGN2  COR_IZQ  EXP_SUCESIVAS: exp_s  COR_DER  END PUNTOYCOMA {: RESULT = new print(exp_s,exp_sright, exp_sleft,"! "+titulo.toString()+": "); :} 
+                   |CONSOLE DOSPUNTOS DOSPUNTOS COLUMN IGUAL EXP_TITULO:titulo ASSIGN2 EXP_SUCESIVAS: exp_s  END PUNTOYCOMA {: RESULT = new print(exp_s,exp_sright, exp_sleft,"! "+titulo.toString()+": "); :} ;
 
     EXP_TITULO ::= CADENA:cad {:RESULT= cad; :}
                     | ID_DECLA:id_titulo {:RESULT= id_titulo; :};
@@ -257,7 +263,7 @@ OP4::=  OP_ESTADISTICA: resuEst {:RESULT= resuEst; :}
 
 //----------------------------------------------------------GRAFICA barras----------------------------------------------------------------
 
-GRAFBARRAS::= graphbar PAR_IZQ SENTENCIAS_BAR  PAR_DER;
+GRAFBARRAS::= graphbar PAR_IZQ SENTENCIAS_BAR  PAR_DER END PUNTOYCOMA;
 
 
 SENTENCIAS_BAR::= SENTENCIAS_BAR BAR
@@ -288,7 +294,7 @@ EXEC_BAR ::= exec:ex graphbar:graph_ {:graficasBarras.put(ex,graph_);:};
 //----------------------------------------------------------GRAFICA PIE------------------------------------------------------------------------------------
 
 
-GRAFPIE::= graphpie PAR_IZQ SENTENCIAS_PIE  PAR_DER;
+GRAFPIE::= graphpie PAR_IZQ SENTENCIAS_PIE  PAR_DER END PUNTOYCOMA;
 
 SENTENCIAS_PIE::= SENTENCIAS_PIE PIE
                   |PIE;
@@ -311,7 +317,7 @@ EXEC_PIE ::= exec:ex graphpie:graph_ {:graficasPie.put(ex,graph_);:};
 
 //----------------------------------------------------------GRAFICA LINEAL------------------------------------------------------------------------------------
 
-GRAFLINEAL ::= graphline PAR_IZQ SENTENCIAS_LINE  PAR_DER;
+GRAFLINEAL ::= graphline PAR_IZQ SENTENCIAS_LINE  PAR_DER END PUNTOYCOMA;
 
 SENTENCIAS_LINE::= SENTENCIAS_LINE LINE
                     |LINE;
@@ -337,7 +343,7 @@ EXEC_LINE ::= exec:ex graphline:graph_ {:graficaLineal.put(ex,graph_);:};
 
 //---------------------------------------------------------GRAFICA HISTOGRAMA---------------------------------------------------------------------------------------
 
-GRAFHISTO::= histogram PAR_IZQ SENTENCIAS_HISTO  PAR_DER;
+GRAFHISTO::= histogram PAR_IZQ SENTENCIAS_HISTO  PAR_DER END PUNTOYCOMA;
 
 SENTENCIAS_HISTO::= SENTENCIAS_HISTO HISTO
                   |HISTO;

@@ -105,3 +105,68 @@ PROGRAM
 
 END PROGRAM
 
+//entrada con muchos errores
+PROGRAM
+! Variables
+	var:dle:: notaAprobar <- 61 end;
+	var:char[]:: labelAprobar <- "Nota Minima" end;
+	
+	! Arreglos
+	arr:double:: @notas <- [notaAprobar, MUL(75, 0.45), DIV(SUM(80,20), RES(75,25))] end;
+	arr:dou:: @notas <- [notaAprobar, MUL(75, 0.45), DIV(SUM(80,20), RES(75,25))] end;
+	arr:char[]:: @labels <- [labelAprobar, "P1", "P2"] end;
+	
+	!Prints
+	var:char[]:: titulo1 <- "Titulo histograma" end;
+	consolge::columdn = "test" -> [10, 15.5, 61.1] end;
+	consolesa::cosslum = "tests" -> [10, 15.5, 61.1] end;
+	console::column = "Notas" -> @notas end;
+	console::column = titulo1 -> @labels end;
+	
+	coe::t = "Media", "Mediana", "Moda", "Varianza", "Max", "Min" end;
+	console::print = Media(@notas), Mediana(@notas), Moda(@notas), Varianza(@notas), Max(@notas), Min(@notas) end;
+	console::print = "Hola Mundo", MOD(10, 9), notaAprobar, labelAprobar end;
+<! FELICIDADES
+	lo de arriba ya es medio proyecto
+	tu puedes !>
+        %%
+	var:double:: gb1 <- 61 end;
+	var:char[]:: gbt <- "Datos" end;
+	grhBar(
+		!grafica1
+		titoX::char[] = "Actividades" end;
+		tituloY::char[] = gbt end;
+		titulo::char[] = "Estudiantes" end;
+		ejeX::char[] = ["1 Parcial", "2 Parcial", "Final"] end;
+		ejeY::double = [gb1, 30, 70] end;
+		EXEC graphBar end;
+	) end;
+	
+	graphPie(
+		<! FELICIDADES
+		La pie es facil !>
+		
+		label::char[] = ["Uno", "Dos", "Tres"] end;
+		titulo::char[] = "Ejemplo Grafica de pie" end;
+		values::double = [50, 30, 20] end;
+		EXEC graphPie end;
+	) end;
+
+        graphLine(
+		!testing de variables en graficas
+			titulo::char[] = "Grafica de linea" end;
+			e::char[] = @labels end;
+			ejeY::double = @notas end;
+			tituloX::char[] = "Actividades" end;
+			tituloY::char[] = "Notas" end;
+			EXEC graphLine end;
+	) end;
+        /
+        Histogram(&&
+		titulo::char[] = titulo1 end;
+		values::char[] = [2,2,2,5,5,7,8] end;
+		EXEC Histogram end;
+	) end;
+
+END PROGRAM
+

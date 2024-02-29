@@ -48,6 +48,7 @@ public class interfaz extends javax.swing.JFrame {
     public List<JFreeChart> list_graficas;
     public int currentIndex;
     public ChartPanel chartPanel;
+    public static String tableString;
 
     /**
      * Creates new form interfaz
@@ -84,6 +85,7 @@ public class interfaz extends javax.swing.JFrame {
         jMenu4 = new javax.swing.JMenu();
         Errores = new javax.swing.JMenuItem();
         jMenuItem6 = new javax.swing.JMenuItem();
+        jMenuItem7 = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("DataForge");
@@ -197,6 +199,14 @@ public class interfaz extends javax.swing.JFrame {
         });
         jMenu4.add(jMenuItem6);
 
+        jMenuItem7.setText("Simbolos");
+        jMenuItem7.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem7ActionPerformed(evt);
+            }
+        });
+        jMenu4.add(jMenuItem7);
+
         jMenuBar1.add(jMenu4);
 
         setJMenuBar(jMenuBar1);
@@ -237,14 +247,14 @@ public class interfaz extends javax.swing.JFrame {
                         .addGap(24, 24, 24)))
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 26, Short.MAX_VALUE)
-                        .addComponent(jLabel1)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 32, Short.MAX_VALUE)
+                        .addComponent(jLabel1))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jButton1)
                             .addComponent(jButton2))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                        .addGap(0, 0, Short.MAX_VALUE)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 129, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
@@ -297,9 +307,6 @@ public class interfaz extends javax.swing.JFrame {
         String titulo_histo = "";
         String values_histo = "";
         
-        
-        
-        
 
         list_graficas = new ArrayList<>();
         currentIndex = 0;
@@ -338,7 +345,8 @@ public class interfaz extends javax.swing.JFrame {
 
                 // Crear el contenido de la tabla
                 String html = htmlstyle + "<table border=1><tr><th>Linea</th><th>Columna</th><th>Descripcion</th><th>Tipo</th></tr>";
-
+                
+                
                 // Iterar sobre los errores sintácticos
                 for (int i = 0; i < parser.errSint.size(); i++) {
                     html += "<tr><td><center>" + parser.errSint.get(i).getLine() + "</center></td><td><center>"
@@ -381,14 +389,16 @@ public class interfaz extends javax.swing.JFrame {
                         + "<center>";
 
                 // Crear el contenido de la tabla
-                String html2 = htmlstyle2 + "<table border=1><tr><th>Descripcion</th><th>Tipo</th><th>Fila</th><th>Columna</th></tr>";
-
+                String html2 = htmlstyle2 + "<table border=1><tr><th>No.</th><th>Descripcion</th><th>Tipo</th><th>Fila</th><th>Columna</th></tr>";
+                int count2 =1;
                 // Iterar sobre los token lexicos
                 for (int i = 0; i < scanner.tokLex.size(); i++) {
-                    html2 += "<tr><td><center>" + scanner.tokLex.get(i).getDescription() + "</center></td><td><center>"
+                    html2 += "<tr><td><center>" +count2+"</center></td><td><center>"
+                            + scanner.tokLex.get(i).getDescription() + "</center></td><td><center>"
                             + scanner.tokLex.get(i).getToken() + "</center></td><td><center>"
                             + scanner.tokLex.get(i).getFila() + "</center></td><td><center>"
                             + scanner.tokLex.get(i).getColumna() + "</center></td></tr>";
+                    count2++;
                 }
 
                 html2 += "</table></center></body></html>";
@@ -420,25 +430,20 @@ public class interfaz extends javax.swing.JFrame {
                         + "<center>";
 
                 // Crear el contenido de la tabla
-                String html3 = htmlstyle3 + "<table border=1><tr><th>Nombre</th><th>valor</th></tr>";
-
-                for (Map.Entry<String, String> entry : parser.variablesNorm.entrySet()) {
-                    String key = entry.getKey();
-                    String value = entry.getValue();
-
-                    html3 += "<tr><td><center>" + key + "</center></td><td><center>"
-                            + value + "</center></td></tr>";
-
+                String html3 = htmlstyle3 + "<table border=1><tr><th>No.</th><th>Nombre</th><th>tipo</th><th>valor</th><th>fila</th><th>columna</th></tr>";
+                int count3 =1;
+                for (int i = 0; i < parser.decSimbol.size(); i++) {
+                    html3 += "<tr><td><center>" + count3+ "</center></td><td><center>"
+                            + parser.decSimbol.get(i).getSimbolos() + "</center></td><td><center>"
+                            + parser.decSimbol.get(i).getTipo()+ "</center></td><td><center>"
+                            + parser.decSimbol.get(i).getValor()+ "</center></td><td><center>"
+                            + parser.decSimbol.get(i).getFila()+ "</center></td><td><center>"
+                            + parser.decSimbol.get(i).getColumna()+ "</center></td></tr>";
+                    
+                    count3++;
                 }
 
-                for (Map.Entry<String, String> entry : parser.variablesArr.entrySet()) {
-                    String key = entry.getKey();
-                    String value = entry.getValue();
-
-                    html3 += "<tr><td><center>" + key + "</center></td><td><center>"
-                            + value + "</center></td></tr>";
-
-                }
+                
                 html3 += "</table></center></body></html>";
 
                 // Guardar en un archivo llamado "errores.html"
@@ -452,11 +457,10 @@ public class interfaz extends javax.swing.JFrame {
                     String clave = entry.getKey();
                     String valor = entry.getValue();
 
-                    
                     switch (clave) {
                         case "ejeX":
                             ejex = valor;
-                            
+
                             break;
                         case "ejeY":
                             ejey = valor;
@@ -474,7 +478,7 @@ public class interfaz extends javax.swing.JFrame {
                             titulo = valor;
                             titulo = titulo.replace("\"", "");
                             break;
-                        
+
                     }
 
                 }
@@ -487,7 +491,7 @@ public class interfaz extends javax.swing.JFrame {
                 for (int i = 0; i < listEjey.length; i++) {
 
                     try {
-                        double valor = Double.parseDouble(listEjey[i]); 
+                        double valor = Double.parseDouble(listEjey[i]);
 
                         datos.setValue(valor, listEjex[i], "SS");
 
@@ -517,13 +521,11 @@ public class interfaz extends javax.swing.JFrame {
                     switch (clave) {
                         case "label":
                             label_pie = valor;
-                           
-                            
 
                             break;
                         case "values":
                             values_pie = valor;
-                            
+
                             break;
                         case "titulo":
                             titulo_pie = valor;
@@ -538,7 +540,7 @@ public class interfaz extends javax.swing.JFrame {
 
                 DefaultPieDataset datos_pie = new DefaultPieDataset();
 
-                for (int i = 0; i < listEjey.length; i++) {
+                for (int i = 0; i < list_valuepie.length; i++) {
                     try {
                         double valor = Double.parseDouble(list_valuepie[i]); // Convertir el valor de String a int
                         datos_pie.setValue(list_labelpie[i], valor);
@@ -566,11 +568,11 @@ public class interfaz extends javax.swing.JFrame {
                     switch (clave) {
                         case "ejeX":
                             ejex_line = valor;
-                            
+
                             break;
                         case "ejeY":
                             ejey_line = valor;
-                            
+
                             break;
                         case "tituloX":
                             tituloX_line = valor;
@@ -584,7 +586,7 @@ public class interfaz extends javax.swing.JFrame {
                         case "titulo":
                             titulo_line = valor;
                             titulo_line = titulo_line.replace("\"", "");
-                            
+
                             break;
                         // Agregar más casos según sea necesario para más claves
                     }
@@ -625,11 +627,11 @@ public class interfaz extends javax.swing.JFrame {
                         case "titulo":
                             titulo_histo = valor;
                             titulo_histo = titulo_histo.replace("\"", "");
-                            
+
                             break;
                         case "values":
                             values_histo = valor;
-                            
+
                             break;
 
                     }
@@ -658,11 +660,30 @@ public class interfaz extends javax.swing.JFrame {
                             frequencyList.add(1);
                         }
                     }
+                    int frecuenciaA = 0 ;
+                    int frecuenciaR =0;
+                    int totalFb =0;
+                    int totalFa =0;
+                    List<String[]> tableData = new ArrayList<>();
+                    tableData.add(new String[]{"valor","fb","fa","fr"});
+                    
 
                     DefaultCategoryDataset datahisto = new DefaultCategoryDataset();
                     for (int i = 0; i < valueList.size(); i++) {
                         datahisto.addValue(frequencyList.get(i), "Frecuencia", String.valueOf(valueList.get(i)));
+                        System.out.println(frequencyList.get(i));
+                        System.out.println(String.valueOf(valueList.get(i)));
+                        
+                        frecuenciaA += frequencyList.get(i);
+                        totalFb += frequencyList.get(i);
+                        totalFa += frequencyList.get(i);
+                        
+                        frecuenciaR =(totalFa / totalFb) * 100;
+                                
+                        tableData.add(new String[]{String.valueOf(valueList.get(i)),String.valueOf(frequencyList.get(i)), String.valueOf(frecuenciaA),String.valueOf(frecuenciaR)+"%"});
                     }
+                    tableData.add(new String[]{"totales:",String.valueOf(totalFb),String.valueOf(totalFa),"100%"});
+                    
 
                     // Create a chart based on the dataset
                     JFreeChart graf_histo = ChartFactory.createBarChart(
@@ -671,12 +692,17 @@ public class interfaz extends javax.swing.JFrame {
                             "Frecuencia",
                             datahisto
                     );
-                    
+
                     // Personalizar el color de las barras
                     CategoryPlot plot = graf_histo.getCategoryPlot();
                     BarRenderer renderer = (BarRenderer) plot.getRenderer();
                     renderer.setSeriesPaint(0, Color.BLUE);
                     
+                    // Guardar la tabla en una cadena de texto
+                    tableString = buildTableString(tableData);
+                    
+                    
+
                     list_graficas.add(graf_histo);
 
                 } catch (Exception e) {
@@ -699,7 +725,15 @@ public class interfaz extends javax.swing.JFrame {
                 }
                 MiSingleton singleton = MiSingleton.obtenerInstancia();
                 
+                
+                if (tableString ==null){
+                    singleton.add_consola("");
+                } else {
+                    singleton.add_consola(tableString);
+                }
+                
                 jTextArea1.setText(singleton.get_consola());
+                
                 singleton.clear_console();
 
             }
@@ -717,8 +751,8 @@ public class interfaz extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenu4ActionPerformed
 
     private void ErroresActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ErroresActionPerformed
-        // Cambia la ruta a la ubicación de tu archivo HTML
-        File htmlFile = new File("errores.html");
+        
+        File htmlFile = new File("Reportes/errores.html");
 
         try {
             Desktop.getDesktop().browse(htmlFile.toURI());
@@ -731,7 +765,7 @@ public class interfaz extends javax.swing.JFrame {
 
     private void jMenuItem6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem6ActionPerformed
         // TODO add your handling code here:
-        File htmlFile = new File("tokens.html");
+        File htmlFile = new File("Reportes/tokens.html");
 
         try {
             Desktop.getDesktop().browse(htmlFile.toURI());
@@ -754,6 +788,17 @@ public class interfaz extends javax.swing.JFrame {
         currentIndex = (currentIndex + 1) % list_graficas.size();
         updateChartPanel();
     }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void jMenuItem7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem7ActionPerformed
+        // TODO add your handling code here:
+        File htmlFile = new File("Reportes/Symbolos.html");
+
+        try {
+            Desktop.getDesktop().browse(htmlFile.toURI());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }//GEN-LAST:event_jMenuItem7ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -871,6 +916,34 @@ public class interfaz extends javax.swing.JFrame {
         }
         return contenido.toString();
     }
+    
+    public static String buildTableString(List<String[]> data) {
+        StringBuilder tableString = new StringBuilder();
+
+        
+        int[] columnWidths = new int[data.get(0).length];
+        for (String[] row : data) {
+            for (int i = 0; i < row.length; i++) {
+                columnWidths[i] = Math.max(columnWidths[i], row[i].length());
+            }
+        }
+
+       
+        for (String[] row : data) {
+            for (int i = 0; i < row.length; i++) {
+                
+                tableString.append(row[i]);
+               
+                for (int j = 0; j < columnWidths[i] - row[i].length() + 2; j++) {
+                    tableString.append(" ");
+                }
+            }
+            
+            tableString.append("\n");
+        }
+
+        return tableString.toString();
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenuItem Errores;
@@ -888,6 +961,7 @@ public class interfaz extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem4;
     private javax.swing.JMenuItem jMenuItem5;
     private javax.swing.JMenuItem jMenuItem6;
+    private javax.swing.JMenuItem jMenuItem7;
     public javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     javax.swing.JTabbedPane jTabbedPane1;
