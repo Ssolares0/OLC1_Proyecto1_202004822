@@ -95,7 +95,7 @@ parser code
     public void syntax_error(Symbol s)
     {
             System.err.println("Error Sintactico: "+ s.value + " - Fila: " + s.right + " - Columna: " + s.left + ". Recuperado" );
-            Errores tmp = new Errores("Sintactico",s.right,s.left, s.value+" "+Error de sintaxis");
+            Errores tmp = new Errores("Sintactico",s.right,s.left, s.value+" "+"Error de sintaxis");
             errSint.add(tmp);
     }
 
@@ -184,13 +184,17 @@ INSTRUCCION::=   IMPRIMIR_EXP:a  {:RESULT =a; :}
                |GRAFPIE  {:RESULT= new func("NUEVA GRAFICA PIE");:}
                |GRAFLINEAL  {:RESULT= new func("NUEVA GRAFICA lineal");:}
                |GRAFHISTO  {:RESULT= new func("NUEVA GRAFICA HISTOGRAMA");:}
-               |error:e END PUNTOYCOMA {:RESULT= new erro("error sint"); :};
+               |error:e PUNTOYCOMA {:RESULT= new erro("error sint"); :};
+          
+               
+               
                
 
 
 //--------------------------> La Declaracion de una variable<----------------
 
 DECLARACION ::= VAR DOSPUNTOS TIPO:tipo DOSPUNTOS DOSPUNTOS ID: id_var ASSIGN valores_variable: exp_va END PUNTOYCOMA {:RESULT = variablesNorm.put(id_var,exp_va.toString()); save_simbol(id_var,"variable"+" "+tipo.toString(),exp_va.toString(),exp_varight,exp_valeft); :};
+                
 // ----------------------------> DECLARACION DE UN ARREGLO <----------------------------------------
 
 
@@ -275,6 +279,7 @@ BAR::= TITULO_BAR END PUNTOYCOMA
         |TITULOX_BAR END PUNTOYCOMA
         |TITULOY_BAR END PUNTOYCOMA
         |EXEC_BAR END PUNTOYCOMA;
+       
         
 
 TITULO_BAR::= titulo:titulo DOSPUNTOS DOSPUNTOS CHAR IGUAL CADENA:cad {:graficasBarras.put(titulo,cad);:} ;
@@ -304,6 +309,7 @@ SENTENCIAS_PIE::= SENTENCIAS_PIE PIE
             |LABEL_PIE END PUNTOYCOMA
             |VALUES_PIE END PUNTOYCOMA
             |EXEC_PIE END PUNTOYCOMA;
+            
 
 TITULO_PIE ::= titulo:titulo DOSPUNTOS DOSPUNTOS CHAR IGUAL valores_grafica:cad {:graficasPie.put(titulo,cad.toString());:} ;
 LABEL_PIE ::= label:lab DOSPUNTOS DOSPUNTOS CHAR IGUAL COR_IZQ EXP_SUCESIVASGRAF:exp_s COR_DER {:graficasPie.put(lab,exp_s.toString());:}
@@ -328,6 +334,7 @@ SENTENCIAS_LINE::= SENTENCIAS_LINE LINE
                 |TITULOX_LINE END PUNTOYCOMA
                 |TITULOY_LINE END PUNTOYCOMA
                 |EXEC_LINE END PUNTOYCOMA;
+                
                
 TITULO_LINE::= titulo:titulo DOSPUNTOS DOSPUNTOS CHAR IGUAL CADENA:cad {:graficaLineal.put(titulo,cad);:} ;
 EJEX_LINE ::= ejex:eje_x DOSPUNTOS DOSPUNTOS CHAR IGUAL COR_IZQ EXP_SUCESIVASGRAF:exp_s COR_DER {:graficaLineal.put(eje_x,exp_s.toString());:} 
@@ -352,6 +359,7 @@ SENTENCIAS_HISTO::= SENTENCIAS_HISTO HISTO
     HISTO::= TITULO_HISTO END PUNTOYCOMA
             |VALUES_HISTO END PUNTOYCOMA
             |EXEC_HISTO END PUNTOYCOMA;
+           
 
 TITULO_HISTO ::= titulo:titulo DOSPUNTOS DOSPUNTOS CHAR IGUAL valores_grafica:cad {:graficaHisto.put(titulo,cad.toString());:} ;
 
@@ -372,9 +380,12 @@ EXP_SUCESIVASGRAF ::= EXP_SUCESIVASGRAF:val1 COMA valores_grafica: val2 {:RESULT
 
 EXP_SUCESIVAS::= EXP_SUCESIVAS:exp_s COMA valores_print: val {: RESULT = exp_s; RESULT.add(val); :}
                  | valores_print: val {:RESULT = new LinkedList<>(); RESULT.add(val); :};
+                 
 
 EXP_SUCESIVASARR::=EXP_SUCESIVASARR:exp_s COMA valores_variable: val {: RESULT = exp_s.toString()+","+val.toString(); :}
                  | valores_variable: val {:RESULT = val;  :};
+     
+                 
 
 
 

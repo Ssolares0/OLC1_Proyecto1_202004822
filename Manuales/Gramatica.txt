@@ -1,0 +1,205 @@
+
+<INICIO> ::= <PROGRAM> <INSTRUCCIONES> <ENDPROGRAM>
+
+<INSTRUCCIONES> ::= <INSTRUCCIONES> <INSTRUCCION> | <INSTRUCCION>
+
+<INSTRUCCION> ::= <IMPRIMIR_EXP>
+				  |<IMPRIMIR_ARRAY>
+				  |<DECLARACION>
+				  |<Dec_Arreglo>
+				  |<GRAFBARRAS>
+				  |<GRAFPIE>
+				  |<GRAFLINEAL>
+				  |<GRAFHISTO>
+				  |<error>
+ 
+ 
+<IMPRIMIR_EXP> ::= CONSOLE DOSPUNTOS DOSPUNTOS PRINT IGUAL <EXP_SUCESIVAS> END PUNTOYCOMA
+
+<IMPRIMIR_ARRAY> ::= CONSOLE DOSPUNTOS DOSPUNTOS COLUMN IGUAL <EXP_TITULO> ASSIGN2  COR_IZQ  <EXP_SUCESIVAS> COR_DER  END PUNTOYCOMA 
+                   |CONSOLE DOSPUNTOS DOSPUNTOS COLUMN IGUAL <EXP_TITULO> ASSIGN2 <EXP_SUCESIVAS> END PUNTOYCOMA 
+				   
+		
+<EXP_TITULO> ::= CADENA
+               |<ID_DECLA>
+			   
+<EXP_SUCESIVAS>::= <EXP_SUCESIVAS> COMA <valores_print>
+                 | <valores_print>
+				 
+<valores_print>::=   NUMERO
+                    | CADENA
+                    | OP_ARITMETICA
+                    | OP_ESTADISTICA
+                    | ID_DECLA
+                    | ARR_DECLA
+
+				 
+				 
+					
+<DECLARACION> ::= VAR DOSPUNTOS <TIPO> DOSPUNTOS DOSPUNTOS ID ASSIGN <valores_variable> END PUNTOYCOMA
+
+<Dec_Arreglo> ::= ARR DOSPUNTOS <TIPO> DOSPUNTOS DOSPUNTOS  ID_ARRAY ASSIGN COR_IZQ <EXP_SUCESIVASARR> COR_DER END PUNTOYCOMA 
+
+
+<TIPO> ::= CHAR
+        | DOUBLE
+		
+<valores_variable> ::= NUMERO: 
+                  |CADENA
+                  |<OP_ARITMETICA>
+                  |<OP_ESTADISTICA>
+                  | ID_DECLA
+
+<EXP_SUCESIVASARR>::=<EXP_SUCESIVASARR> COMA <valores_variable>
+                 | <valores_variable>
+				 
+OP_ARITMETICA ::= 
+                 sum PAR_IZQ <OP> PAR_DER 
+               | res PAR_IZQ <OP> PAR_DER 
+               | mul PAR_IZQ <OP> PAR_DER 
+               | mod PAR_IZQ <OP> PAR_DER 
+               | div PAR_IZQ <OP> PAR_DER 
+		
+<OP>::= 
+      <OP> COMA <OP2>
+      | <OP2>
+
+<OP2>::= <OP_ARITMETICA>
+        |<OP_ESTADISTICA>
+        |NUMERO
+        |ID_DECLA
+        
+
+<OP3>::= 
+       <OP3> COMA <OP4>
+      | <OP4>
+	  
+<OP4>::=  <OP_ESTADISTICA>
+        |<OP_ARITMETICA>
+        |NUMERO
+        |ARR_DECLA	  
+
+<OP_ESTADISTICA>::= media PAR_IZQ COR_IZQ OP3
+                | mediana  PAR_IZQ COR_IZQ OP3
+                | moda   PAR_IZQ COR_IZQ OP3
+                | varianza PAR_IZQ COR_IZQ OP3
+                | max PAR_IZQ COR_IZQ OP3
+                | min PAR_IZQ COR_IZQ OP3
+                | media  PAR_IZQ OP3
+                | mediana PAR_IZQ OP3
+                | moda PAR_IZQ OP3
+                | varianza PAR_IZQ OP3
+                | max PAR_IZQ OP3
+                | min PAR_IZQ OP3
+	  
+<GRAFBARRAS>::= graphbar PAR_IZQ <SENTENCIAS_BAR>  PAR_DER END PUNTOYCOMA
+
+
+<SENTENCIAS_BAR>::= <SENTENCIAS_BAR> <BAR>
+                  | <BAR>
+
+<BAR>::= <TITULO_BAR> END PUNTOYCOMA
+        |<EJEX_BAR> END PUNTOYCOMA
+        |<EJEY_BAR> END PUNTOYCOMA
+        |<TITULOX_BAR> END PUNTOYCOMA
+        |<TITULOY_BAR> END PUNTOYCOMA
+        |<EXEC_BAR> END PUNTOYCOMA
+
+<TITULO_BAR>::= titulo DOSPUNTOS DOSPUNTOS CHAR IGUAL CADENA
+
+<EJEX_BAR> ::= ejex DOSPUNTOS DOSPUNTOS CHAR IGUAL COR_IZQ <EXP_SUCESIVASGRAF> 
+             |ejex DOSPUNTOS DOSPUNTOS CHAR IGUAL <EXP_SUCESIVASGRAF>
+
+<EJEY_BAR> ::= ejey DOSPUNTOS DOSPUNTOS DOUBLE IGUAL COR_IZQ <EXP_SUCESIVASGRAF>
+             |ejey DOSPUNTOS DOSPUNTOS DOUBLE IGUAL <EXP_SUCESIVASGRAF>
+
+<TITULOX_BAR> ::= titulox DOSPUNTOS DOSPUNTOS CHAR IGUAL <valores_grafica>
+<TITULOY_BAR>::= tituloy DOSPUNTOS DOSPUNTOS CHAR IGUAL <valores_grafica>
+<EXEC_BAR> ::= exec graphbar
+
+
+
+<GRAFPIE> ::= graphpie PAR_IZQ <SENTENCIAS_PIE>  PAR_DER END PUNTOYCOMA
+
+<SENTENCIAS_PIE>::= <SENTENCIAS_PIE> <PIE>
+                  |<PIE>
+            
+                  
+    <PIE>::=  <TITULO_PIE> END PUNTOYCOMA
+            |<LABEL_PIE> END PUNTOYCOMA
+            |<VALUES_PIE> END PUNTOYCOMA
+            |<EXEC_PIE> END PUNTOYCOMA
+            
+
+<TITULO_PIE> ::= titulo DOSPUNTOS DOSPUNTOS CHAR IGUAL <valores_grafica>
+
+<LABEL_PIE> ::= label DOSPUNTOS DOSPUNTOS CHAR IGUAL COR_IZQ <EXP_SUCESIVASGRAF>
+              |label DOSPUNTOS DOSPUNTOS CHAR IGUAL <EXP_SUCESIVASGRAF>
+
+<VALUES_PIE>::= values DOSPUNTOS DOSPUNTOS DOUBLE IGUAL COR_IZQ <EXP_SUCESIVASGRAF>
+               |values DOSPUNTOS DOSPUNTOS DOUBLE IGUAL <EXP_SUCESIVASGRAF>
+
+<EXEC_PIE> ::= exec graphpie
+
+
+
+<GRAFLINEAL> ::= graphline PAR_IZQ <SENTENCIAS_LINE>  PAR_DER END PUNTOYCOMA
+
+<SENTENCIAS_LINE> ::= <SENTENCIAS_LINE> <LINE>
+                    |<LINE>
+
+        <LINE> ::= <TITULO_LINE> END PUNTOYCOMA
+                |<EJEX_LINE> END PUNTOYCOMA
+                |<EJEY_LINE> END PUNTOYCOMA
+                |<TITULOX_LINE> END PUNTOYCOMA
+                |<TITULOY_LINE> END PUNTOYCOMA
+                |<EXEC_LINE> END PUNTOYCOMA;
+                
+               
+<TITULO_LINE>::= titulo DOSPUNTOS DOSPUNTOS CHAR IGUAL CADENA
+ 
+<EJEX_LINE> ::=ejex DOSPUNTOS DOSPUNTOS CHAR IGUAL COR_IZQ <EXP_SUCESIVASGRAF> COR_DER 
+              |ejex DOSPUNTOS DOSPUNTOS CHAR IGUAL <EXP_SUCESIVASGRAF>
+
+<EJEY_LINE> ::= ejey DOSPUNTOS DOSPUNTOS DOUBLE IGUAL COR_IZQ <EXP_SUCESIVASGRAF> COR_DER 
+                |ejey DOSPUNTOS DOSPUNTOS DOUBLE IGUAL  <EXP_SUCESIVASGRAF>  
+
+<TITULOX_LINE> ::= titulox DOSPUNTOS DOSPUNTOS CHAR IGUAL <valores_grafica> 
+<TITULOY_LINE> ::= tituloy DOSPUNTOS DOSPUNTOS CHAR IGUAL <valores_grafica>
+<EXEC_LINE> ::= exec graphline 
+
+
+
+
+<GRAFHISTO>::= histogram PAR_IZQ <SENTENCIAS_HISTO>  PAR_DER END PUNTOYCOMA
+
+<SENTENCIAS_HISTO>::= <SENTENCIAS_HISTO> <HISTO>
+                  |<HISTO>
+            
+                  
+    <HISTO>::= <TITULO_HISTO> END PUNTOYCOMA
+            |<VALUES_HISTO> END PUNTOYCOMA
+            |<EXEC_HISTO> END PUNTOYCOMA;
+           
+		   
+		   
+		   
+
+<TITULO_HISTO> ::= titulo DOSPUNTOS DOSPUNTOS CHAR IGUAL <valores_grafica>
+
+<VALUES_HISTO> ::= values DOSPUNTOS DOSPUNTOS CHAR IGUAL COR_IZQ <EXP_SUCESIVASGRAF> COR_DER 
+               |values DOSPUNTOS DOSPUNTOS CHAR IGUAL <EXP_SUCESIVASGRAF>
+
+<EXEC_HISTO> ::= exec histogram
+
+
+
+
+<EXP_SUCESIVASGRAF> ::= <EXP_SUCESIVASGRAF> COMA <valores_grafica>
+                 | <valores_grafica>
+				 
+				 
+<valores_grafica>::=  NUMERO 
+                    | CADENA
+                    | ID_DECLA
+                    | ARR_DECLA

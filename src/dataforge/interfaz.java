@@ -719,6 +719,8 @@ public class interfaz extends javax.swing.JFrame {
                 System.out.println("Analizando entrada... ");
 
                 LinkedList<sentencia> AST = parser.getAST();
+                
+                
 
                 for (int i = 0; i < AST.size(); i++) {
                     AST.get(i).ejecutar();

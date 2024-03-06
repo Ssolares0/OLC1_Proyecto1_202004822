@@ -20,6 +20,8 @@ public class funcionesUsar {
     public double resultado;
     public String printConsole;
     public String numeroString;
+    public static double valorMedia;
+    
 
     public void clean() {
         //esta funcion permite limpiar la consola
@@ -105,8 +107,10 @@ public class funcionesUsar {
         return resultado;
 
     }
+    
 
     public static Double operacionEstadistica(String id, String num) {
+        
         try {
             String id_min = id.toLowerCase();
             String[] partes = num.split(",");
@@ -134,6 +138,7 @@ public class funcionesUsar {
 
                     resultado = promedio;
                     media = promedio;
+                    valorMedia=media;
 
                     break;
 
@@ -158,7 +163,8 @@ public class funcionesUsar {
 
                 case "moda":
                     int maximoNumRepeticiones = 0;
-                    double moda = 0;
+                    double moda = 0.0;
+                    
 
                     for (int i = 0; i < numeros.length; i++) {
                         int numRepeticiones = 0;
@@ -168,20 +174,25 @@ public class funcionesUsar {
                             }
                             if (numRepeticiones > maximoNumRepeticiones) {
                                 moda = numeros[i];
+                                
 
                                 maximoNumRepeticiones = numRepeticiones;
                             }
                         }
                     }
+                    
                     resultado = moda;
+                    
                     System.out.println("la moda es: " + moda);
                     break;
 
                 case "varianza":
+                    
+                    double SumDF =0;
                     for (int i = 0; i < numeros.length; i++) {
                         double rango;
-                        rango = Math.pow(numeros[i] - media, 2f);
-                        resultado = resultado + rango;
+                        SumDF +=Math.pow(numeros[i]-valorMedia,2);
+                        resultado = SumDF + numeros.length;
                     }
                     resultado = resultado / numeros.length;
                     System.out.println("la varianza es: " + resultado);
