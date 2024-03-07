@@ -49,6 +49,7 @@ public class interfaz extends javax.swing.JFrame {
     public int currentIndex;
     public ChartPanel chartPanel;
     public static String tableString;
+    public int countNewArch =1;
 
     /**
      * Creates new form interfaz
@@ -286,6 +287,7 @@ public class interfaz extends javax.swing.JFrame {
         if (selectedIndex != -1) {
             jTabbedPane1.remove(selectedIndex);
         }
+        countNewArch--;
     }//GEN-LAST:event_jMenuItem4ActionPerformed
 
     private void jMenuItem5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem5ActionPerformed
@@ -844,9 +846,10 @@ public class interfaz extends javax.swing.JFrame {
         JScrollPane scrollPane = new JScrollPane(textArea);
         newPanel.add(scrollPane, BorderLayout.CENTER);
 
-        jTabbedPane1.addTab("undefined", newPanel);
+        jTabbedPane1.addTab("archivo"+countNewArch, newPanel);
         int lastIndex = jTabbedPane1.getTabCount() - 1;
         jTabbedPane1.setSelectedIndex(lastIndex);
+        countNewArch++;
 
     }
 
