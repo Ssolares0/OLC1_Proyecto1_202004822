@@ -224,7 +224,12 @@ OP_ARITMETICA ::=
                | mul: mul PAR_IZQ OP:val PAR_DER {:double resultado = funcionesUsar.operacionAritmetica(mul, val.toString()); RESULT =resultado;:}
                | mod: mod PAR_IZQ OP:val PAR_DER {:double resultado = funcionesUsar.operacionAritmetica(mod, val.toString()); RESULT =resultado;:}
                | div: div PAR_IZQ OP:val PAR_DER {:double resultado = funcionesUsar.operacionAritmetica(div, val.toString()); RESULT =resultado;:};
-               
+
+
+
+
+
+             
 
 OP_ESTADISTICA::= media:media        PAR_IZQ COR_IZQ OP3:val COR_DER PAR_DER {:double resultado = funcionesUsar.operacionEstadistica(media, val.toString()); RESULT =resultado;:}
                 | mediana:mediana    PAR_IZQ COR_IZQ OP3:val COR_DER PAR_DER {:double resultado = funcionesUsar.operacionEstadistica(mediana, val.toString()); RESULT =resultado;:}
